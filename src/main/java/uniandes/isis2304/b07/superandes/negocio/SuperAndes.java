@@ -124,14 +124,16 @@ public class SuperAndes {
     	System.out.println("Hola");
     }
     
-    public void registrarPedido(String[] codigosProductos, String nitProveedor, Timestamp fechaPrevista, int precioTotal )
+    public Pedido registrarPedido(String[] codigosProductos, String nitProveedor, Timestamp fechaPrevista, double precioTotal )
     {
     	log.info ("Registrando pedido con numero de productos: " + codigosProductos.length);
+    	return null;
     }
     
-    public void registrarLlegadaPedido(long codigoPedido, Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
+    public LlegadaPedido registrarLlegadaPedido(long codigoPedido, long idSucursal, Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
     {
     	log.info ("Registrando llegada pedido: " + codigoPedido);
+    	return null;
     }
     
     public void registrarVenta(String codigoProducto, int unidadesVendidas, String tipoDocumentoCliente, String numeroDocumentoCLiente)

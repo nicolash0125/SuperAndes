@@ -36,10 +36,12 @@ import uniandes.isis2304.b07.superandes.negocio.SuperAndes;
 import uniandes.isis2304.b07.superandes.negocio.VOBodega;
 import uniandes.isis2304.b07.superandes.negocio.VODescPorcentajePromo;
 import uniandes.isis2304.b07.superandes.negocio.VOEstante;
+import uniandes.isis2304.b07.superandes.negocio.VOLlegadaPedido;
 import uniandes.isis2304.b07.superandes.negocio.VOPague1Lleve2ConDescPromo;
 import uniandes.isis2304.b07.superandes.negocio.VOPagueNUnidadesLleveMPromo;
 import uniandes.isis2304.b07.superandes.negocio.VOPagueXCantidadLleveY;
 import uniandes.isis2304.b07.superandes.negocio.VOPaqueteDeProductos;
+import uniandes.isis2304.b07.superandes.negocio.VOPedido;
 import uniandes.isis2304.b07.superandes.negocio.VOSucursal;
 /**
  * Clase principal de la interfaz
@@ -744,6 +746,8 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			
 				
 			default:
+				panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+		    	
 				break;
 			}
     		
@@ -764,12 +768,77 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
     
     public void registrarPedido()
     {
-    	System.out.println("Hola");
+    	try 
+    	{
+    		String nitProveedor = JOptionPane.showInputDialog (this, "Nit del proveedor?", "Registrar pedido", JOptionPane.QUESTION_MESSAGE);
+    		long fecha = Long.parseLong(JOptionPane.showInputDialog (this, "Fecha prevista de llegada", "Registrar pedido", JOptionPane.QUESTION_MESSAGE));
+    		Timestamp fechaPrevista = new Timestamp(fecha);
+    		
+    		double precioTotal = Double.parseDouble(JOptionPane.showInputDialog (this, "Precio Total del pedido?", "Registrar pedido", JOptionPane.QUESTION_MESSAGE));
+    		String[] codigosProductos=new String[8];
+    		
+    		if (precioTotal != 0 && nitProveedor != null && fechaPrevista != null && codigosProductos != null)
+    		{
+    			VOPedido pedido =superAndes.registrarPedido(codigosProductos, nitProveedor, fechaPrevista, precioTotal);
+        		if (pedido == null)
+        		{
+        			throw new Exception ("No se pudo registrar pedido a proveedor: " + nitProveedor);
+        		}
+        		String resultado = "En registrarPedido\n\n";
+        		resultado += "Estante adicionado exitosamente: " + pedido;
+    			resultado += "\n Operación terminada";
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    		else
+    		{
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
     }
     
     public void registrarLlegadaPedido()
     {
-    	System.out.println("Hola");
+    	try 
+    	{
+    		long codigoPedido = Long.parseLong(JOptionPane.showInputDialog (this, "Codigo del pedido", "Registrar llegada pedido", JOptionPane.QUESTION_MESSAGE));
+    		long idSucursal = Long.parseLong(JOptionPane.showInputDialog (this, "Id de la sucursal a la cual llega", "Registrar llegada pedido", JOptionPane.QUESTION_MESSAGE));
+    		long fecha = Long.parseLong(JOptionPane.showInputDialog (this, "Fecha  de llegada", "Registrar llegada pedido", JOptionPane.QUESTION_MESSAGE));
+    		Timestamp fechaLlegada = new Timestamp(fecha);
+    		int cantidadProductos = Integer.parseInt(JOptionPane.showInputDialog (this, "Cantidad productos que llegaron?", "Registrar llegada pedido", JOptionPane.QUESTION_MESSAGE));
+    		String calidadProductos = JOptionPane.showInputDialog (this, "Calidad de los productos que llegaron", "Registrar llegada pedido", JOptionPane.QUESTION_MESSAGE);
+    		String calificacion = JOptionPane.showInputDialog (this, "Calificacion", "Registrar llegada pedido", JOptionPane.QUESTION_MESSAGE);
+    		
+    		
+    		
+    		if (codigoPedido != 0 && idSucursal != 0 && cantidadProductos != 0 && fechaLlegada != null && calidadProductos != null && calificacion != null)
+    		{
+    			VOLlegadaPedido llegadaPedido =superAndes.registrarLlegadaPedido(codigoPedido, idSucursal, fechaLlegada, cantidadProductos, calidadProductos, calificacion);
+        		if (llegadaPedido == null)
+        		{
+        			throw new Exception ("No se pudo registrar llegada pedido pedido del pedido: " + codigoPedido);
+        		}
+        		String resultado = "En registrarLlegadaPedido\n\n";
+        		resultado += "Estante adicionado exitosamente: " + llegadaPedido;
+    			resultado += "\n Operación terminada";
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    		else
+    		{
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
     }
     
     public void registrarVenta()
