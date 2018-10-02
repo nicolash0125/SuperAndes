@@ -850,7 +850,33 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
      *****************************************************************/
 	public void dineroRecolectado()
 	{
-		System.out.println("Hola");
+		try 
+    	{
+    		long fechaI = Long.parseLong(JOptionPane.showInputDialog (this, "Fecha  de inicio", "Dinero recolectado por ventas", JOptionPane.QUESTION_MESSAGE));
+    		Timestamp fechaInicio = new Timestamp(fechaI);
+    		long fechaF = Long.parseLong(JOptionPane.showInputDialog (this, "Fecha  de inicio", "Dinero recolectado por ventas", JOptionPane.QUESTION_MESSAGE));
+    		Timestamp fechaFin= new Timestamp(fechaF);
+    		
+    		
+    		
+    		if (fechaInicio != null && fechaFin != null)
+    		{
+    			superAndes.dineroRecolectado(fechaInicio, fechaFin);
+        		String resultado = "En dineroRecolectado\n\n";
+        		resultado += "\n Operación terminada";
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    		else
+    		{
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
 	}
 	
 	public void promocionesMasPopulares()
@@ -860,7 +886,29 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
     
 	public void indiceOcupacion()
 	{
-		System.out.println("Hola");
+		try 
+    	{
+    		long sucursal = Long.parseLong(JOptionPane.showInputDialog (this, "Id de la sucursal", "Indice de ocupacion sucursal", JOptionPane.QUESTION_MESSAGE));
+    		
+    		if (sucursal != 0)
+    		{
+    			superAndes.indiceOcupacion(sucursal);
+        		String resultado = "En indiceOcupacion\n\n";
+        		resultado += "\n Operación terminada";
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    		else
+    		{
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+
 	}
 	
 	public void productosConCiertaCaracteristica()
