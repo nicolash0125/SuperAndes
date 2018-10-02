@@ -83,20 +83,42 @@ public class SuperAndes {
     	
     }
     
-    public void registrarBodega(long idSucursal, int capacidadVolumen, int capacidadTotalVolumen, int capacidadPeso, int capacidadTotalPeso)
+    public void registrarBodega(long idSucursal, double capacidadVolumen, double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso)
     {
     	log.info ("Registrando bodega en la sucursal: " + idSucursal);
     
     }
     
-    public void registrarEstante(long idSucursal, int capacidadVolumen, int capacidadTotalVolumen, int capacidadPeso, int capacidadTotalPeso)
+    public void registrarEstante(long idSucursal, double capacidadVolumen, double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso)
     {
     	log.info ("Registrando estante en la sucursal: " + idSucursal);
     }
     
-    public void registrarPromocion()
+    /**
+     * 
+     * @param tipoPromocion
+     * @param codigoProducto
+     * @param fechaVencimientoPromocion
+     * @param cantidadPaga
+     * @param cantidadLleva
+     * @param porcentajeDescSegundoP
+     * @param porcentajeDesc
+     * @param precioConjunto
+     * @param codigoNuevoProducto
+     * @param compraUnidades
+     * @param llevaUnidades
+     */
+    public void registrarPromocion(String tipoPromocion,String codigoProducto, Timestamp fechaVencimientoPromocion,double cantidadPaga, double cantidadLleva, double porcentajeDescSegundoP, 
+    		double porcentajeDesc, int precioConjunto, String codigoNuevoProducto, int compraUnidades, int llevaUnidades)
     {
-    	
+    	switch (tipoPromocion) {
+		case "":
+			
+			break;
+
+		default:
+			break;
+		}
     }
     
     public void finalizarPromocion()
@@ -127,19 +149,28 @@ public class SuperAndes {
 		log.info ("Obteniendo dinero recolectado en las sucursales entre " + fechaInicio+" y "+fechaFin);
 	}
 	
+	/**
+	 * 
+	 */
 	public void promocionesMasPopulares()
 	{
 		log.info ("Obteniendo las 20 promociones mas populares ");
 	}
     
+	/**
+	 * 
+	 * @param idSucursal
+	 */
 	public void indiceOcupacion(long idSucursal)
 	{
 		log.info ("Obteniendo indice de ocupacion de la sucursal: " + idSucursal);
 	}
 	
-	public void productosConCiertaCaracteristica()
+	public void productosConCiertaCaracteristica(int precioInferior, int precioSuperior, Timestamp fechaVencimientoMinima, double pesoMinimo, double pesoMaximo,
+			String nitProveedor, String ciudad, long idSucursal, String tipo, String categoria, int cantidadMinimaVentas, Timestamp fechaMinCantMinVentas,
+			Timestamp fechaMaxCantMinVentas)
 	{
-		System.out.println("Hola");
+		
 	}
 	/* ****************************************************************
 	 *			Requerimientos funcionales de Bono
