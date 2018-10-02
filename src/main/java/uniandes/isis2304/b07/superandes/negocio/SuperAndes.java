@@ -90,9 +90,10 @@ public class SuperAndes {
     	return null;
     }
     
-    public void registrarEstante(long idSucursal, double capacidadVolumen, double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso)
+    public Estante registrarEstante(long idSucursal, String nombre ,double capacidadVolumen, double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso)
     {
     	log.info ("Registrando estante en la sucursal: " + idSucursal);
+    	return null;
     }
     
     /**

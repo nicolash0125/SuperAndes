@@ -33,6 +33,7 @@ import com.google.gson.stream.JsonReader;
 
 import uniandes.isis2304.b07.superandes.negocio.SuperAndes;
 import uniandes.isis2304.b07.superandes.negocio.VOBodega;
+import uniandes.isis2304.b07.superandes.negocio.VOEstante;
 import uniandes.isis2304.b07.superandes.negocio.VOSucursal;
 /**
  * Clase principal de la interfaz
@@ -552,11 +553,11 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
     {
     	try 
     	{
-    		long idSucursal = Long.parseLong(JOptionPane.showInputDialog (this, "Nombre de la sucursal?", "Registrar sucursal", JOptionPane.QUESTION_MESSAGE));
-    		double capacidadVolumen = Double.parseDouble(JOptionPane.showInputDialog (this, "Segmentacion de la sucursal?", "Registrar sucursal", JOptionPane.QUESTION_MESSAGE));
-    		double capacidadTotalVolumen = Double.parseDouble(JOptionPane.showInputDialog (this, "Tamano de la sucursal?", "Registrar sucursal", JOptionPane.QUESTION_MESSAGE));
-    		double capacidadPeso = Double.parseDouble(JOptionPane.showInputDialog (this, "Ciudad de la sucursal?", "Registrar sucursal", JOptionPane.QUESTION_MESSAGE));
-    		double capacidadTotalPeso = Double.parseDouble(JOptionPane.showInputDialog (this, "Direccion de la sucursal?", "Registrar sucursal", JOptionPane.QUESTION_MESSAGE));
+    		long idSucursal = Long.parseLong(JOptionPane.showInputDialog (this, "Id de la sucursal?", "Registrar bodega", JOptionPane.QUESTION_MESSAGE));
+    		double capacidadVolumen = Double.parseDouble(JOptionPane.showInputDialog (this, "Capacidad actual en litros de la bodega?", "Registrar bodega", JOptionPane.QUESTION_MESSAGE));
+    		double capacidadTotalVolumen = Double.parseDouble(JOptionPane.showInputDialog (this, "Capacidad maxima en litros de la bodega?", "Registrar bodega", JOptionPane.QUESTION_MESSAGE));
+    		double capacidadPeso = Double.parseDouble(JOptionPane.showInputDialog (this, "Capacidad actual en kg de la bodega?", "Registrar bodega", JOptionPane.QUESTION_MESSAGE));
+    		double capacidadTotalPeso = Double.parseDouble(JOptionPane.showInputDialog (this, "Capacidad maxima en kg de la bodega?", "Registrar bodega", JOptionPane.QUESTION_MESSAGE));
     		
     		
     		if (idSucursal != 0 && capacidadVolumen != 0 && capacidadTotalVolumen != 0 && capacidadPeso != 0 && capacidadTotalPeso != 0)
@@ -586,7 +587,40 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
     
     public void registrarEstante()
     {
-    	System.out.println("Hola");
+    	try 
+    	{
+    		String nombre = JOptionPane.showInputDialog (this, "Nombre del estante?", "Registrar estante", JOptionPane.QUESTION_MESSAGE);
+    		
+    		long idSucursal = Long.parseLong(JOptionPane.showInputDialog (this, "Id de la sucursal?", "Registrar estante", JOptionPane.QUESTION_MESSAGE));
+    		double capacidadVolumen = Double.parseDouble(JOptionPane.showInputDialog (this, "Capacidad actual en litros del estante?", "Registrar estante", JOptionPane.QUESTION_MESSAGE));
+    		double capacidadTotalVolumen = Double.parseDouble(JOptionPane.showInputDialog (this, "Capacidad maxima en litros del estante?", "Registrar estante", JOptionPane.QUESTION_MESSAGE));
+    		double capacidadPeso = Double.parseDouble(JOptionPane.showInputDialog (this, "Capacidad actual en kg del estante?", "Registrar estante", JOptionPane.QUESTION_MESSAGE));
+    		double capacidadTotalPeso = Double.parseDouble(JOptionPane.showInputDialog (this, "Capacidad maxima en kg del estante?", "Registrar estante", JOptionPane.QUESTION_MESSAGE));
+    		
+    		
+    		if (idSucursal != 0 && capacidadVolumen != 0 && capacidadTotalVolumen != 0 && capacidadPeso != 0 && capacidadTotalPeso != 0)
+    		{
+    			VOEstante estante =superAndes.registrarEstante(idSucursal, nombre, capacidadVolumen, capacidadTotalVolumen, capacidadPeso, capacidadTotalPeso);
+        		if (estante == null)
+        		{
+        			throw new Exception ("No se pudo registrar estante en sucursal: " + idSucursal);
+        		}
+        		String resultado = "En registrarEstante\n\n";
+        		resultado += "Estante adicionado exitosamente: " + estante;
+    			resultado += "\n Operación terminada";
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    		else
+    		{
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
     }
     
     public void registrarPromocion()
