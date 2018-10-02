@@ -77,16 +77,17 @@ public class SuperAndes {
     	
     }
     
-    public void registrarSucursal(String nombre, String segmentacion, String tamanio, String ciudad, String direccion)
+    public Sucursal registrarSucursal(String nombre, String segmentacion, String tamanio, String ciudad, String direccion)
     {
     	log.info ("Registrando sucursal: " + nombre);
+    	return null;
     	
     }
     
-    public void registrarBodega(long idSucursal, double capacidadVolumen, double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso)
+    public Bodega registrarBodega(long idSucursal, double capacidadVolumen, double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso)
     {
     	log.info ("Registrando bodega en la sucursal: " + idSucursal);
-    
+    	return null;
     }
     
     public void registrarEstante(long idSucursal, double capacidadVolumen, double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso)

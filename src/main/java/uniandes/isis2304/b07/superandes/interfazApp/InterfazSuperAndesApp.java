@@ -1,6 +1,7 @@
 package uniandes.isis2304.b07.superandes.interfazApp;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
@@ -31,6 +32,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 import uniandes.isis2304.b07.superandes.negocio.SuperAndes;
+import uniandes.isis2304.b07.superandes.negocio.VOBodega;
+import uniandes.isis2304.b07.superandes.negocio.VOSucursal;
 /**
  * Clase principal de la interfaz
  * @author Santiago Carrero y Nicolas Hernandez, Tomado de esquema paranderos jdo, autor German Bravo
@@ -510,12 +513,75 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
     
     public void registrarSucursal()
     {
-    	System.out.println("Hola");
+    	try 
+    	{
+    		String nombre = JOptionPane.showInputDialog (this, "Nombre de la sucursal?", "Registrar sucursal", JOptionPane.QUESTION_MESSAGE);
+    		String segmentacion = JOptionPane.showInputDialog (this, "Segmentacion de la sucursal?", "Registrar sucursal", JOptionPane.QUESTION_MESSAGE);
+    		String tamanio = JOptionPane.showInputDialog (this, "Tamano de la sucursal?", "Registrar sucursal", JOptionPane.QUESTION_MESSAGE);
+    		String ciudad = JOptionPane.showInputDialog (this, "Ciudad de la sucursal?", "Registrar sucursal", JOptionPane.QUESTION_MESSAGE);
+    		String direccion = JOptionPane.showInputDialog (this, "Direccion de la sucursal?", "Registrar sucursal", JOptionPane.QUESTION_MESSAGE);
+    		
+    		
+    		if (nombre != null && segmentacion != null && tamanio != null && ciudad != null && direccion != null)
+    		{
+    			VOSucursal sucursal =superAndes.registrarSucursal(nombre, segmentacion, tamanio, ciudad, direccion);
+        		if (sucursal == null)
+        		{
+        			throw new Exception ("No se pudo crear una sucursal nombre: " + nombre);
+        		}
+        		String resultado = "En registrarSucursal\n\n";
+        		resultado += "Sucursal adicionada exitosamente: " + sucursal;
+    			resultado += "\n Operación terminada";
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    		else
+    		{
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+    	
     }
     
     public void registrarBodega()
     {
-    	System.out.println("Hola");
+    	try 
+    	{
+    		long idSucursal = Long.parseLong(JOptionPane.showInputDialog (this, "Nombre de la sucursal?", "Registrar sucursal", JOptionPane.QUESTION_MESSAGE));
+    		double capacidadVolumen = Double.parseDouble(JOptionPane.showInputDialog (this, "Segmentacion de la sucursal?", "Registrar sucursal", JOptionPane.QUESTION_MESSAGE));
+    		double capacidadTotalVolumen = Double.parseDouble(JOptionPane.showInputDialog (this, "Tamano de la sucursal?", "Registrar sucursal", JOptionPane.QUESTION_MESSAGE));
+    		double capacidadPeso = Double.parseDouble(JOptionPane.showInputDialog (this, "Ciudad de la sucursal?", "Registrar sucursal", JOptionPane.QUESTION_MESSAGE));
+    		double capacidadTotalPeso = Double.parseDouble(JOptionPane.showInputDialog (this, "Direccion de la sucursal?", "Registrar sucursal", JOptionPane.QUESTION_MESSAGE));
+    		
+    		
+    		if (idSucursal != 0 && capacidadVolumen != 0 && capacidadTotalVolumen != 0 && capacidadPeso != 0 && capacidadTotalPeso != 0)
+    		{
+    			VOBodega bodega =superAndes.registrarBodega(idSucursal, capacidadVolumen, capacidadTotalVolumen, capacidadPeso, capacidadTotalPeso);
+        		if (bodega == null)
+        		{
+        			throw new Exception ("No se pudo registrar bodega en sucursal: " + idSucursal);
+        		}
+        		String resultado = "En registrarBodega\n\n";
+        		resultado += "Bodega adicionada exitosamente: " + bodega;
+    			resultado += "\n Operación terminada";
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    		else
+    		{
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
     }
     
     public void registrarEstante()
