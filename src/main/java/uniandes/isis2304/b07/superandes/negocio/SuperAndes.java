@@ -1,5 +1,7 @@
 package uniandes.isis2304.b07.superandes.negocio;
 
+import java.sql.Timestamp;
+
 import org.apache.log4j.Logger;
 
 import com.google.gson.JsonObject;
@@ -54,4 +56,102 @@ public class SuperAndes {
 	{
 		pp.cerrarUnidadPersistencia ();
 	}
+	
+	
+	/* ****************************************************************
+     * 			Requerimientos funcionales de modificacion
+     *****************************************************************/
+    public void registrarProveedores(String nombre)
+    {
+    	log.info ("Registrando proveedor: " + nombre);
+    	
+    }
+    
+    public void registrarProductos()
+    {
+    	
+    }
+    
+    public void registrarClientes()
+    {
+    	
+    }
+    
+    public void registrarSucursal(String nombre, String segmentacion, String tamanio, String ciudad, String direccion)
+    {
+    	log.info ("Registrando sucursal: " + nombre);
+    	
+    }
+    
+    public void registrarBodega(long idSucursal, int capacidadVolumen, int capacidadTotalVolumen, int capacidadPeso, int capacidadTotalPeso)
+    {
+    	log.info ("Registrando bodega en la sucursal: " + idSucursal);
+    
+    }
+    
+    public void registrarEstante(long idSucursal, int capacidadVolumen, int capacidadTotalVolumen, int capacidadPeso, int capacidadTotalPeso)
+    {
+    	log.info ("Registrando estante en la sucursal: " + idSucursal);
+    }
+    
+    public void registrarPromocion()
+    {
+    	
+    }
+    
+    public void finalizarPromocion()
+    {
+    	System.out.println("Hola");
+    }
+    
+    public void registrarPedido(String[] codigosProductos, String nitProveedor, Timestamp fechaPrevista, int precioTotal )
+    {
+    	log.info ("Registrando pedido con numero de productos: " + codigosProductos.length);
+    }
+    
+    public void registrarLlegadaPedido(long codigoPedido, Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
+    {
+    	log.info ("Registrando llegada pedido: " + codigoPedido);
+    }
+    
+    public void registrarVenta(String codigoProducto, int unidadesVendidas, String tipoDocumentoCliente, String numeroDocumentoCLiente)
+    {
+    	log.info ("Registrando venta de producto: " + codigoProducto);
+    }
+    
+    /* ****************************************************************
+     * 			Requerimientos funcionales de consulta
+     *****************************************************************/
+	public void dineroRecolectado(Timestamp fechaInicio,Timestamp fechaFin)
+	{
+		log.info ("Obteniendo dinero recolectado en las sucursales entre " + fechaInicio+" y "+fechaFin);
+	}
+	
+	public void promocionesMasPopulares()
+	{
+		log.info ("Obteniendo las 20 promociones mas populares ");
+	}
+    
+	public void indiceOcupacion(long idSucursal)
+	{
+		log.info ("Obteniendo indice de ocupacion de la sucursal: " + idSucursal);
+	}
+	
+	public void productosConCiertaCaracteristica()
+	{
+		System.out.println("Hola");
+	}
+	/* ****************************************************************
+	 *			Requerimientos funcionales de Bono
+	 *****************************************************************/
+	public void comprasAProveedores()
+	{
+		
+	}
+	
+	public void ventasAUsuario()
+	{
+		
+	}
+
 }
