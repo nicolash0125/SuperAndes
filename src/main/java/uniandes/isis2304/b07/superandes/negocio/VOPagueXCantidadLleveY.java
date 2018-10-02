@@ -5,9 +5,9 @@ public interface VOPagueXCantidadLleveY {
 	 * 			Métodos
 	 *****************************************************************/
 	/**
-	 * @return el id de la promocion pague x cantidad lleve y cantidad
+	 * @return el codigo de la promocion pague x cantidad lleve y cantidad
 	 */
-	public long getId();
+	public String getCodigoPromo();
 	
 	/**
 	 * @return la cantidad que paga el cliente
@@ -19,8 +19,4 @@ public interface VOPagueXCantidadLleveY {
 	 */
 	public int getCantidadLleva();
 	
-	/**
-	 * @return id de la promocion generica
-	 */
-	public long getIdPromocion();
 }

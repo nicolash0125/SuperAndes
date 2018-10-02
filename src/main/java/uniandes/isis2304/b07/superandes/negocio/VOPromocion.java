@@ -8,9 +8,9 @@ public interface VOPromocion {
 	 * 			Métodos
 	 *****************************************************************/
 	/**
-	 * @return id de la promocion
+	 * @return codigo de la promocion
 	 */
-	public long getId();
+	public String getCodigoPromo();
 	
 	/**
 	 * @return fecha de terminacion de la promocion

@@ -5,17 +5,14 @@ public interface VODescPorcentajePromo {
 	 * 			Métodos
 	 *****************************************************************/
 	/**
-	 * @return el id de la promocion porcentaje
+	 * @return el codigo de la promocion porcentaje
 	 */
-	public long getId();
+	public String getCodigoPromo();
 	
 	/**
 	 * @return porcentaje de descuento
 	 */
 	public double getPorcentaje();
 	
-	/**
-	 * @return id de la promocion generica
-	 */
-	public long getIdPromocion();
+	
 }

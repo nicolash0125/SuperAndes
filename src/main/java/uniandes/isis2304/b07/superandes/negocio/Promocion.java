@@ -8,22 +8,23 @@ public class Promocion implements VOPromocion{
 	 * 			Atributos
 	 *****************************************************************/
 	
-	private long id;
+	private String codigoPromo;
 	
 	private Timestamp fechaTerminacion;
 
+	
 	/**
-	 * @return the id
+	 * @return the codigoPromo
 	 */
-	public long getId() {
-		return id;
+	public String getCodigoPromo() {
+		return codigoPromo;
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param codigoPromo the codigoPromo to set
 	 */
-	public void setId(long id) {
-		this.id = id;
+	public void setCodigoPromo(String codigoPromo) {
+		this.codigoPromo = codigoPromo;
 	}
 
 	/**

@@ -109,7 +109,7 @@ public class SuperAndes {
     {
     	return null;
     }
-    public PagueXCantidadLleveY registrarPromocionPagueXLleveY(String codigoProducto, Timestamp fechaVencimientoPromocion, int cantidadPaga, int cantidadLleva)
+    public PagueXCantidadLleveYPromo registrarPromocionPagueXLleveY(String codigoProducto, Timestamp fechaVencimientoPromocion, int cantidadPaga, int cantidadLleva)
     {
     	return null;
     }

@@ -5,9 +5,9 @@ public interface VOPagueNUnidadesLleveMPromo {
 	 * 			Métodos
 	 *****************************************************************/
 	/**
-	 * @return el id de la promocion pague n unidades lleve m unidades
+	 * @return el codigo de la promocion pague n unidades lleve m unidades
 	 */
-	public long getId();
+	public String getCodigoPromo();
 	
 	/**
 	 * @return las unidades que paga el cliente
@@ -19,8 +19,4 @@ public interface VOPagueNUnidadesLleveMPromo {
 	 */
 	public int getLlevaUnidades();
 	
-	/**
-	 * @return id de la promocion generica
-	 */
-	public long getIdPromocion();
 }
