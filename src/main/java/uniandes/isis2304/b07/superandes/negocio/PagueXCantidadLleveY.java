@@ -1,12 +1,15 @@
 package uniandes.isis2304.b07.superandes.negocio;
 
-public class DescPorcentajePromo implements VODescPorcentajePromo{
+public class PagueXCantidadLleveY implements VOPagueXCantidadLleveY{
+
 	/* ****************************************************************
 	 * 			Atributos
 	 *****************************************************************/
 	private long id;
 	
-	private double porcentaje;
+	private int cantidadPaga;
+	
+	private int cantidadLleva;
 	
 	private long idPromocion;
 
@@ -25,17 +28,31 @@ public class DescPorcentajePromo implements VODescPorcentajePromo{
 	}
 
 	/**
-	 * @return the porcentaje
+	 * @return the cantidadPaga
 	 */
-	public double getPorcentaje() {
-		return porcentaje;
+	public int getCantidadPaga() {
+		return cantidadPaga;
 	}
 
 	/**
-	 * @param porcentaje the porcentaje to set
+	 * @param cantidadPaga the cantidadPaga to set
 	 */
-	public void setPorcentaje(double porcentaje) {
-		this.porcentaje = porcentaje;
+	public void setCantidadPaga(int cantidadPaga) {
+		this.cantidadPaga = cantidadPaga;
+	}
+
+	/**
+	 * @return the cantidadLleva
+	 */
+	public int getCantidadLleva() {
+		return cantidadLleva;
+	}
+
+	/**
+	 * @param cantidadLleva the cantidadLleva to set
+	 */
+	public void setCantidadLleva(int cantidadLleva) {
+		this.cantidadLleva = cantidadLleva;
 	}
 
 	/**
@@ -51,6 +68,7 @@ public class DescPorcentajePromo implements VODescPorcentajePromo{
 	public void setIdPromocion(long idPromocion) {
 		this.idPromocion = idPromocion;
 	}
+	
 	
 	
 }

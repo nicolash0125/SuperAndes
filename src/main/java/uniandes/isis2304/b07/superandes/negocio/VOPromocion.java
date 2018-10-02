@@ -1,5 +1,34 @@
 package uniandes.isis2304.b07.superandes.negocio;
 
+import java.sql.Timestamp;
+
 public interface VOPromocion {
+
+	/* ****************************************************************
+	 * 			Métodos
+	 *****************************************************************/
+	/**
+	 * @return id de la promocion
+	 */
+	public long getId();
+	
+	/**
+	 * @return fecha de terminacion de la promocion
+	 */
+	public Timestamp getFechaTerminacion();
+	
+	/**
+	 * @return Una cadena de caracteres con la información de la promocion
+	 */
+	@Override
+	public String toString(); 
+
+	/**
+	 * Define la igualdad dos Promociones
+	 * @param b - La promocion a comparar
+	 * @return true si tienen el mismo identificador 
+	 */
+	@Override
+	public boolean equals (Object b); 
 
 }

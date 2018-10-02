@@ -1,18 +1,23 @@
 package uniandes.isis2304.b07.superandes.negocio;
 
-public interface VOPague1Lleve2ConDescPromo {
+public interface VOPaqueteDeProductos {
 	/* ****************************************************************
 	 * 			Métodos
 	 *****************************************************************/
 	/**
-	 * @return el id de la promocion pague 1 lleve 2 con desc
+	 * @return el id de la promocion paquete de productos
 	 */
 	public long getId();
 	
 	/**
-	 * @return porcentaje del 2do producto
+	 * @return id del otro producto
 	 */
-	public double getPorcentaje();
+	public long getIdProducto();
+	
+	/**
+	 * @return precio en conjunto de los productos
+	 */
+	public double getPrecioEnConjunto();
 	
 	/**
 	 * @return id de la promocion generica

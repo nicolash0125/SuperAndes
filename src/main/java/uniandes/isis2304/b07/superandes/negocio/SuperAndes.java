@@ -96,32 +96,28 @@ public class SuperAndes {
     	return null;
     }
     
-    /**
-     * 
-     * @param tipoPromocion
-     * @param codigoProducto
-     * @param fechaVencimientoPromocion
-     * @param cantidadPaga
-     * @param cantidadLleva
-     * @param porcentajeDescSegundoP
-     * @param porcentajeDesc
-     * @param precioConjunto
-     * @param codigoNuevoProducto
-     * @param compraUnidades
-     * @param llevaUnidades
-     */
-    public void registrarPromocion(String tipoPromocion,String codigoProducto, Timestamp fechaVencimientoPromocion,double cantidadPaga, double cantidadLleva, double porcentajeDescSegundoP, 
-    		double porcentajeDesc, int precioConjunto, String codigoNuevoProducto, int compraUnidades, int llevaUnidades)
+    
+    public PagueNUnidadesLleveMPromo registrarPromocionPagueNLleveM(String codigoProducto, Timestamp fechaVencimientoPromocion, int compraUnidades, int llevaUnidades)
     {
-    	switch (tipoPromocion) {
-		case "":
-			
-			break;
-
-		default:
-			break;
-		}
+    	return null;
     }
+    public DescPorcentajePromo registrarPromocionDescPorcentaje(String codigoProducto, Timestamp fechaVencimientoPromocion, double porcentaje)
+    {
+    	return null;
+    }
+    public PagueXCantidadLleveY registrarPromocionPagueXLleveY(String codigoProducto, Timestamp fechaVencimientoPromocion, int cantidadPaga, int cantidadLleva)
+    {
+    	return null;
+    }
+    public Pague1Lleve2ConDescPromo registrarPromocionPague1Lleve2doDesc(String codigoProducto, Timestamp fechaVencimientoPromocion, double porcentaje)
+    {
+    	return null;
+    }
+    public PaqueteDeProductos registrarPromocionPaqueteProductos(String codigoProducto, Timestamp fechaVencimientoPromocion, String producto2, double precioConjunto)
+    {
+    	return null;
+    }
+    
     
     public void finalizarPromocion()
     {

@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.sql.Timestamp;
 
 import javax.jdo.JDODataStoreException;
 import javax.swing.ImageIcon;
@@ -33,7 +34,12 @@ import com.google.gson.stream.JsonReader;
 
 import uniandes.isis2304.b07.superandes.negocio.SuperAndes;
 import uniandes.isis2304.b07.superandes.negocio.VOBodega;
+import uniandes.isis2304.b07.superandes.negocio.VODescPorcentajePromo;
 import uniandes.isis2304.b07.superandes.negocio.VOEstante;
+import uniandes.isis2304.b07.superandes.negocio.VOPague1Lleve2ConDescPromo;
+import uniandes.isis2304.b07.superandes.negocio.VOPagueNUnidadesLleveMPromo;
+import uniandes.isis2304.b07.superandes.negocio.VOPagueXCantidadLleveY;
+import uniandes.isis2304.b07.superandes.negocio.VOPaqueteDeProductos;
 import uniandes.isis2304.b07.superandes.negocio.VOSucursal;
 /**
  * Clase principal de la interfaz
@@ -625,7 +631,130 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
     
     public void registrarPromocion()
     {
-    	System.out.println("Hola");
+    	try 
+    	{
+    		String codigoProducto = JOptionPane.showInputDialog (this, "Codigo del producto al cual se le va a aplicar la promocion", "Registrar promocion", JOptionPane.QUESTION_MESSAGE);
+    		long fecha = Long.parseLong(JOptionPane.showInputDialog (this, "Fecha de vencimiento de la promocion", "Registrar promocion", JOptionPane.QUESTION_MESSAGE));
+    		Timestamp fechaVencimientoPromocion = new Timestamp(fecha);
+    		String tipo = JOptionPane.showInputDialog (this, "Tipo de promocion, debe ser un jcombobox", "Registrar promocion", JOptionPane.QUESTION_MESSAGE);
+    		switch (tipo) {
+    		//Pague N lleve M
+			case "1":
+				int pagaUnid = Integer.parseInt(JOptionPane.showInputDialog (this, "Numero de unidades que debe pagar el cliente?", "Registrar promocion", JOptionPane.QUESTION_MESSAGE));
+				int llevaUnid = Integer.parseInt(JOptionPane.showInputDialog (this, "Numero de unidades que lleva el cliente?", "Registrar promocion", JOptionPane.QUESTION_MESSAGE));
+	    		if(pagaUnid != 0 && llevaUnid != 0)
+	    		{
+	    			VOPagueNUnidadesLleveMPromo promocion = superAndes.registrarPromocionPagueNLleveM(codigoProducto, fechaVencimientoPromocion, pagaUnid, llevaUnid);
+	    			if (promocion == null)
+	        		{
+	        			throw new Exception ("No se pudo registrar promocion en producto: " + codigoProducto);
+	        		}
+	    			String resultado = "En registrarPromocion\n\n";
+	        		resultado += "Promocion registrada exitosamente: " + promocion;
+	    			resultado += "\n Operación terminada";
+	    			panelDatos.actualizarInterfaz(resultado);
+	    		}
+	    		else
+	    		{
+	    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+	    		}
+				break;
+				//Desc porcentaje
+			case "2":
+				double porcentaje = Double.parseDouble(JOptionPane.showInputDialog (this, "Porcentaje de descuento", "Registrar promocion", JOptionPane.QUESTION_MESSAGE));
+				if(porcentaje != 0)
+				{
+	    			VODescPorcentajePromo promocion = superAndes.registrarPromocionDescPorcentaje(codigoProducto, fechaVencimientoPromocion, porcentaje);
+	    			if (promocion == null)
+	        		{
+	        			throw new Exception ("No se pudo registrar promocion en producto: " + codigoProducto);
+	        		}
+	    			String resultado = "En registrarPromocion\n\n";
+	        		resultado += "Promocion registrada exitosamente: " + promocion;
+	    			resultado += "\n Operación terminada";
+	    			panelDatos.actualizarInterfaz(resultado);
+				}
+				else
+	    		{
+	    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+	    		}
+				break;
+				//Pague X lleve Y
+			case "3":
+				int pagaCant = Integer.parseInt(JOptionPane.showInputDialog (this, "Cantidad que debe pagar el cliente?", "Registrar promocion", JOptionPane.QUESTION_MESSAGE));
+				int llevaCant = Integer.parseInt(JOptionPane.showInputDialog (this, "Cantidad que lleva el cliente?", "Registrar promocion", JOptionPane.QUESTION_MESSAGE));
+				if(pagaCant != 0 && llevaCant != 0)
+				{
+	    			VOPagueXCantidadLleveY promocion = superAndes.registrarPromocionPagueXLleveY(codigoProducto, fechaVencimientoPromocion, pagaCant, llevaCant);
+	    			if (promocion == null)
+	        		{
+	        			throw new Exception ("No se pudo registrar promocion en producto: " + codigoProducto);
+	        		}
+	    			String resultado = "En registrarPromocion\n\n";
+	        		resultado += "Promocion registrada exitosamente: " + promocion;
+	    			resultado += "\n Operación terminada";
+	    			panelDatos.actualizarInterfaz(resultado);
+				}
+				else
+	    		{
+	    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+	    		}
+				break;
+				//Pague 2do con desc
+			case "4":
+				double porcentajeSegUnid = Double.parseDouble(JOptionPane.showInputDialog (this, "Porcentaje de descuento", "Registrar promocion", JOptionPane.QUESTION_MESSAGE));
+				if(porcentajeSegUnid != 0)
+				{
+	    			VOPague1Lleve2ConDescPromo promocion = superAndes.registrarPromocionPague1Lleve2doDesc(codigoProducto, fechaVencimientoPromocion, porcentajeSegUnid);
+	    			if (promocion == null)
+	        		{
+	        			throw new Exception ("No se pudo registrar promocion en producto: " + codigoProducto);
+	        		}
+	    			String resultado = "En registrarPromocion\n\n";
+	        		resultado += "Promocion registrada exitosamente: " + promocion;
+	    			resultado += "\n Operación terminada";
+	    			panelDatos.actualizarInterfaz(resultado);
+				}
+				else
+	    		{
+	    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+	    		}
+				break;
+				//Paguete descuentos
+			case "5":
+				String codigoProductoPaquete = JOptionPane.showInputDialog (this, "Codigo del producto del paquete de la promocion", "Registrar promocion", JOptionPane.QUESTION_MESSAGE);
+				double precioConjunto = Double.parseDouble(JOptionPane.showInputDialog (this, "Precio en conjunto", "Registrar promocion", JOptionPane.QUESTION_MESSAGE));
+				if(precioConjunto !=0 && codigoProductoPaquete != null)
+				{
+	    			VOPaqueteDeProductos promocion = superAndes.registrarPromocionPaqueteProductos(codigoProducto, fechaVencimientoPromocion, codigoProductoPaquete, precioConjunto);
+	    			if (promocion == null)
+	        		{
+	        			throw new Exception ("No se pudo registrar promocion en producto: " + codigoProducto);
+	        		}
+	    			String resultado = "En registrarPromocion\n\n";
+	        		resultado += "Promocion registrada exitosamente: " + promocion;
+	    			resultado += "\n Operación terminada";
+	    			panelDatos.actualizarInterfaz(resultado);
+				}
+				else
+	    		{
+	    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+	    		}
+				break;	
+			
+				
+			default:
+				break;
+			}
+    		
+    		
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
     }
     
     public void finalizarPromocion()
