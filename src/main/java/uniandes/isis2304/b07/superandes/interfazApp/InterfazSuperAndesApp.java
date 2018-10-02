@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.jdo.JDODataStoreException;
 import javax.swing.ImageIcon;
@@ -32,6 +33,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
+import uniandes.isis2304.b07.superandes.negocio.Producto;
+import uniandes.isis2304.b07.superandes.negocio.Proveedor;
 import uniandes.isis2304.b07.superandes.negocio.SuperAndes;
 import uniandes.isis2304.b07.superandes.negocio.VOBodega;
 import uniandes.isis2304.b07.superandes.negocio.VODescPorcentajePromo;
@@ -42,6 +45,7 @@ import uniandes.isis2304.b07.superandes.negocio.VOPagueNUnidadesLleveMPromo;
 import uniandes.isis2304.b07.superandes.negocio.VOPagueXCantidadLleveY;
 import uniandes.isis2304.b07.superandes.negocio.VOPaqueteDeProductos;
 import uniandes.isis2304.b07.superandes.negocio.VOPedido;
+import uniandes.isis2304.b07.superandes.negocio.VOProveedor;
 import uniandes.isis2304.b07.superandes.negocio.VOSucursal;
 /**
  * Clase principal de la interfaz
@@ -327,7 +331,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	 */
 	public void mostrarModeloConceptual ()
 	{
-		mostrarArchivo ("data/Modelo Conceptual Parranderos.pdf");
+		mostrarArchivo ("data/Modelo Conceptual SuperAndes.pdf");
 	}
 	
 	/**
@@ -335,7 +339,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	 */
 	public void mostrarEsquemaBD ()
 	{
-		mostrarArchivo ("data/Esquema BD Parranderos.pdf");
+		mostrarArchivo ("data/Esquema BD SuperAndes.pdf");
 	}
 	
 	/**
@@ -343,7 +347,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	 */
 	public void mostrarScriptBD ()
 	{
-		mostrarArchivo ("data/EsquemaParranderos.sql");
+		mostrarArchivo ("data/EsquemaSuperAndes.sql");
 	}
 	
 	/**
@@ -507,12 +511,91 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
      *****************************************************************/
     public void registrarProveedores()
     {
-    	System.out.println("Hola");
+    	try 
+    	{
+    		String nombre = JOptionPane.showInputDialog (this, "Nombre de los proveedores? Separados por comas", "Registrar proveedores", JOptionPane.QUESTION_MESSAGE);
+    		String nit = JOptionPane.showInputDialog (this, "Nit de los proveedores? Separados por comas", "Registrar proveedores", JOptionPane.QUESTION_MESSAGE);
+    		String[] nombres=nombre.split(",");
+    		String[] nits=nit.split(",");
+    		
+    		
+    		if (nombres != null && nits != null)
+    		{
+    			List<Proveedor> proveedores =superAndes.registrarProveedores(nits,nombres);
+        		if (proveedores == null)
+        		{
+        			throw new Exception ("No se pudo crear proveedores  " );
+        		}
+        		String resultado = "En registrarProveedores\n\n";
+        		for (VOProveedor voProveedor : proveedores) {
+        			resultado += "Proveedor adicionado exitosamente: " + voProveedor;
+        			
+				}
+        		resultado += "\n Operación terminada";
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    		else
+    		{
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
     }
     
     public void registrarProductos()
     {
-    	System.out.println("Hola");
+    	try 
+    	{
+    		String codigoBarra = JOptionPane.showInputDialog (this, "Codigos de barras de los productos? Separados por comas", "Registrar producto", JOptionPane.QUESTION_MESSAGE);
+    		String nombre = JOptionPane.showInputDialog (this, "Nombres de los productos? Separados por comas", "Registrar producto", JOptionPane.QUESTION_MESSAGE);
+    		String presentacion = JOptionPane.showInputDialog (this, "Presentaciones de los productos? Separados por comas", "Registrar producto", JOptionPane.QUESTION_MESSAGE);
+    		String cantidad = JOptionPane.showInputDialog (this, "Cantidades de los productos? Separados por comas", "Registrar producto", JOptionPane.QUESTION_MESSAGE);
+    		String unidadMedida = JOptionPane.showInputDialog (this, "Unidades de medida de los productos? Separados por comas", "Registrar producto", JOptionPane.QUESTION_MESSAGE);
+    		String especificacionEmpecado = JOptionPane.showInputDialog (this, "Especificaciones empacado de los productos? Separados por comas", "Registrar producto", JOptionPane.QUESTION_MESSAGE);
+    		
+    		String[] codigosBarras=codigoBarra.split(",");
+    		String[] nombres=nombre.split(",");
+    		String[] presentaciones=presentacion.split(",");
+    		String[] cantidadesS=cantidad.split(",");
+    		int[] cantidades=new int[cantidadesS.length];
+    		for (int i = 0; i < cantidades.length; i++) {
+				cantidades[i]=Integer.parseInt(cantidadesS[i]);
+			}
+    		String[] unidadesMedida=unidadMedida.split(",");
+    		String[] especificacionesEmpacado=especificacionEmpecado.split(",");
+    		
+    		
+    		if (codigosBarras != null && nombres != null && presentaciones != null && cantidades != null && unidadesMedida != null && especificacionesEmpacado != null)
+    		{
+    			List<Producto> productos =superAndes.registrarProductos(codigosBarras, nombres, presentaciones, cantidades, unidadesMedida, especificacionesEmpacado);
+        		if (productos == null)
+        		{
+        			throw new Exception ("No se pudo crear productos  " );
+        		}
+        		String resultado = "En registrarProveedores\n\n";
+        		for (Producto producto : productos) {
+        			resultado += "Producto adicionado exitosamente: " + producto;
+        			
+				}
+        		resultado += "\n Operación terminada";
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    		else
+    		{
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
     }
     
     public void registrarClientes()

@@ -1,6 +1,7 @@
 package uniandes.isis2304.b07.superandes.negocio;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -61,15 +62,18 @@ public class SuperAndes {
 	/* ****************************************************************
      * 			Requerimientos funcionales de modificacion
      *****************************************************************/
-    public void registrarProveedores(String nombre)
+    public List<Proveedor> registrarProveedores(String[]nit ,String[] nombre)
     {
-    	log.info ("Registrando proveedor: " + nombre);
+    	log.info ("Registrando proveedores: " + nit.length);
     	
+    	return null;
     }
     
-    public void registrarProductos()
+    public List<Producto> registrarProductos(String[]codigosBarras,String[] nombres,String[] presentaciones,int[]cantidades, String[]unidadesMedida,String[] especificacionesEmpacado)
     {
+    	log.info ("Registrando productos: " + codigosBarras.length);
     	
+    	return null;
     }
     
     public void registrarClientes()
