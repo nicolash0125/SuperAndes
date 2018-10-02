@@ -5,62 +5,86 @@
 	"bannerPath": "./src/main/resources/config/logo.png",
 	"menuBar":
 	[
-		{ "menuTitle": "Bebida",
+		{ "menuTitle": "Requerimientos funcionales de modificacion",
 		  "options":
 			[
 				{
-					"label": "Adicionar bebida",
-					"event": "adicionarBebida"
+					"label": "RF1 Registrar Proveedores",
+					"event": "registrarProveedores"
 				},
 				{
-					"label": "Cambiar nombre bebida",
-					"event": "cambiarNombreBebida"
+					"label": "RF2 Registrar Productos",
+					"event": "registrarProductos"
+				},
+				{
+					"label": "RF3 Registrar Clientes",
+					"event": "registrarClientes"
+				},
+				{
+					"label": "RF4 Registrar una Sucursal",
+					"event": "registrarSucursal"
+				},
+				{
+					"label": "RF5 Registrar una Bodega de una Sucursal",
+					"event": "registrarBodega"
+				},
+				{
+					"label": "RF6 Registrar Estante de una Sucursal",
+					"event": "registrarEstante"
+				},
+				{
+					"label": "RF7 Registrar una Promocion",
+					"event": "registrarPromocion"
+				},
+				{
+					"label": "RF8 Finalizar una Promocion",
+					"event": "finalizarPromocion"
+				},
+				{
+					"label": "RF9 Registrar pedido de un producto a una sucursal",
+					"event": "registrarPedido"
+				},
+				{
+					"label": "RF10 Registrar llegada de un pedido",
+					"event": "registrarLlegadaPedido"
+				},
+				{
+					"label": "RF11 Registrar una venta",
+					"event": "registrarVenta"
 				}
 			]
 		},
-		{ "menuTitle": "TipoBebida",
+		{ "menuTitle": "Requerimientos Funcionales de Consulta",
 		  "options":
 			[
 				{
-					"label": "Adicionar",
-					"event": "adicionarTipoBebida"
+					"label": "RFC1 Mostrar dinero recolectado de cada sucursal en rango de tiempo y ano corrido CAMBIAR EL ANOOOO",
+					"event": "dineroRecolectado"
 				},
 				{
-					"label": "Listar",
-					"event": "listarTipoBebida"
+					"label": "RFC2 Mostrar 20 promociones mas populares",
+					"event": "promocionesMasPopulares"
 				},
 				{
-					"label": "Borrar por Id",
-					"event": "eliminarTipoBebidaPorId"
+					"label": "RFC3 Mostrar indice de ocupacion de bodegas y estantes de una sucursal",
+					"event": "indiceOcupacion"
 				},
 				{
-					"label": "Buscar por Nombre",
-					"event": "buscarTipoBebidaPorNombre"
+					"label": "RFC4 Mostrar productos con cierta caracteristica",
+					"event": "productosConCiertaCaracteristica"
 				}
 			]
 		},
-		{ "menuTitle": "Mantenimiento",
+		{ "menuTitle": "Bono",
 		  "options":
 			[
 				{
-					"label": "Mostrar log Parranderos",
-					"event": "mostrarLogParranderos"
+					"label": "RFC5 Mostrar compras hechas de SuperAndes a proveedores",
+					"event": "comprasAProveedores"
 				},
 				{
-					"label": "Mostrar log datanucleus",
-					"event": "mostrarLogDatanuecleus"
-				},
-				{
-					"label": "Limpiar log de parranderos",
-					"event": "limpiarLogParranderos"
-				},
-				{
-					"label": "Limpiar log de datanucleus",
-					"event": "limpiarLogDatanucleus"
-				},
-				{
-					"label": "Limpiar Base de Datos",
-					"event": "limpiarBD"
+					"label": "RFC6 Mostrar ventas a un usuario en un rango de fechas",
+					"event": "ventasAUsuario"
 				}
 			]
 		},		

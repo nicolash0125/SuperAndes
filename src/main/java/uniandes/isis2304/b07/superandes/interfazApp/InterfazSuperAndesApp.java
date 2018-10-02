@@ -361,12 +361,13 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		resultado += " * Licenciado	bajo	el	esquema	Academic Free License versión 2.1\n";
 		resultado += " * \n";		
 		resultado += " * Curso: isis2304 - Sistemas Transaccionales\n";
-		resultado += " * Proyecto: Parranderos Uniandes\n";
+		resultado += " * Proyecto: SuperAndes Uniandes\n";
 		resultado += " * @version 1.0\n";
-		resultado += " * @author Germán Bravo\n";
-		resultado += " * Julio de 2018\n";
+		resultado += " * @author Santiago Carrero\n";
+		resultado += " * @author Nicolas Hernandez\n";
+		resultado += " * Octubre de 2018\n";
+		resultado += " * Esquema tomado de parranderos jdo de German Bravo de 2018\n";
 		resultado += " * \n";
-		resultado += " * Revisado por: Claudia Jiménez, Christian Ariza\n";
 		resultado += "\n ************************************\n\n";
 
 		panelDatos.actualizarInterfaz(resultado);		
@@ -489,8 +490,96 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
         }
     }
 	
+    /* ****************************************************************
+     * 			Requerimientos funcionales de modificacion
+     *****************************************************************/
+    public void registrarProveedores()
+    {
+    	System.out.println("Hola");
+    }
     
+    public void registrarProductos()
+    {
+    	System.out.println("Hola");
+    }
     
+    public void registrarClientes()
+    {
+    	System.out.println("Hola");
+    }
     
+    public void registrarSucursal()
+    {
+    	System.out.println("Hola");
+    }
+    
+    public void registrarBodega()
+    {
+    	System.out.println("Hola");
+    }
+    
+    public void registrarEstante()
+    {
+    	System.out.println("Hola");
+    }
+    
+    public void registrarPromocion()
+    {
+    	System.out.println("Hola");
+    }
+    
+    public void finalizarPromocion()
+    {
+    	System.out.println("Hola");
+    }
+    
+    public void registrarPedido()
+    {
+    	System.out.println("Hola");
+    }
+    
+    public void registrarLlegadaPedido()
+    {
+    	System.out.println("Hola");
+    }
+    
+    public void registrarVenta()
+    {
+    	System.out.println("Hola");
+    }
+    /* ****************************************************************
+     * 			Requerimientos funcionales de consulta
+     *****************************************************************/
+	public void dineroRecolectado()
+	{
+		System.out.println("Hola");
+	}
+	
+	public void promocionesMasPopulares()
+	{
+		System.out.println("Hola");
+	}
+    
+	public void indiceOcupacion()
+	{
+		System.out.println("Hola");
+	}
+	
+	public void productosConCiertaCaracteristica()
+	{
+		System.out.println("Hola");
+	}
+	/* ****************************************************************
+	 *			Requerimientos funcionales de Bono
+	 *****************************************************************/
+	public void comprasAProveedores()
+	{
+		System.out.println("Hola");
+	}
+	
+	public void ventasAUsuario()
+	{
+		System.out.println("Hola");
+	}
 	
 }
