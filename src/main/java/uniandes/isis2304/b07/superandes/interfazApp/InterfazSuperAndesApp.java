@@ -996,7 +996,72 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	
 	public void productosConCiertaCaracteristica()
 	{
-		System.out.println("Hola");
+		try 
+    	{
+			String caracteristica = JOptionPane.showInputDialog (this, "Seleccione la caracteristica por la cual desea filtrar los productos ", "Producto con cierta caracteristica", JOptionPane.QUESTION_MESSAGE);
+    		String resultado;
+    		
+    		switch (caracteristica) {
+			case "1":
+				double precioMin = Double.parseDouble(JOptionPane.showInputDialog (this, "Precio minimo ", "Producto con cierta caracteristica", JOptionPane.QUESTION_MESSAGE));
+	    		double precioMax = Double.parseDouble(JOptionPane.showInputDialog (this, "Precio maximo ", "Producto con cierta caracteristica", JOptionPane.QUESTION_MESSAGE));
+	    		
+	    		superAndes.productosEnRangoPrecios(precioMin,precioMax);
+	        	 resultado = "En indiceOcupacion\n\n";
+	        	resultado += "\n Operación terminada";
+	    		panelDatos.actualizarInterfaz(resultado);
+	    		
+				break;
+			case "2":
+				long fechaV = Long.parseLong(JOptionPane.showInputDialog (this, "Fecha  de vencimiento", "Producto con cierta caracteristica", JOptionPane.QUESTION_MESSAGE));
+	    		Timestamp fechaVencimiento = new Timestamp(fechaV);
+	    		
+	    		superAndes.productosPorFechaVencimiento(fechaVencimiento);
+	        	 resultado = "En indiceOcupacion\n\n";
+	        	resultado += "\n Operación terminada";
+	    		panelDatos.actualizarInterfaz(resultado);
+	    		
+				break;
+			case "3":
+				double pesoMin = Double.parseDouble(JOptionPane.showInputDialog (this, "Peso minimo ", "Producto con cierta caracteristica", JOptionPane.QUESTION_MESSAGE));
+	    		double pesoMax = Double.parseDouble(JOptionPane.showInputDialog (this, "Peso maximo ", "Producto con cierta caracteristica", JOptionPane.QUESTION_MESSAGE));
+	    		
+	    		superAndes.productosEnRangoPesos(pesoMin,pesoMax);
+	        	 resultado = "En indiceOcupacion\n\n";
+	        	resultado += "\n Operación terminada";
+	    		panelDatos.actualizarInterfaz(resultado);
+	    		
+				break;
+			case "4":
+				double volumenMin = Double.parseDouble(JOptionPane.showInputDialog (this, "Volumen minimo ", "Producto con cierta caracteristica", JOptionPane.QUESTION_MESSAGE));
+	    		double volumenMax = Double.parseDouble(JOptionPane.showInputDialog (this, "Volumen maximo ", "Producto con cierta caracteristica", JOptionPane.QUESTION_MESSAGE));
+	    		
+	    		superAndes.productosEnRangoVolumen(volumenMin,volumenMax);
+	        	 resultado = "En indiceOcupacion\n\n";
+	        	resultado += "\n Operación terminada";
+	    		panelDatos.actualizarInterfaz(resultado);
+			case "5":
+				String nit = JOptionPane.showInputDialog (this, "Proveedor ", "Producto con cierta caracteristica", JOptionPane.QUESTION_MESSAGE);
+	    		
+	    		superAndes.productosDeProveedor(nit);
+	        	 resultado = "En indiceOcupacion\n\n";
+	        	resultado += "\n Operación terminada";
+	    		panelDatos.actualizarInterfaz(resultado);
+	    		
+				break;
+
+			default:
+				break;
+			}
+    		
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+
 	}
 	/* ****************************************************************
 	 *			Requerimientos funcionales de Bono

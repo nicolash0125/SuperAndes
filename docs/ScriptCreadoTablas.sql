@@ -99,14 +99,14 @@ CREATE TABLE ProductoPedido
     codigoPedido INTEGER NOT NULL,
     volumen INTEGER,
     precio INTEGER,
-    CONSTRAINT productospedidos_pk PRIMARY KEY(codigoProducto, codigoPedido)
+    CONSTRAINT productopedido_pk PRIMARY KEY(codigoProducto, codigoPedido)
 );
 
 CREATE TABLE Proveedor
 (
     NIT VARCHAR(20) NOT NULL,
     nombre VARCHAR(20),
-    CONSTRAINT proveedores_pk PRIMARY KEY(NIT)
+    CONSTRAINT proveedor_pk PRIMARY KEY(NIT)
 );
 
 CREATE TABLE ProveedorProducto
