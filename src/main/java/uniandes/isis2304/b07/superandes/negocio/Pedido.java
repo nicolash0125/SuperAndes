@@ -2,6 +2,8 @@ package uniandes.isis2304.b07.superandes.negocio;
 
 import java.sql.Timestamp;
 
+import javax.jdo.PersistenceManager;
+
 public class Pedido implements VOPedido{
 
 	/* ****************************************************************
@@ -16,6 +18,11 @@ public class Pedido implements VOPedido{
 	private String estadoOrden;
 	
 	private String nitProveedor;
+
+	public Pedido(PersistenceManager pm, String idSucursal, String[] codigosProductos, String nitProveedor2,
+			Timestamp fechaPrevista, double precioTotal2) {
+		// TODO hacer este constructor
+	}
 
 	/**
 	 * @return the id

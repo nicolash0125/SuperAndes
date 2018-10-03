@@ -25,11 +25,13 @@ import uniandes.isis2304.b07.superandes.negocio.Pague1Lleve2ConDescPromo;
 import uniandes.isis2304.b07.superandes.negocio.PagueNUnidadesLleveMPromo;
 import uniandes.isis2304.b07.superandes.negocio.PagueXCantidadLleveYPromo;
 import uniandes.isis2304.b07.superandes.negocio.PaqueteDeProductos;
+import uniandes.isis2304.b07.superandes.negocio.Pedido;
 import uniandes.isis2304.b07.superandes.negocio.PersonaJuridica;
 import uniandes.isis2304.b07.superandes.negocio.Producto;
 import uniandes.isis2304.b07.superandes.negocio.Promocion;
 import uniandes.isis2304.b07.superandes.negocio.Proveedor;
 import uniandes.isis2304.b07.superandes.negocio.Sucursal;
+import uniandes.isis2304.b07.superandes.negocio.Venta;
 
 
 
@@ -436,7 +438,7 @@ public class PersistenciaSuperAndes {
 	 * 			Requerimientos funcionales de modificacion
 	 *****************************************************************/
 	public Proveedor registrarProveedor(String nit, String nombre)	{
-		
+
 		PersistenceManager pm = pmf.getPersistenceManager();
 
 		Transaction tx = pm.currentTransaction();
@@ -509,7 +511,7 @@ public class PersistenciaSuperAndes {
 		}	
 
 	}
-	
+
 
 	public PersonaJuridica registrarPersonaJuridica(String documento, String numDocumento, String direccion) {
 
@@ -535,7 +537,7 @@ public class PersistenciaSuperAndes {
 			return null;
 		}	
 
-		
+
 	}
 
 
@@ -627,7 +629,7 @@ public class PersistenciaSuperAndes {
 		}
 	}
 
-	
+
 
 
 	public PagueNUnidadesLleveMPromo registrarPromocionPagueNLleveM(String codigoProducto, Timestamp fechaVencimientoPromocion, int compraUnidades, int llevaUnidades)
@@ -776,9 +778,43 @@ public class PersistenciaSuperAndes {
 		System.out.println("Hola");
 	}
 
-	public void registrarPedido(String[] codigosProductos, String nitProveedor, Timestamp fechaPrevista, int precioTotal )
+	public Pedido registrarPedido(String idSucursal, String[] codigosProductos, String[] cantidad, String[] precios, String nitProveedor, Timestamp fechaPrevista, double precioTotal )
 	{
-		log.info ("Registrando pedido con numero de productos: " + codigosProductos.length);
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx = pm.currentTransaction();
+
+		try {
+
+			tx.begin();
+
+			long codigoPedido = nextval();
+
+			long tuplasInsertadas = sqlPedido.adicionarPedido(pm, idSucursal, codigosProductos, nitProveedor, fechaPrevista, precioTotal);
+
+			long tuplasInsertadas2 = 0;
+
+			for (int i = 0; i < codigosProductos.length; i++) {
+
+				tuplasInsertadas2 += sqlProductoPedido.adicionarProductoPedido(pm, codigoPedido,codigosProductos[i],cantidad[i],precios[i]);		
+
+			}
+
+			tx.commit();
+
+			log.trace ("Inserción de pedido a proveedor: " + nitProveedor + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			log.trace ("Inserción de productosPedidos: " + codigoPedido + ": " + tuplasInsertadas2 + " tuplas insertadas");
+
+
+			return new Pedido(pm, idSucursal, codigosProductos, nitProveedor, fechaPrevista, precioTotal);
+
+		} catch (Exception e) {
+
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+
+			return null;
+		}		
 	}
 
 	public void registrarLlegadaPedido(long codigoPedido, Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
@@ -786,14 +822,51 @@ public class PersistenciaSuperAndes {
 		log.info ("Registrando llegada pedido: " + codigoPedido);
 	}
 
-	public void registrarVenta(String codigoProducto, int unidadesVendidas, String tipoDocumentoCliente, String numeroDocumentoCLiente)
-	{
-		log.info ("Registrando venta de producto: " + codigoProducto);
+	public Venta registrarVenta(String sucursal, String tipodocumento, String documento, String[] codigosProductos,
+			String[] cantidad, String[] precios, double precioTotal) {
+
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx = pm.currentTransaction();
+
+		try {
+
+			tx.begin();
+
+			long numeroVenta = nextval();
+
+			long tuplasInsertadas = sqlVenta.adicionarVenta(pm, numeroVenta, tipodocumento, documento, precioTotal);
+
+			long tuplasInsertadas2 = 0;
+
+			for (int i = 0; i < codigosProductos.length; i++) {
+
+				tuplasInsertadas2 += sqlVentaProducto.adicionarVentaProducto(pm, numeroVenta, codigosProductos[i],cantidad[i]);		
+			}
+
+			tx.commit();
+
+			log.trace ("Inserción de venta: " + numeroVenta + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			log.trace ("Inserción de ventaProducto: " + numeroVenta + ": " + tuplasInsertadas2 + " tuplas insertadas");
+
+
+			return new Venta(pm, numeroVenta, tipodocumento, documento, precioTotal);
+
+		} catch (Exception e) {
+
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+
+			return null;
+		}		
+
 	}
 
 	/* ****************************************************************
 	 * 			Requerimientos funcionales de consulta
 	 *****************************************************************/
+
+
 	public void dineroRecolectado(Timestamp fechaInicio,Timestamp fechaFin)
 	{
 		log.info ("Obteniendo dinero recolectado en las sucursales entre " + fechaInicio+" y "+fechaFin);
@@ -865,6 +938,35 @@ public class PersistenciaSuperAndes {
 
 
 
+	/* ****************************************************************
+	 *		Métodos adicionales
+	 *****************************************************************/
+
+
+	public String[] obtenerPreciosSucursal(String sucursal, String[] productos) {
+
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx = pm.currentTransaction();
+
+		try {
+
+			tx.begin();
+
+			String[] precios = sqlProductoSucursal.darPrecioProductosSucursal(pm, sucursal, productos);
+
+			tx.commit();
+
+
+			return precios;
+
+		} catch (Exception e) {
+
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+
+			return null;
+		}	
+	}
 
 
 
