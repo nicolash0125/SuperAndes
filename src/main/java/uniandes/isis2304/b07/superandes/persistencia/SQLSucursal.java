@@ -1,5 +1,11 @@
 package uniandes.isis2304.b07.superandes.persistencia;
 
+import java.util.List;
+
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+
+import uniandes.isis2304.b07.superandes.negocio.IndiceOcupacion;
 
 public class SQLSucursal {
 	/* ****************************************************************
@@ -29,5 +35,15 @@ public class SQLSucursal {
 	public SQLSucursal (PersistenciaSuperAndes pp)
 	{
 		this.pp = pp;
+	}
+	public List<IndiceOcupacion> darIndiceOcupacion(PersistenceManager pm, long idSucursal){
+		Query q = pm.newQuery(SQL, "SELECT * FROM ( SELECT idEstante as id_Elemento, 'ESTANTE' as TIPO, CAPACIDADVOLUMEN / CAPACIDADTOTALVOLUMEN as INDICE_VOLUMEN, CAPACIDADPESO / CAPACIDADTOTALPESO as INDICE_PESO "
+				+ "FROM ESTANTE WHERE idsucursal = ? "
+				+ "UNION ALL SELECT idBodega as id_Elemento,'BODEGA' AS TIPO,CAPACIDADVOLUMEN / CAPACIDADTOTALVOLUMEN AS INDICE_VOLUMEN, CAPACIDADPESO / CAPACIDADTOTALPESO as INDICE_PESO "
+				+ "FROM BODEGA WHERE idsucursal= ?" 
+				+")");
+		q.setResultClass(IndiceOcupacion.class);
+		q.setParameters(idSucursal,idSucursal);
+		return (List<IndiceOcupacion>) q.executeList();
 	}
 }

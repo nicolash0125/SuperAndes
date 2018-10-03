@@ -165,9 +165,10 @@ public class SuperAndes {
 	 * 
 	 * @param idSucursal
 	 */
-	public void indiceOcupacion(long idSucursal)
+	public List<IndiceOcupacion> indiceOcupacion(long idSucursal)
 	{
 		log.info ("Obteniendo indice de ocupacion de la sucursal: " + idSucursal);
+		return pp.indiceOcupacion(idSucursal);
 	}
 	
 	public void productosConCiertaCaracteristica(int precioInferior, int precioSuperior, Timestamp fechaVencimientoMinima, double pesoMinimo, double pesoMaximo,

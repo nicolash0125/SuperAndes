@@ -33,6 +33,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
+import uniandes.isis2304.b07.superandes.negocio.IndiceOcupacion;
 import uniandes.isis2304.b07.superandes.negocio.Producto;
 import uniandes.isis2304.b07.superandes.negocio.Proveedor;
 import uniandes.isis2304.b07.superandes.negocio.SuperAndes;
@@ -975,11 +976,22 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
     		
     		if (sucursal != 0)
     		{
-    			superAndes.indiceOcupacion(sucursal);
-        		String resultado = "En indiceOcupacion\n\n";
-        		resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
+    			List<IndiceOcupacion> lista=superAndes.indiceOcupacion(sucursal);
+    			String resultado = "En indiceOcupacion\n\n";
+    			resultado += "\n ID_ELEMENTO | TIPO | INDICE_VOLUMEN | INDICE_PESO ";
+    			if(lista!=null){
+    				for (IndiceOcupacion indiceOcupacion : lista) {
+    					resultado += "\n "+indiceOcupacion;
+					}
+    				resultado += "\n Operación terminada";
+    				panelDatos.actualizarInterfaz(resultado);
+        	    	
+    			}
+    			else
+    			{
+    				panelDatos.actualizarInterfaz("No se econtro informacion de la sucursal"+sucursal);
+    			}
+        	}
     		else
     		{
     			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");

@@ -17,6 +17,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import uniandes.isis2304.b07.superandes.negocio.DescPorcentajePromo;
+import uniandes.isis2304.b07.superandes.negocio.IndiceOcupacion;
 import uniandes.isis2304.b07.superandes.negocio.Pague1Lleve2ConDescPromo;
 import uniandes.isis2304.b07.superandes.negocio.PagueNUnidadesLleveMPromo;
 import uniandes.isis2304.b07.superandes.negocio.PagueXCantidadLleveYPromo;
@@ -224,7 +225,7 @@ public class PersistenciaSuperAndes {
 	
 	public String darTablaPagueNUnidadesLleveMPromo()
 	{
-		return tablas.get (10);
+		return "PAGUENUNIDADESLLEVEMPROMO";
 	}
 	
 	
@@ -255,7 +256,7 @@ public class PersistenciaSuperAndes {
 	
 	public String darTablaProductoPromocion()
 	{
-		return tablas.get (16);
+		return "PRODUCTOPROMOCION";
 	}
 	
 	public String darTablaProductoProveedor()
@@ -270,7 +271,7 @@ public class PersistenciaSuperAndes {
 	
 	public String darTablaPromocion()
 	{
-		return tablas.get (19);
+		return "PROMOCION";
 	}
 	
 	public String darTablaProveedor()
@@ -382,7 +383,7 @@ public class PersistenciaSuperAndes {
 		sqlPromocion = new SQLPromocion(this);
 		sqlPagueNUnidadesLleveMPromo = new SQLPagueNUnidadesLleveMPromo(this);
 		sqlProductoPromocion = new SQLProductoPromocion(this);
-		
+		sqlSucursal=new SQLSucursal(this);
 		//		sqlTipoBebida = new SQLTipoBebida(this);
 //		sqlBebida = new SQLBebida(this);
 //		sqlBar = new SQLBar(this);
@@ -555,9 +556,9 @@ public class PersistenciaSuperAndes {
 	 * 
 	 * @param idSucursal
 	 */
-	public void indiceOcupacion(long idSucursal)
+	public List<IndiceOcupacion> indiceOcupacion(long idSucursal)
 	{
-		log.info ("Obteniendo indice de ocupacion de la sucursal: " + idSucursal);
+		return sqlSucursal.darIndiceOcupacion(pmf.getPersistenceManager(), idSucursal);
 	}
 	
 	public void productosConCiertaCaracteristica(int precioInferior, int precioSuperior, Timestamp fechaVencimientoMinima, double pesoMinimo, double pesoMaximo,
