@@ -32,14 +32,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
-import com.sun.media.jfxmedia.events.NewFrameEvent;
-
-<<<<<<< HEAD
 import uniandes.isis2304.b07.superandes.negocio.IndiceOcupacion;
-=======
 import uniandes.isis2304.b07.superandes.negocio.Cliente;
 import uniandes.isis2304.b07.superandes.negocio.PersonaJuridica;
->>>>>>> 5b59419fdfaf73bc25a6805713198a312ce9ed31
 import uniandes.isis2304.b07.superandes.negocio.Producto;
 import uniandes.isis2304.b07.superandes.negocio.Proveedor;
 import uniandes.isis2304.b07.superandes.negocio.SuperAndes;
@@ -533,13 +528,13 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 
 				String resultado = "Proveedor adicionado exitosamente";			
 
-				resultado += "\n Operación terminada";
+				resultado += "\n Operaciï¿½n terminada";
 
 				panelDatos.actualizarInterfaz(resultado);
 			}
 			else
 			{
-				panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+				panelDatos.actualizarInterfaz("Operaciï¿½n cancelada por el usuario");
 			}
 		} 
 		catch (Exception e) 
@@ -639,7 +634,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 					}	
 
 					String resultado = "En registrarCliente\n\n";
-					resultado += "Cliente añadido exitosamente: " + cliente;
+					resultado += "Cliente aï¿½adido exitosamente: " + cliente;
 					resultado += "\n Operacion terminada";
 					panelDatos.actualizarInterfaz(resultado);
 				}
@@ -689,7 +684,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 					}	
 
 					String resultado = "En registrarCliente\n\n";
-					resultado += "Cliente añadido exitosamente: " + cliente;
+					resultado += "Cliente aï¿½adido exitosamente: " + cliente;
 					resultado += "\n Operacion terminada";
 					panelDatos.actualizarInterfaz(resultado);
 
@@ -1073,7 +1068,6 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	public void indiceOcupacion()
 	{
 		try 
-<<<<<<< HEAD
     	{
     		long sucursal = Long.parseLong(JOptionPane.showInputDialog (this, "Id de la sucursal", "Indice de ocupacion sucursal", JOptionPane.QUESTION_MESSAGE));
     		
@@ -1099,22 +1093,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
     		{
     			panelDatos.actualizarInterfaz("OperaciÃ³n cancelada por el usuario");
     		}
-=======
-		{
-			long sucursal = Long.parseLong(JOptionPane.showInputDialog (this, "Id de la sucursal", "Indice de ocupacion sucursal", JOptionPane.QUESTION_MESSAGE));
-
-			if (sucursal != 0)
-			{
-				superAndes.indiceOcupacion(sucursal);
-				String resultado = "En indiceOcupacion\n\n";
-				resultado += "\n OperaciÃ³n terminada";
-				panelDatos.actualizarInterfaz(resultado);
-			}
-			else
-			{
-				panelDatos.actualizarInterfaz("OperaciÃ³n cancelada por el usuario");
-			}
->>>>>>> 5b59419fdfaf73bc25a6805713198a312ce9ed31
+		
 		} 
 		catch (Exception e) 
 		{

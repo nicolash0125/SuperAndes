@@ -394,18 +394,9 @@ public class PersistenciaSuperAndes {
 		sqlLegadaPedido = new SQLLegadaPedido(this);
 		sqlPague1Lleve2ConDescPromo = new SQLPague1Lleve2ConDescPromo(this);
 		sqlPagueNUnidadesLleveMPromo = new SQLPagueNUnidadesLleveMPromo(this);
-<<<<<<< HEAD
 		sqlProductoPromocion = new SQLProductoPromocion(this);
 		sqlSucursal=new SQLSucursal(this);
-		//		sqlTipoBebida = new SQLTipoBebida(this);
-//		sqlBebida = new SQLBebida(this);
-//		sqlBar = new SQLBar(this);
-//		sqlBebedor = new SQLBebedor(this);
-//		sqlGustan = new SQLGustan(this);
-//		sqlSirven = new SQLSirven (this);
-//		sqlVisitan = new SQLVisitan(this);		
-//		sqlUtil = new SQLUtil(this);
-=======
+
 
 		sqlPagueXCantidadLleveYPromo = new SQLPagueXCantidadLleveYPromo(this);		
 		sqlPedido = new SQLPedido(this);
@@ -426,7 +417,7 @@ public class PersistenciaSuperAndes {
 		sqlVentaProducto = new SQLVentaProducto(this);		
 
 		sqlUtil = new SQLUtil(this);
->>>>>>> 5b59419fdfaf73bc25a6805713198a312ce9ed31
+
 	}
 
 	/**
