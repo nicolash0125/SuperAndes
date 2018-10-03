@@ -167,7 +167,7 @@ public class SuperAndes {
 	public LlegadaPedido registrarLlegadaPedido(long codigoPedido, long idSucursal, Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
 	{
 		log.info ("Registrando llegada pedido: " + codigoPedido);
-		return null;
+		return pp.registrarLlegadaPedido(codigoPedido, idSucursal, fechaLlegada, cantidadProductos, calidadProductos, calificacion);
 	}
 
 	public void registrarVenta(String codigoProducto, int unidadesVendidas, String tipoDocumentoCliente, String numeroDocumentoCLiente)
