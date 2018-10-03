@@ -12,6 +12,14 @@ public class PagueNUnidadesLleveMPromo implements VOPagueNUnidadesLleveMPromo{
 	private int llevaUnidades;
 	
 	
+	public PagueNUnidadesLleveMPromo(String codigoPromo, int compraUnidades, int llevaUnidades) 
+	{
+		
+		this.codigoPromo = codigoPromo;
+		this.compraUnidades = compraUnidades;
+		this.llevaUnidades = llevaUnidades;
+	}
+
 	/**
 	 * @return the codigoPromo
 	 */

@@ -5,7 +5,8 @@ import java.sql.Timestamp;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
-public class SQLPromocion {
+public class SQLPagueNUnidadesLleveMPromo {
+	
 	/* ****************************************************************
 	 * 			Constantes
 	 *****************************************************************/
@@ -30,18 +31,16 @@ public class SQLPromocion {
 	 * Constructor
 	 * @param pp - El Manejador de persistencia de la aplicación
 	 */
-	public SQLPromocion (PersistenciaSuperAndes pp)
+	public SQLPagueNUnidadesLleveMPromo (PersistenciaSuperAndes pp)
 	{
 		this.pp = pp;
 	}
 	
-	public long adicionarPromocion(PersistenceManager pm, String codigoPromocion, int tipoPromocion, Timestamp fechaTerminacion)
+	public long adicionarPromocion(PersistenceManager pm, String codigoPromocion, int compraUnidades, int llevaUnidades)
 	{
-		Query q = pm.newQuery(SQL,"INSERT INTO "+pp.darTablaPromocion()+"(CODIGOPROMOCION, TIPOPROMOCION,FECHATERMINACION) VALUES (?,?,?))");
-		q.setParameters(codigoPromocion,tipoPromocion,fechaTerminacion);
+		Query q = pm.newQuery(SQL,"INSERT INTO "+pp.darTablaPagueNUnidadesLleveMPromo()+"(CODIGOPROMO,COMPRAUNIDADES,LLEVAUNIDADES) VALUES (?,?,?))");
+		q.setParameters(codigoPromocion,compraUnidades,llevaUnidades);
 		return (long) q.executeUnique();
 
 	}
-	
-	
 }

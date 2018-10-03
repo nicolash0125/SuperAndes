@@ -103,7 +103,7 @@ public class SuperAndes {
     
     public PagueNUnidadesLleveMPromo registrarPromocionPagueNLleveM(String codigoProducto, Timestamp fechaVencimientoPromocion, int compraUnidades, int llevaUnidades)
     {
-    	return null;
+    	return pp.registrarPromocionPagueNLleveM(codigoProducto, fechaVencimientoPromocion, compraUnidades, llevaUnidades);
     }
     public DescPorcentajePromo registrarPromocionDescPorcentaje(String codigoProducto, Timestamp fechaVencimientoPromocion, double porcentaje)
     {

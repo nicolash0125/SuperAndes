@@ -4,14 +4,23 @@ import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.jdo.JDODataStoreException;
 import javax.jdo.JDOHelper;
+import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
+import javax.jdo.Transaction;
 
 import org.apache.log4j.Logger;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import uniandes.isis2304.b07.superandes.negocio.DescPorcentajePromo;
+import uniandes.isis2304.b07.superandes.negocio.Pague1Lleve2ConDescPromo;
+import uniandes.isis2304.b07.superandes.negocio.PagueNUnidadesLleveMPromo;
+import uniandes.isis2304.b07.superandes.negocio.PagueXCantidadLleveYPromo;
+import uniandes.isis2304.b07.superandes.negocio.PaqueteDeProductos;
 
 
 
@@ -48,6 +57,21 @@ public class PersistenciaSuperAndes {
 	 */
 	private List <String> tablas;
 	
+	
+	/**
+	 * Atributo para el acceso a la tabla promocion
+	 */
+	private SQLPromocion sqlPromocion;
+	
+	/**
+	 * Atributo para el acceso a la tabla PagueNUnidadesLleveMPromo
+	 */
+	private SQLPagueNUnidadesLleveMPromo sqlPagueNUnidadesLleveMPromo;
+	
+	/**
+	 * Atributo para el acceso a la tabla ProductoPromocion
+	 */
+	private SQLProductoPromocion sqlProductoPromocion;
 	/**
 	 * Atributo para el acceso a las sentencias SQL propias a PersistenciaParranderos
 	 */
@@ -67,7 +91,7 @@ public class PersistenciaSuperAndes {
 		
 		// Define los nombres por defecto de las tablas de la base de datos
 		tablas = new LinkedList<String> ();
-		tablas.add ("SupeAndes_sequence");
+		tablas.add ("SuperAndes_sequence");
 //		tablas.add ("TIPOBEBIDA");
 //		tablas.add ("BEBIDA");
 //		tablas.add ("BAR");
@@ -149,7 +173,11 @@ public class PersistenciaSuperAndes {
 	 */
 	private void crearClasesSQL ()
 	{
-//		sqlTipoBebida = new SQLTipoBebida(this);
+		sqlPromocion = new SQLPromocion(this);
+		sqlPagueNUnidadesLleveMPromo = new SQLPagueNUnidadesLleveMPromo(this);
+		sqlProductoPromocion = new SQLProductoPromocion(this);
+		
+		//		sqlTipoBebida = new SQLTipoBebida(this);
 //		sqlBebida = new SQLBebida(this);
 //		sqlBar = new SQLBar(this);
 //		sqlBebedor = new SQLBebedor(this);
@@ -232,6 +260,61 @@ public class PersistenciaSuperAndes {
 		}
     }
     
+    
+    
+    public PagueNUnidadesLleveMPromo registrarPromocionPagueNLleveM(String codigoProducto, Timestamp fechaVencimientoPromocion, int compraUnidades, int llevaUnidades)
+    {
+    	
+    	PersistenceManager pm = pmf.getPersistenceManager();
+    	Transaction tx=pm.currentTransaction();
+    	try 
+    	{
+			tx.begin();
+			System.out.println(1);
+			String codigoPromo= nextval()+"";
+			System.out.println(codigoPromo);
+			long tuplasInsertadas=sqlPromocion.adicionarPromocion(pm, codigoPromo, 1, fechaVencimientoPromocion);
+			System.out.println(tuplasInsertadas);
+			tuplasInsertadas+=sqlPagueNUnidadesLleveMPromo.adicionarPromocion(pm, codigoPromo, compraUnidades, llevaUnidades);
+			System.out.println(tuplasInsertadas);
+			tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm, codigoProducto, codigoPromo);
+			System.out.println(tuplasInsertadas);
+			tx.commit();
+			log.trace ("Inserción de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
+            System.out.println(tuplasInsertadas);
+			return new PagueNUnidadesLleveMPromo(codigoPromo, compraUnidades, llevaUnidades);
+		} 
+    	catch (Exception e) 
+    	{
+    		log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+		}
+    	finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+    public DescPorcentajePromo registrarPromocionDescPorcentaje(String codigoProducto, Timestamp fechaVencimientoPromocion, double porcentaje)
+    {
+    	return null;
+    }
+    public PagueXCantidadLleveYPromo registrarPromocionPagueXLleveY(String codigoProducto, Timestamp fechaVencimientoPromocion, int cantidadPaga, int cantidadLleva)
+    {
+    	return null;
+    }
+    public Pague1Lleve2ConDescPromo registrarPromocionPague1Lleve2doDesc(String codigoProducto, Timestamp fechaVencimientoPromocion, double porcentaje)
+    {
+    	return null;
+    }
+    public PaqueteDeProductos registrarPromocionPaqueteProductos(String codigoProducto, Timestamp fechaVencimientoPromocion, String producto2, double precioConjunto)
+    {
+    	return null;
+    }
+ 
     public void finalizarPromocion()
     {
     	System.out.println("Hola");
@@ -307,6 +390,34 @@ public class PersistenciaSuperAndes {
         log.trace ("Generando secuencia: " + resp);
         return resp;
     }
+
+	public String darTablaPromocion() 
+	{
+		return "PROMOCION";
+	}
+	
+	public String darTablaPagueNUnidadesLleveMPromo() 
+	{
+		return "PAGUENUNIDADESLLEVEMPROMO";
+	}
+	
+	/**
+	 * Extrae el mensaje de la exception JDODataStoreException embebido en la Exception e, que da el detalle específico del problema encontrado
+	 * @param e - La excepción que ocurrio
+	 * @return El mensaje de la excepción JDO
+	 */
+	private String darDetalleException(Exception e) 
+	{
+		String resp = "";
+		if (e.getClass().getName().equals("javax.jdo.JDODataStoreException"))
+		{
+			JDODataStoreException je = (javax.jdo.JDODataStoreException) e;
+			return je.getNestedExceptions() [0].getMessage();
+		}
+		return resp;
+	}
+
+	
 	
 	
 }

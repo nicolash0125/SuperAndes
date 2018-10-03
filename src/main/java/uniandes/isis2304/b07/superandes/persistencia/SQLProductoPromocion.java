@@ -1,11 +1,10 @@
 package uniandes.isis2304.b07.superandes.persistencia;
 
-import java.sql.Timestamp;
-
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
-public class SQLPromocion {
+public class SQLProductoPromocion {
+
 	/* ****************************************************************
 	 * 			Constantes
 	 *****************************************************************/
@@ -30,18 +29,16 @@ public class SQLPromocion {
 	 * Constructor
 	 * @param pp - El Manejador de persistencia de la aplicación
 	 */
-	public SQLPromocion (PersistenciaSuperAndes pp)
+	public SQLProductoPromocion (PersistenciaSuperAndes pp)
 	{
 		this.pp = pp;
 	}
 	
-	public long adicionarPromocion(PersistenceManager pm, String codigoPromocion, int tipoPromocion, Timestamp fechaTerminacion)
+	public long adicionarPromocion(PersistenceManager pm, String codigoProducto, String codigoPromocion)
 	{
-		Query q = pm.newQuery(SQL,"INSERT INTO "+pp.darTablaPromocion()+"(CODIGOPROMOCION, TIPOPROMOCION,FECHATERMINACION) VALUES (?,?,?))");
-		q.setParameters(codigoPromocion,tipoPromocion,fechaTerminacion);
+		Query q = pm.newQuery(SQL,"INSERT INTO "+pp.darTablaPagueNUnidadesLleveMPromo()+"(CODIGOPROMOCION,CODIGOPRODUCTO) VALUES (?,?)");
+		q.setParameters(codigoProducto,codigoPromocion);
 		return (long) q.executeUnique();
 
 	}
-	
-	
 }
