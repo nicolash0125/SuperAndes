@@ -84,7 +84,7 @@ public class ConexionTest {
 			log.info ("La causa es: " + e.getCause ().toString ());
 
 			String msg = "Prueba de acceso normal a la base de datos falló !! Revise persistence.xml.\n";
-			msg += "Revise el log de parranderos y el de datanucleus para conocer el detalle de la excepción";
+			msg += "Revise el log de SuperAndes y el de datanucleus para conocer el detalle de la excepción";
 //			System.out.println (msg);
 			fail (msg);
 		}
@@ -111,7 +111,7 @@ public class ConexionTest {
 			log.info ("La causa es: " + e.getCause ().toString ());
 
 			String msg = "Prueba de base de datos inaccesible correcta.\n";
-			msg += "Revise el log de parranderos y el de datanucleus para conocer el detalle de la excepción";
+			msg += "Revise el log de SuperAndes y el de datanucleus para conocer el detalle de la excepción";
 			System.out.println (msg);
 		}
     }
@@ -136,7 +136,7 @@ public class ConexionTest {
 			log.info ("La causa es: " + e.getCause ().toString ());
 
 			String msg = "Prueba de credenciales incorrectas correcta.\n";
-			msg += "Revise el log de parranderos y el de datanucleus para conocer el detalle de la excepción";
+			msg += "Revise el log de SuperAndes y el de datanucleus para conocer el detalle de la excepción";
 			System.out.println (msg);
 		}
     }
@@ -161,7 +161,7 @@ public class ConexionTest {
 			log.info ("La causa es: " + e.getCause ().toString ());
 
 			String msg = "Prueba de tabla inexistente incompleta. No se pudo conectar a la base de datos !!.\n";
-			msg += "Revise el log de parranderos y el de datanucleus para conocer el detalle de la excepción";
+			msg += "Revise el log de SuperAndes y el de datanucleus para conocer el detalle de la excepción";
 			System.out.println (msg);
 			fail (msg);
 		}
@@ -180,7 +180,7 @@ public class ConexionTest {
 			log.info ("La causa es: " + e.getCause ().toString ());
 
 			String msg = "Prueba de tabla inexistente correcta.\n";
-			msg += "Revise el log de parranderos y el de datanucleus para conocer el detalle de la excepción";
+			msg += "Revise el log de SuperAndes y el de datanucleus para conocer el detalle de la excepción";
 			System.out.println (msg);
 		}
 		finally

@@ -66,8 +66,8 @@ public class PersistenciaSuperAndes {
 		crearClasesSQL ();
 		
 		// Define los nombres por defecto de las tablas de la base de datos
-//		tablas = new LinkedList<String> ();
-//		tablas.add ("Parranderos_sequence");
+		tablas = new LinkedList<String> ();
+		tablas.add ("SupeAndes_sequence");
 //		tablas.add ("TIPOBEBIDA");
 //		tablas.add ("BEBIDA");
 //		tablas.add ("BAR");
@@ -162,7 +162,7 @@ public class PersistenciaSuperAndes {
 	/**
 	 * @return La cadena de caracteres con el nombre del secuenciador de parranderos
 	 */
-	public String darSeqParranderos ()
+	public String darSeqSuperAndes ()
 	{
 		return tablas.get (0);
 	}
@@ -295,6 +295,18 @@ public class PersistenciaSuperAndes {
 	{
 		
 	}
+	
+	/**
+	 * Transacción para el generador de secuencia de SuperAndes
+	 * Adiciona entradas al log de la aplicación
+	 * @return El siguiente número del secuenciador de SuperAndes
+	 */
+	private long nextval ()
+	{
+        long resp = sqlUtil.nextval (pmf.getPersistenceManager());
+        log.trace ("Generando secuencia: " + resp);
+        return resp;
+    }
 	
 	
 }

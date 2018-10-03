@@ -1,3 +1,5 @@
+create sequence SuperAndes_sequence;
+
 -- Crear tablas
 CREATE TABLE Producto
 (
