@@ -1,4 +1,4 @@
-package uniandes.isis2304.b07.superandes.persistencia;
+﻿package uniandes.isis2304.b07.superandes.persistencia;
 
 import java.sql.Timestamp;
 import java.util.LinkedList;
@@ -59,24 +59,69 @@ public class PersistenciaSuperAndes {
 	
 	
 	/**
-	 * Atributo para el acceso a la tabla promocion
-	 */
-	private SQLPromocion sqlPromocion;
-	
-	/**
-	 * Atributo para el acceso a la tabla PagueNUnidadesLleveMPromo
-	 */
-	private SQLPagueNUnidadesLleveMPromo sqlPagueNUnidadesLleveMPromo;
-	
-	/**
-	 * Atributo para el acceso a la tabla ProductoPromocion
-	 */
-	private SQLProductoPromocion sqlProductoPromocion;
-	/**
 	 * Atributo para el acceso a las sentencias SQL propias a PersistenciaParranderos
 	 */
 	private SQLUtil sqlUtil;
 	
+
+
+	/**
+	 * Atributos para manejar los sql de las tablas.
+	 */
+
+	private SQLBodega sqlBodega;
+
+	private SQLCategoria sqlCategoria;
+
+	private SQLCategoriaProducto sqlCategoriaProducto;
+
+	private SQLCliente sqlCliente;
+
+	private SQLDescPorcentajePromo sqlDescPorcentajePromo;
+
+	private SQLEstante sqlEstante;
+
+	private SQLFactura sqlFactura;
+
+	private SQLLegadaPedido sqlLegadaPedido;
+
+	private SQLPague1Lleve2ConDescPromo sqlPague1Lleve2ConDescPromo;
+
+	private SQLPagueNUnidadesLleveMPromo sqlPagueNUnidadesLleveMPromo;
+
+	private SQLPagueXCantidadLleveYPromo sqlPagueXCantidadLleveYPromo ;
+
+	private SQLPedido sqlPedido;
+
+	private SQLPersonaJuridica sqlPersonaJuridica;
+
+	private SQLProducto sqlProducto;
+
+	private SQLProductoPedido sqlProductoPedido;
+
+	private SQLProductoPromocion sqlProductoPromocion;
+
+	private SQLProductoProveedor sqlProductoProveedor;
+
+	private SQLProductoSucursal sqlProductoSucursal;
+
+	private SQLPromocion sqlPromocion;
+
+	private SQLProveedor sqlProveedor;
+
+	private SQLRestriccionBodega sqlRestriccionBodega;
+
+	private SQLRestriccionEstante sqlRestriccionEstante;
+
+	private SQLSucursal sqlSucursal;
+
+	private SQLVenta sqlVenta;
+
+	private SQLVentaProducto sqlVentaProducto;
+
+
+
+
 	/* ****************************************************************
 	 * 			Métodos del MANEJADOR DE PERSISTENCIA
 	 *****************************************************************/
@@ -90,15 +135,35 @@ public class PersistenciaSuperAndes {
 		crearClasesSQL ();
 		
 		// Define los nombres por defecto de las tablas de la base de datos
+		
+
 		tablas = new LinkedList<String> ();
 		tablas.add ("SuperAndes_sequence");
-//		tablas.add ("TIPOBEBIDA");
-//		tablas.add ("BEBIDA");
-//		tablas.add ("BAR");
-//		tablas.add ("BEBEDOR");
-//		tablas.add ("GUSTAN");
-//		tablas.add ("SIRVEN");
-//		tablas.add ("VISITAN");
+		tablas.add ("BODEGA");
+		tablas.add ("CATEGORIA");
+		tablas.add ("CATEGORIAPRODUCTO");
+		tablas.add ("CLIENTE");
+		tablas.add ("DESCPORCENTAJEPROMO");		
+		tablas.add ("ESTANTE");
+		tablas.add ("FACTURA");
+		tablas.add ("LLEGADAPEDIDO");
+		tablas.add ("PAGUE1LLEVE2CONDESCPROMO");
+		tablas.add ("PAGUENUNIDADESLLEVEMPROMO");		
+		tablas.add ("PAGUEXCANTIDADLLEVEYPROMO");
+		tablas.add ("PEDIDO");
+		tablas.add ("PERSONAJURIDICA");
+		tablas.add ("PRODUCTO");
+		tablas.add ("PRODUCTOPEDIDO");		
+		tablas.add ("PRODUCTOPROMOCION");
+		tablas.add ("PRODUCTOPROVEEDOR");
+		tablas.add ("PRODUCTOSUCURSAL");
+		tablas.add ("PROMOCION");
+		tablas.add ("PROVEEDOR");		
+		tablas.add ("RESTRICCIONBODEGA");
+		tablas.add ("RESTRICCIONESTANTE");
+		tablas.add ("SUCURSAL");
+		tablas.add ("VENTA");
+		tablas.add ("VENTAPRODUCTO");
 }
 
 	/**
