@@ -12,6 +12,12 @@ public class Pague1Lleve2ConDescPromo implements VOPague1Lleve2ConDescPromo{
 	
 	
 
+	public Pague1Lleve2ConDescPromo(String codigoPromo, double porcentaje) 
+	{
+		this.codigoPromo = codigoPromo;
+		this.porcentaje = porcentaje;
+	}
+
 	/**
 	 * @return the codigoPromo
 	 */
@@ -38,6 +44,14 @@ public class Pague1Lleve2ConDescPromo implements VOPague1Lleve2ConDescPromo{
 	 */
 	public void setPorcentaje(double porcentaje) {
 		this.porcentaje = porcentaje;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Pague1Lleve2ConDescPromo [codigoPromo=" + codigoPromo + ", porcentaje=" + porcentaje + "]";
 	}
 
 	

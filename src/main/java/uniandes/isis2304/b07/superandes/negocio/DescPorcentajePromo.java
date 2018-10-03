@@ -10,6 +10,11 @@ public class DescPorcentajePromo implements VODescPorcentajePromo{
 	
 	
 
+	public DescPorcentajePromo(String codigoPromo, double porcentaje) {
+		this.codigoPromo = codigoPromo;
+		this.porcentaje = porcentaje;
+	}
+
 	/**
 	 * @return the codigoPromo
 	 */
@@ -36,6 +41,14 @@ public class DescPorcentajePromo implements VODescPorcentajePromo{
 	 */
 	public void setPorcentaje(double porcentaje) {
 		this.porcentaje = porcentaje;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "DescPorcentajePromo [codigoPromo=" + codigoPromo + ", porcentaje=" + porcentaje + "]";
 	}
 
 

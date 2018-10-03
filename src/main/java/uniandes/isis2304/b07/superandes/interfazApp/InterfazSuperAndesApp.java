@@ -13,6 +13,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.jdo.JDODataStoreException;
@@ -36,6 +38,7 @@ import uniandes.isis2304.b07.superandes.negocio.IndiceOcupacion;
 import uniandes.isis2304.b07.superandes.negocio.Cliente;
 import uniandes.isis2304.b07.superandes.negocio.PersonaJuridica;
 import uniandes.isis2304.b07.superandes.negocio.Producto;
+import uniandes.isis2304.b07.superandes.negocio.Promocion;
 import uniandes.isis2304.b07.superandes.negocio.Proveedor;
 import uniandes.isis2304.b07.superandes.negocio.SuperAndes;
 import uniandes.isis2304.b07.superandes.negocio.VOBodega;
@@ -817,9 +820,16 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		try 
 		{
 			String codigoProducto = JOptionPane.showInputDialog (this, "Codigo del producto al cual se le va a aplicar la promocion", "Registrar promocion", JOptionPane.QUESTION_MESSAGE);
-			long fecha = Long.parseLong(JOptionPane.showInputDialog (this, "Fecha de vencimiento de la promocion", "Registrar promocion", JOptionPane.QUESTION_MESSAGE));
-			Timestamp fechaVencimientoPromocion = new Timestamp(fecha);
-			String tipo = JOptionPane.showInputDialog (this, "Tipo de promocion, debe ser un jcombobox", "Registrar promocion", JOptionPane.QUESTION_MESSAGE);
+			String fecha = JOptionPane.showInputDialog (this, "Fecha de vencimiento de la promocion (dd/mm/yyyy)", "Registrar promocion", JOptionPane.QUESTION_MESSAGE);
+			SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
+			Date d = dateformat.parse(fecha);
+			Timestamp fechaVencimientoPromocion = new Timestamp(d.getTime());
+			String tipo = JOptionPane.showInputDialog (this, "Tipo de promocion:"
+					+ "\n 1. Pague N unidades lleve M unidades"
+					+ "\n 2. Descuento de porcentaje"
+					+ "\n 3. Pague X cantidad lleve Y cantidad"
+					+ "\n 4. Pague 1 lleve el 2do con descuento de porcentaje"
+					+ "\n 5. Paquete de productos (cree antes el producto en conjunto)", "Registrar promocion", JOptionPane.QUESTION_MESSAGE);
 			switch (tipo) {
 			//Pague N lleve M
 			case "1":
@@ -905,11 +915,13 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 				break;
 				//Paguete descuentos
 			case "5":
-				String codigoProductoPaquete = JOptionPane.showInputDialog (this, "Codigo del producto del paquete de la promocion", "Registrar promocion", JOptionPane.QUESTION_MESSAGE);
-				double precioConjunto = Double.parseDouble(JOptionPane.showInputDialog (this, "Precio en conjunto", "Registrar promocion", JOptionPane.QUESTION_MESSAGE));
+				String codigoProductoPaquete = "";
+				//codigoProductoPaquete=JOptionPane.showInputDialog (this, "Codigo del producto del paquete de la promocion", "Registrar promocion", JOptionPane.QUESTION_MESSAGE);
+				double precioConjunto = -1;
+				//precioConjunto=Double.parseDouble(JOptionPane.showInputDialog (this, "Precio en conjunto", "Registrar promocion", JOptionPane.QUESTION_MESSAGE));
 				if(precioConjunto !=0 && codigoProductoPaquete != null)
 				{
-					VOPaqueteDeProductos promocion = superAndes.registrarPromocionPaqueteProductos(codigoProducto, fechaVencimientoPromocion, codigoProductoPaquete, precioConjunto);
+					Promocion promocion = superAndes.registrarPromocionPaqueteProductos(codigoProducto, fechaVencimientoPromocion, codigoProductoPaquete, precioConjunto);
 					if (promocion == null)
 					{
 						throw new Exception ("No se pudo registrar promocion en producto: " + codigoProducto);
@@ -927,7 +939,8 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 
 
 			default:
-				panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+				panelDatos.actualizarInterfaz("Por favor selecciona un valor del 1 al 5 sin ningun otro caracter. Gracias"
+						+ "\nOperación cancelada por el usuario");
 
 				break;
 			}

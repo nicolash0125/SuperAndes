@@ -13,6 +13,13 @@ public class Promocion implements VOPromocion{
 	private Timestamp fechaTerminacion;
 
 	
+	
+	public Promocion(String codigoPromo, Timestamp fechaTerminacion) 
+	{
+		this.codigoPromo = codigoPromo;
+		this.fechaTerminacion = fechaTerminacion;
+	}
+
 	/**
 	 * @return the codigoPromo
 	 */
@@ -39,6 +46,14 @@ public class Promocion implements VOPromocion{
 	 */
 	public void setFechaTerminacion(Timestamp fechaTerminacion) {
 		this.fechaTerminacion = fechaTerminacion;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Promocion [codigoPromo=" + codigoPromo + ", fechaTerminacion=" + fechaTerminacion + "]";
 	}
 	
 	

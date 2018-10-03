@@ -137,19 +137,19 @@ public class SuperAndes {
 	}
 	public DescPorcentajePromo registrarPromocionDescPorcentaje(String codigoProducto, Timestamp fechaVencimientoPromocion, double porcentaje)
 	{
-		return null;
+		return pp.registrarPromocionDescPorcentaje(codigoProducto, fechaVencimientoPromocion, porcentaje);
 	}
 	public PagueXCantidadLleveYPromo registrarPromocionPagueXLleveY(String codigoProducto, Timestamp fechaVencimientoPromocion, int cantidadPaga, int cantidadLleva)
 	{
-		return null;
+		return pp.registrarPromocionPagueXLleveY(codigoProducto, fechaVencimientoPromocion, cantidadPaga, cantidadLleva);
 	}
 	public Pague1Lleve2ConDescPromo registrarPromocionPague1Lleve2doDesc(String codigoProducto, Timestamp fechaVencimientoPromocion, double porcentaje)
 	{
-		return null;
+		return pp.registrarPromocionPague1Lleve2doDesc(codigoProducto, fechaVencimientoPromocion, porcentaje);
 	}
-	public PaqueteDeProductos registrarPromocionPaqueteProductos(String codigoProducto, Timestamp fechaVencimientoPromocion, String producto2, double precioConjunto)
+	public Promocion registrarPromocionPaqueteProductos(String codigoProducto, Timestamp fechaVencimientoPromocion, String producto2, double precioConjunto)
 	{
-		return null;
+		return pp.registrarPromocionPaqueteProductos(codigoProducto, fechaVencimientoPromocion, producto2, precioConjunto);
 	}
 
 

@@ -14,7 +14,6 @@ public class PagueNUnidadesLleveMPromo implements VOPagueNUnidadesLleveMPromo{
 	
 	public PagueNUnidadesLleveMPromo(String codigoPromo, int compraUnidades, int llevaUnidades) 
 	{
-		
 		this.codigoPromo = codigoPromo;
 		this.compraUnidades = compraUnidades;
 		this.llevaUnidades = llevaUnidades;
@@ -60,6 +59,15 @@ public class PagueNUnidadesLleveMPromo implements VOPagueNUnidadesLleveMPromo{
 	 */
 	public void setLlevaUnidades(int llevaUnidades) {
 		this.llevaUnidades = llevaUnidades;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "PagueNUnidadesLleveMPromo [codigoPromo=" + codigoPromo + ", compraUnidades=" + compraUnidades
+				+ ", llevaUnidades=" + llevaUnidades + "]";
 	}
 
 	

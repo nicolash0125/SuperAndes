@@ -13,6 +13,13 @@ public class PagueXCantidadLleveYPromo implements VOPagueXCantidadLleveY{
 	
 	
 
+	public PagueXCantidadLleveYPromo(String codigoPromo, int cantidadPaga, int cantidadLleva) 
+	{
+		this.codigoPromo = codigoPromo;
+		this.cantidadPaga = cantidadPaga;
+		this.cantidadLleva = cantidadLleva;
+	}
+
 	/**
 	 * @return the codigoPromo
 	 */
@@ -53,6 +60,15 @@ public class PagueXCantidadLleveYPromo implements VOPagueXCantidadLleveY{
 	 */
 	public void setCantidadLleva(int cantidadLleva) {
 		this.cantidadLleva = cantidadLleva;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "PagueXCantidadLleveYPromo [codigoPromo=" + codigoPromo + ", cantidadPaga=" + cantidadPaga
+				+ ", cantidadLleva=" + cantidadLleva + "]";
 	}
 	
 	

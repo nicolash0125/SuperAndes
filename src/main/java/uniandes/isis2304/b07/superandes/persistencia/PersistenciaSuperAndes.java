@@ -27,6 +27,7 @@ import uniandes.isis2304.b07.superandes.negocio.PagueXCantidadLleveYPromo;
 import uniandes.isis2304.b07.superandes.negocio.PaqueteDeProductos;
 import uniandes.isis2304.b07.superandes.negocio.PersonaJuridica;
 import uniandes.isis2304.b07.superandes.negocio.Producto;
+import uniandes.isis2304.b07.superandes.negocio.Promocion;
 import uniandes.isis2304.b07.superandes.negocio.Proveedor;
 import uniandes.isis2304.b07.superandes.negocio.Sucursal;
 
@@ -203,7 +204,7 @@ public class PersistenciaSuperAndes {
 
 	public String darTablaDescPorcentajePromo()
 	{
-		return tablas.get (5);
+		return "descporcentajepromo";
 	}
 
 
@@ -227,7 +228,7 @@ public class PersistenciaSuperAndes {
 
 	public String darTablaPague1Lleve2ConDescPromo()
 	{
-		return tablas.get (9);
+		return "pague1lleve2condescpromo";
 	}
 
 	public String darTablaPagueNUnidadesLleveMPromo()
@@ -238,7 +239,7 @@ public class PersistenciaSuperAndes {
 
 	public String darTablaPagueXCantidadLleveYPromo()
 	{
-		return tablas.get (11);
+		return "paguexcantidadlleveypromo";
 	}
 
 	public String darTablaPedido()
@@ -626,33 +627,7 @@ public class PersistenciaSuperAndes {
 		}
 	}
 
-	/**
-	 * 
-	 * @param tipoPromocion
-	 * @param codigoProducto
-	 * @param fechaVencimientoPromocion
-	 * @param cantidadPaga
-	 * @param cantidadLleva
-	 * @param porcentajeDescSegundoP
-	 * @param porcentajeDesc
-	 * @param precioConjunto
-	 * @param codigoNuevoProducto
-	 * @param compraUnidades
-	 * @param llevaUnidades
-	 */
-	public void registrarPromocion(String tipoPromocion,String codigoProducto, Timestamp fechaVencimientoPromocion,double cantidadPaga, double cantidadLleva, double porcentajeDescSegundoP, 
-			double porcentajeDesc, int precioConjunto, String codigoNuevoProducto, int compraUnidades, int llevaUnidades)
-	{
-		switch (tipoPromocion) {
-		case "":
-
-			break;
-
-		default:
-			break;
-		}
-	}
-
+	
 
 
 	public PagueNUnidadesLleveMPromo registrarPromocionPagueNLleveM(String codigoProducto, Timestamp fechaVencimientoPromocion, int compraUnidades, int llevaUnidades)
@@ -665,9 +640,8 @@ public class PersistenciaSuperAndes {
 			tx.begin();
 			String codigoPromo= nextval()+"";
 			long tuplasInsertadas=sqlPromocion.adicionarPromocion(pm, codigoPromo, 1, fechaVencimientoPromocion);
-			tuplasInsertadas+=sqlPagueNUnidadesLleveMPromo.adicionarPromocion(pm, codigoPromo, compraUnidades, llevaUnidades);
-			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm, codigoProducto, "3");
-			tx.commit();
+			tuplasInsertadas+=sqlPagueNUnidadesLleveMPromo.adicionarPromocion(pm, codigoPromo, compraUnidades, llevaUnidades);		
+			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
 			log.trace ("Inserción de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new PagueNUnidadesLleveMPromo(codigoPromo, compraUnidades, llevaUnidades);
 		} 
@@ -687,19 +661,114 @@ public class PersistenciaSuperAndes {
 	}
 	public DescPorcentajePromo registrarPromocionDescPorcentaje(String codigoProducto, Timestamp fechaVencimientoPromocion, double porcentaje)
 	{
-		return null;
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try 
+		{
+			tx.begin();
+			String codigoPromo= nextval()+"";
+			long tuplasInsertadas=sqlPromocion.adicionarPromocion(pm, codigoPromo, 1, fechaVencimientoPromocion);
+			tuplasInsertadas+=sqlDescPorcentajePromo.adicionarPromocion(pm, codigoPromo, porcentaje);		
+			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
+			log.trace ("Inserción de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
+			return new DescPorcentajePromo(codigoPromo, porcentaje);
+		} 
+		catch (Exception e) 
+		{
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 	public PagueXCantidadLleveYPromo registrarPromocionPagueXLleveY(String codigoProducto, Timestamp fechaVencimientoPromocion, int cantidadPaga, int cantidadLleva)
 	{
-		return null;
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try 
+		{
+			tx.begin();
+			String codigoPromo= nextval()+"";
+			long tuplasInsertadas=sqlPromocion.adicionarPromocion(pm, codigoPromo, 1, fechaVencimientoPromocion);
+			tuplasInsertadas+=sqlPagueXCantidadLleveYPromo.adicionarPromocion(pm, codigoPromo, cantidadPaga, cantidadLleva);		
+			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
+			log.trace ("Inserción de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
+			return new PagueXCantidadLleveYPromo(codigoPromo, cantidadPaga, cantidadLleva);
+		} 
+		catch (Exception e) 
+		{
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 	public Pague1Lleve2ConDescPromo registrarPromocionPague1Lleve2doDesc(String codigoProducto, Timestamp fechaVencimientoPromocion, double porcentaje)
 	{
-		return null;
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try 
+		{
+			tx.begin();
+			String codigoPromo= nextval()+"";
+			long tuplasInsertadas=sqlPromocion.adicionarPromocion(pm, codigoPromo, 1, fechaVencimientoPromocion);
+			tuplasInsertadas+=sqlPague1Lleve2ConDescPromo.adicionarPromocion(pm, codigoPromo, porcentaje);		
+			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
+			log.trace ("Inserción de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
+			return new Pague1Lleve2ConDescPromo(codigoPromo, porcentaje);
+		} 
+		catch (Exception e) 
+		{
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
-	public PaqueteDeProductos registrarPromocionPaqueteProductos(String codigoProducto, Timestamp fechaVencimientoPromocion, String producto2, double precioConjunto)
+	public Promocion registrarPromocionPaqueteProductos(String codigoProducto, Timestamp fechaVencimientoPromocion, String producto2, double precioConjunto)
 	{
-		return null;
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try 
+		{
+			tx.begin();
+			String codigoPromo= nextval()+"";
+			long tuplasInsertadas=sqlPromocion.adicionarPromocion(pm, codigoPromo, 1, fechaVencimientoPromocion);
+			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
+			log.trace ("Inserción de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
+			return new Promocion(codigoPromo, fechaVencimientoPromocion);
+		} 
+		catch (Exception e) 
+		{
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 
 	public void finalizarPromocion()
