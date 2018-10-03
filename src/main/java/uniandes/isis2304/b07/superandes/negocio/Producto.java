@@ -12,17 +12,46 @@ public class Producto implements VOProducto{
 	
 	public String presentacion;
 	
+	public String marca;
+	
 	public int cantidad;
 	
 	public String unidadMedida;
 	
 	public String especificacionEmpacado;
 
+	public Producto(String codigosBarras, String nombres, String presentaciones, String marcas, int cantidades, String unidadesMedida,
+			String especificacionesEmpacado) {
+		
+		codigoBarras = codigosBarras;
+		
+		nombre = nombres;
+		
+		presentacion = presentaciones;
+		
+		marca = marcas;
+		
+		cantidad = cantidades;
+		
+		unidadMedida = unidadesMedida;
+		
+		especificacionEmpacado = especificacionesEmpacado;
+		
+	}
+
 	/**
 	 * @return the codigoBarras
 	 */
 	public String getCodigoBarras() {
 		return codigoBarras;
+	}
+
+	public String getMarca() {
+		return marca;
+	}
+
+	public void setMarca(String marca) {
+		this.marca = marca;
 	}
 
 	/**

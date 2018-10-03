@@ -1,5 +1,7 @@
 package uniandes.isis2304.b07.superandes.persistencia;
 
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 
 public class SQLCliente {
 	/* ****************************************************************
@@ -29,5 +31,13 @@ public class SQLCliente {
 	public SQLCliente (PersistenciaSuperAndes pp)
 	{
 		this.pp = pp;
+	}
+
+	public long adicionarCliente(PersistenceManager pm, String documento, String numDocumento, String nombre,
+			String apellido, String correo) {
+		
+		Query q = pm.newQuery(SQL, "INSERT INTO" + pp.darTablaProveedor()+"(TIPODOCUMENTO,NUMDOCUMENTO,NOMBRE,CORREO,APELLIDO) values (?,?,?,?,?)");
+		q.setParameters(documento,numDocumento,nombre,correo,apellido);
+		return (long) q.executeUnique();
 	}
 }
