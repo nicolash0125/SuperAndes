@@ -165,6 +165,146 @@ public class PersistenciaSuperAndes {
 		tablas.add ("VENTA");
 		tablas.add ("VENTAPRODUCTO");
 }
+	
+	public String darSeqParranderos()
+	{
+		return tablas.get (0);
+	}
+	
+	public String darTablaBodega()
+	{
+		return tablas.get (1);
+	}
+	
+	public String darTablaCategoria()
+	{
+		return tablas.get (2);
+	}
+	
+	public String darTablaCategoriaProducto()
+	{
+		return tablas.get (3);
+	}
+	
+	
+	public String darTablaCliente()
+	{
+		return tablas.get (4);
+	}
+	
+	
+	public String darTablaDescPorcentajePromo()
+	{
+		return tablas.get (5);
+	}
+	
+	
+	public String darTablaEstante()
+	{
+		return tablas.get (6);
+	}
+	
+	
+	public String darTablaFactura()
+	{
+		return tablas.get (7);
+	}
+	
+	
+	public String darTablaLlegadaPedido()
+	{
+		return tablas.get (8);
+	}
+	
+	
+	public String darTablaPague1Lleve2ConDescPromo()
+	{
+		return tablas.get (9);
+	}
+	
+	public String darTablaPagueNUnidadesLleveMPromo()
+	{
+		return tablas.get (10);
+	}
+	
+	
+	public String darTablaPagueXCantidadLleveYPromo()
+	{
+		return tablas.get (11);
+	}
+	
+	public String darTablaPedido()
+	{
+		return tablas.get (12);
+	}
+	
+	public String darTablaPersonaJuridica()
+	{
+		return tablas.get (13);
+	}
+	
+	public String darTablaProducto()
+	{
+		return tablas.get (14);
+	}
+	
+	public String darTablaProductoPedido()
+	{
+		return tablas.get (15);
+	}	
+	
+	public String darTablaProductoPromocion()
+	{
+		return tablas.get (16);
+	}
+	
+	public String darTablaProductoProveedor()
+	{
+		return tablas.get (17);
+	}
+	
+	public String darTablaProductoSucursal()
+	{
+		return tablas.get (18);
+	}
+	
+	public String darTablaPromocion()
+	{
+		return tablas.get (19);
+	}
+	
+	public String darTablaProveedor()
+	{
+		return tablas.get (20);
+	}
+	
+	public String darTablaRestriccionBodega()
+	{
+		return tablas.get (21);
+	}
+	
+	public String darTablaRestriccionEstante()
+	{
+		return tablas.get (22);
+	}
+	
+	public String darTablaSucursal()
+	{
+		return tablas.get (23);
+	}
+	
+	public String darTablaVenta()
+	{
+		return tablas.get (24);
+	}
+	
+	public String darTablaVentaProducto()
+	{
+		return tablas.get (25);
+	}
+	
+	
+	
 
 	/**
 	 * Constructor privado, que recibe los nombres de las tablas en un objeto Json - Patrón SINGLETON
@@ -450,21 +590,6 @@ public class PersistenciaSuperAndes {
         log.trace ("Generando secuencia: " + resp);
         return resp;
     }
-
-	public String darTablaPromocion() 
-	{
-		return "PROMOCION";
-	}
-	
-	public String darTablaPagueNUnidadesLleveMPromo() 
-	{
-		return "PAGUENUNIDADESLLEVEMPROMO";
-	}
-	
-	public String darTablaProductoPromocion() 
-	{
-		return "PRODUCTOPROMOCION";
-	}
 	
 	/**
 	 * Extrae el mensaje de la exception JDODataStoreException embebido en la Exception e, que da el detalle específico del problema encontrado
