@@ -34,7 +34,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
-import uniandes.isis2304.b07.superandes.negocio.IndiceOcupacion;
 import uniandes.isis2304.b07.superandes.negocio.Cliente;
 import uniandes.isis2304.b07.superandes.negocio.PersonaJuridica;
 import uniandes.isis2304.b07.superandes.negocio.Producto;
@@ -48,9 +47,7 @@ import uniandes.isis2304.b07.superandes.negocio.VOLlegadaPedido;
 import uniandes.isis2304.b07.superandes.negocio.VOPague1Lleve2ConDescPromo;
 import uniandes.isis2304.b07.superandes.negocio.VOPagueNUnidadesLleveMPromo;
 import uniandes.isis2304.b07.superandes.negocio.VOPagueXCantidadLleveY;
-import uniandes.isis2304.b07.superandes.negocio.VOPaqueteDeProductos;
 import uniandes.isis2304.b07.superandes.negocio.VOPedido;
-import uniandes.isis2304.b07.superandes.negocio.VOProveedor;
 import uniandes.isis2304.b07.superandes.negocio.VOSucursal;
 /**
  * Clase principal de la interfaz

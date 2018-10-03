@@ -12,7 +12,11 @@ import uniandes.isis2304.b07.superandes.persistencia.PersistenciaSuperAndes;
 
 
 
-
+/**
+ * Clase principal del mundo
+ * @author Santiago Carrero y Nicolas Hernandez 
+ *
+ */
 public class SuperAndes {
 	/* ****************************************************************
 	 * 			Constantes
@@ -228,25 +232,22 @@ public class SuperAndes {
 
 
 	public void productosPorFechaVencimiento(Timestamp fechaVencimiento) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
 
 	public void productosEnRangoPesos(double pesoMin, double pesoMax) {
-		// TODO Auto-generated method stub
 
 	}
 
 
 	public void productosEnRangoVolumen(double volumenMin, double volumenMax) {
-		// TODO Auto-generated method stub
 
 	}
 
 
 	public void productosDeProveedor(String nit) {
-		// TODO Auto-generated method stub
 
 	}
 
