@@ -38,7 +38,7 @@ public class SQLPagueNUnidadesLleveMPromo {
 	
 	public long adicionarPromocion(PersistenceManager pm, String codigoPromocion, int compraUnidades, int llevaUnidades)
 	{
-		Query q = pm.newQuery(SQL,"INSERT INTO "+pp.darTablaPagueNUnidadesLleveMPromo()+"(CODIGOPROMO,COMPRAUNIDADES,LLEVAUNIDADES) VALUES (?,?,?))");
+		Query q = pm.newQuery(SQL,"INSERT INTO "+pp.darTablaPagueNUnidadesLleveMPromo()+"(CODIGOPROMO,COMPRAUNIDADES,LLEVAUNIDADES) VALUES (?,?,?)");
 		q.setParameters(codigoPromocion,compraUnidades,llevaUnidades);
 		return (long) q.executeUnique();
 

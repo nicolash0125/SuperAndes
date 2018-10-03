@@ -271,19 +271,13 @@ public class PersistenciaSuperAndes {
     	try 
     	{
 			tx.begin();
-			System.out.println(1);
 			String codigoPromo= nextval()+"";
-			System.out.println(codigoPromo);
 			long tuplasInsertadas=sqlPromocion.adicionarPromocion(pm, codigoPromo, 1, fechaVencimientoPromocion);
-			System.out.println(tuplasInsertadas);
 			tuplasInsertadas+=sqlPagueNUnidadesLleveMPromo.adicionarPromocion(pm, codigoPromo, compraUnidades, llevaUnidades);
-			System.out.println(tuplasInsertadas);
-			tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm, codigoProducto, codigoPromo);
-			System.out.println(tuplasInsertadas);
+			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm, codigoProducto, codigoPromo);
 			tx.commit();
 			log.trace ("Inserción de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
-            System.out.println(tuplasInsertadas);
-			return new PagueNUnidadesLleveMPromo(codigoPromo, compraUnidades, llevaUnidades);
+            return new PagueNUnidadesLleveMPromo(codigoPromo, compraUnidades, llevaUnidades);
 		} 
     	catch (Exception e) 
     	{
@@ -402,6 +396,11 @@ public class PersistenciaSuperAndes {
 		return "PAGUENUNIDADESLLEVEMPROMO";
 	}
 	
+	public String darTablaProductoPromocion() 
+	{
+		return "PRODUCTOPROMOCION";
+	}
+	
 	/**
 	 * Extrae el mensaje de la exception JDODataStoreException embebido en la Exception e, que da el detalle específico del problema encontrado
 	 * @param e - La excepción que ocurrio
@@ -417,6 +416,8 @@ public class PersistenciaSuperAndes {
 		}
 		return resp;
 	}
+
+	
 
 	
 	
