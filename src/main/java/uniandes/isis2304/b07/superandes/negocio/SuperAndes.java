@@ -189,4 +189,37 @@ public class SuperAndes {
 		
 	}
 
+
+	
+
+
+	public void productosEnRangoPrecios(double precioMin, double precioMax) 
+	{
+		
+	}
+
+
+	public void productosPorFechaVencimiento(Timestamp fechaVencimiento) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void productosEnRangoPesos(double pesoMin, double pesoMax) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void productosEnRangoVolumen(double volumenMin, double volumenMax) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void productosDeProveedor(String nit) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
