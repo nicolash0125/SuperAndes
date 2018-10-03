@@ -173,6 +173,7 @@ public class PersistenciaSuperAndes {
 	 */
 	private void crearClasesSQL ()
 	{
+		sqlUtil = new SQLUtil(this);
 		sqlPromocion = new SQLPromocion(this);
 		sqlPagueNUnidadesLleveMPromo = new SQLPagueNUnidadesLleveMPromo(this);
 		sqlProductoPromocion = new SQLProductoPromocion(this);
