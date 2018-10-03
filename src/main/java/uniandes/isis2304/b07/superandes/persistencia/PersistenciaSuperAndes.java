@@ -16,12 +16,16 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import uniandes.isis2304.b07.superandes.negocio.Cliente;
 import uniandes.isis2304.b07.superandes.negocio.DescPorcentajePromo;
 import uniandes.isis2304.b07.superandes.negocio.IndiceOcupacion;
 import uniandes.isis2304.b07.superandes.negocio.Pague1Lleve2ConDescPromo;
 import uniandes.isis2304.b07.superandes.negocio.PagueNUnidadesLleveMPromo;
 import uniandes.isis2304.b07.superandes.negocio.PagueXCantidadLleveYPromo;
 import uniandes.isis2304.b07.superandes.negocio.PaqueteDeProductos;
+import uniandes.isis2304.b07.superandes.negocio.PersonaJuridica;
+import uniandes.isis2304.b07.superandes.negocio.Producto;
+import uniandes.isis2304.b07.superandes.negocio.Proveedor;
 
 
 
@@ -34,7 +38,7 @@ public class PersistenciaSuperAndes {
 	 * Logger para escribir la traza de la ejecución
 	 */
 	private static Logger log = Logger.getLogger(PersistenciaSuperAndes.class.getName());
-	
+
 	/**
 	 * Cadena para indicar el tipo de sentencias que se va a utilizar en una consulta
 	 */
@@ -47,23 +51,23 @@ public class PersistenciaSuperAndes {
 	 * Atributo privado que es el único objeto de la clase - Patrón SINGLETON
 	 */
 	private static PersistenciaSuperAndes instance;
-	
+
 	/**
 	 * Fábrica de Manejadores de persistencia, para el manejo correcto de las transacciones
 	 */
 	private PersistenceManagerFactory pmf;
-	
+
 	/**
 	 * Arreglo de cadenas con los nombres de las tablas de la base de datos, en su orden:
 	 */
 	private List <String> tablas;
-	
-	
+
+
 	/**
 	 * Atributo para el acceso a las sentencias SQL propias a PersistenciaParranderos
 	 */
 	private SQLUtil sqlUtil;
-	
+
 
 
 	/**
@@ -134,9 +138,9 @@ public class PersistenciaSuperAndes {
 	{
 		pmf = JDOHelper.getPersistenceManagerFactory("Parranderos");		
 		crearClasesSQL ();
-		
+
 		// Define los nombres por defecto de las tablas de la base de datos
-		
+
 
 		tablas = new LinkedList<String> ();
 		tablas.add ("SuperAndes_sequence");
@@ -165,147 +169,147 @@ public class PersistenciaSuperAndes {
 		tablas.add ("SUCURSAL");
 		tablas.add ("VENTA");
 		tablas.add ("VENTAPRODUCTO");
-}
-	
+	}
+
 	public String darSeqParranderos()
 	{
 		return tablas.get (0);
 	}
-	
+
 	public String darTablaBodega()
 	{
 		return tablas.get (1);
 	}
-	
+
 	public String darTablaCategoria()
 	{
 		return tablas.get (2);
 	}
-	
+
 	public String darTablaCategoriaProducto()
 	{
 		return tablas.get (3);
 	}
-	
-	
+
+
 	public String darTablaCliente()
 	{
 		return tablas.get (4);
 	}
-	
-	
+
+
 	public String darTablaDescPorcentajePromo()
 	{
 		return tablas.get (5);
 	}
-	
-	
+
+
 	public String darTablaEstante()
 	{
 		return tablas.get (6);
 	}
-	
-	
+
+
 	public String darTablaFactura()
 	{
 		return tablas.get (7);
 	}
-	
-	
+
+
 	public String darTablaLlegadaPedido()
 	{
 		return tablas.get (8);
 	}
-	
-	
+
+
 	public String darTablaPague1Lleve2ConDescPromo()
 	{
 		return tablas.get (9);
 	}
-	
+
 	public String darTablaPagueNUnidadesLleveMPromo()
 	{
 		return "PAGUENUNIDADESLLEVEMPROMO";
 	}
-	
-	
+
+
 	public String darTablaPagueXCantidadLleveYPromo()
 	{
 		return tablas.get (11);
 	}
-	
+
 	public String darTablaPedido()
 	{
 		return tablas.get (12);
 	}
-	
+
 	public String darTablaPersonaJuridica()
 	{
 		return tablas.get (13);
 	}
-	
+
 	public String darTablaProducto()
 	{
 		return tablas.get (14);
 	}
-	
+
 	public String darTablaProductoPedido()
 	{
 		return tablas.get (15);
 	}	
-	
+
 	public String darTablaProductoPromocion()
 	{
 		return "PRODUCTOPROMOCION";
 	}
-	
+
 	public String darTablaProductoProveedor()
 	{
 		return tablas.get (17);
 	}
-	
+
 	public String darTablaProductoSucursal()
 	{
 		return tablas.get (18);
 	}
-	
+
 	public String darTablaPromocion()
 	{
 		return "PROMOCION";
 	}
-	
+
 	public String darTablaProveedor()
 	{
 		return tablas.get (20);
 	}
-	
+
 	public String darTablaRestriccionBodega()
 	{
 		return tablas.get (21);
 	}
-	
+
 	public String darTablaRestriccionEstante()
 	{
 		return tablas.get (22);
 	}
-	
+
 	public String darTablaSucursal()
 	{
 		return tablas.get (23);
 	}
-	
+
 	public String darTablaVenta()
 	{
 		return tablas.get (24);
 	}
-	
+
 	public String darTablaVentaProducto()
 	{
 		return tablas.get (25);
 	}
-	
-	
-	
+
+
+
 
 	/**
 	 * Constructor privado, que recibe los nombres de las tablas en un objeto Json - Patrón SINGLETON
@@ -315,7 +319,7 @@ public class PersistenciaSuperAndes {
 	{
 		crearClasesSQL ();
 		tablas = leerNombresTablas (tableConfig);
-		
+
 		String unidadPersistencia = tableConfig.get ("unidadPersistencia").getAsString ();
 		log.trace ("Accediendo unidad de persistencia: " + unidadPersistencia);
 		pmf = JDOHelper.getPersistenceManagerFactory (unidadPersistencia);
@@ -332,7 +336,7 @@ public class PersistenciaSuperAndes {
 		}
 		return instance;
 	}
-	
+
 	/**
 	 * Constructor que toma los nombres de las tablas de la base de datos del objeto tableConfig
 	 * @param tableConfig - El objeto JSON con los nombres de las tablas
@@ -355,7 +359,7 @@ public class PersistenciaSuperAndes {
 		pmf.close ();
 		instance = null;
 	}
-	
+
 	/**
 	 * Genera una lista con los nombres de las tablas de la base de datos
 	 * @param tableConfig - El objeto Json con los nombres de las tablas
@@ -370,18 +374,27 @@ public class PersistenciaSuperAndes {
 		{
 			resp.add (nom.getAsString ());
 		}
-		
+
 		return resp;
 	}
-	
+
 	/**
 	 * Crea los atributos de clases de apoyo SQL
 	 */
 	private void crearClasesSQL ()
 	{
-		sqlUtil = new SQLUtil(this);
-		sqlPromocion = new SQLPromocion(this);
+		sqlBodega = new SQLBodega(this);
+		sqlCategoria = new SQLCategoria(this);
+		sqlCategoriaProducto = new SQLCategoriaProducto(this);
+		sqlCliente = new SQLCliente(this);
+		sqlDescPorcentajePromo = new SQLDescPorcentajePromo(this);
+
+		sqlEstante = new SQLEstante(this);
+		sqlFactura = new SQLFactura(this);
+		sqlLegadaPedido = new SQLLegadaPedido(this);
+		sqlPague1Lleve2ConDescPromo = new SQLPague1Lleve2ConDescPromo(this);
 		sqlPagueNUnidadesLleveMPromo = new SQLPagueNUnidadesLleveMPromo(this);
+<<<<<<< HEAD
 		sqlProductoPromocion = new SQLProductoPromocion(this);
 		sqlSucursal=new SQLSucursal(this);
 		//		sqlTipoBebida = new SQLTipoBebida(this);
@@ -392,6 +405,28 @@ public class PersistenciaSuperAndes {
 //		sqlSirven = new SQLSirven (this);
 //		sqlVisitan = new SQLVisitan(this);		
 //		sqlUtil = new SQLUtil(this);
+=======
+
+		sqlPagueXCantidadLleveYPromo = new SQLPagueXCantidadLleveYPromo(this);		
+		sqlPedido = new SQLPedido(this);
+		sqlPersonaJuridica = new SQLPersonaJuridica(this);
+		sqlProducto = new SQLProducto(this);
+		sqlProductoPedido = new SQLProductoPedido(this);
+
+		sqlProductoPromocion = new SQLProductoPromocion(this);		
+		sqlProductoProveedor = new SQLProductoProveedor(this);
+		sqlProductoSucursal = new SQLProductoSucursal(this);
+		sqlPromocion = new SQLPromocion(this);
+		sqlProveedor = new SQLProveedor(this);
+
+		sqlRestriccionBodega = new SQLRestriccionBodega(this);		
+		sqlRestriccionEstante = new SQLRestriccionEstante(this);
+		sqlSucursal = new SQLSucursal(this);
+		sqlVenta = new SQLVenta(this);
+		sqlVentaProducto = new SQLVentaProducto(this);		
+
+		sqlUtil = new SQLUtil(this);
+>>>>>>> 5b59419fdfaf73bc25a6805713198a312ce9ed31
 	}
 
 	/**
@@ -401,81 +436,167 @@ public class PersistenciaSuperAndes {
 	{
 		return tablas.get (0);
 	}
-	
-	
-	
+
 	/* ****************************************************************
-     * 			Requerimientos funcionales de modificacion
-     *****************************************************************/
-    public void registrarProveedores(String nombre)
-    {
-    	log.info ("Registrando proveedor: " + nombre);
-    	
-    }
-    
-    public void registrarProductos()
-    {
-    	
-    }
-    
-    public void registrarClientes()
-    {
-    	
-    }
-    
-    public void registrarSucursal(String nombre, String segmentacion, String tamanio, String ciudad, String direccion)
-    {
-    	log.info ("Registrando sucursal: " + nombre);
-    	
-    }
-    
-    public void registrarBodega(long idSucursal, double capacidadVolumen, double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso)
-    {
-    	log.info ("Registrando bodega en la sucursal: " + idSucursal);
-    
-    }
-    
-    public void registrarEstante(long idSucursal, double capacidadVolumen, double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso)
-    {
-    	log.info ("Registrando estante en la sucursal: " + idSucursal);
-    }
-    
-    /**
-     * 
-     * @param tipoPromocion
-     * @param codigoProducto
-     * @param fechaVencimientoPromocion
-     * @param cantidadPaga
-     * @param cantidadLleva
-     * @param porcentajeDescSegundoP
-     * @param porcentajeDesc
-     * @param precioConjunto
-     * @param codigoNuevoProducto
-     * @param compraUnidades
-     * @param llevaUnidades
-     */
-    public void registrarPromocion(String tipoPromocion,String codigoProducto, Timestamp fechaVencimientoPromocion,double cantidadPaga, double cantidadLleva, double porcentajeDescSegundoP, 
-    		double porcentajeDesc, int precioConjunto, String codigoNuevoProducto, int compraUnidades, int llevaUnidades)
-    {
-    	switch (tipoPromocion) {
+	 * 			Requerimientos funcionales de modificacion
+	 *****************************************************************/
+	public Proveedor registrarProveedor(String nit, String nombre)	{
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx = pm.currentTransaction();
+
+		try {
+
+			tx.begin();
+			long tuplasInsertadas = sqlProveedor.adicionarProveedor(pm,nit,nombre);
+			tx.commit();
+
+			log.trace ("Inserción de proveedor: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new Proveedor(nit, nombre);
+
+		} catch (Exception e) {
+
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+
+			return null;
+		}
+
+	}
+
+	public Producto registrarProductos(String codigosBarras, String nombres, String presentaciones, String marcas, int cantidades, String unidadesMedida, String especificacionesEmpacado)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx = pm.currentTransaction();
+
+		try {
+
+			tx.begin();
+			long tuplasInsertadas = sqlProducto.adicionarProducto(pm, codigosBarras, nombres, presentaciones, marcas, cantidades, unidadesMedida, especificacionesEmpacado);
+			tx.commit();
+
+			log.trace ("Inserción de producto: " + nombres + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new Producto(codigosBarras, nombres , presentaciones, marcas, cantidades,unidadesMedida, especificacionesEmpacado);
+
+		} catch (Exception e) {
+
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+
+			return null;
+		}		
+
+	}
+
+	public Cliente registrarCliente(String tipodocumento, String numDocumento, String nombre, String apellido, String correo)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx = pm.currentTransaction();
+
+		try {
+
+			tx.begin();
+			long tuplasInsertadas = sqlCliente.adicionarCliente(pm, tipodocumento, numDocumento, nombre, apellido, correo);
+			tx.commit();
+
+			log.trace ("Inserción de cliente: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new Cliente(tipodocumento, numDocumento, nombre, apellido, correo);
+
+		} catch (Exception e) {
+
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+
+			return null;
+		}	
+
+	}
+	
+
+	public PersonaJuridica registrarPersonaJuridica(String documento, String numDocumento, String direccion) {
+
+
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx = pm.currentTransaction();
+
+		try {
+
+			tx.begin();
+			long tuplasInsertadas = sqlPersonaJuridica.adicionarPersonaJuridica(pm, documento, numDocumento,direccion);
+			tx.commit();
+
+			log.trace ("Inserción de personaJuridica: " + numDocumento + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new PersonaJuridica(documento, numDocumento, direccion);
+
+		} catch (Exception e) {
+
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+
+			return null;
+		}	
+
+		
+	}
+
+
+	public void registrarSucursal(String nombre, String segmentacion, String tamanio, String ciudad, String direccion)
+	{
+		log.info ("Registrando sucursal: " + nombre);
+
+	}
+
+	public void registrarBodega(long idSucursal, double capacidadVolumen, double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso)
+	{
+		log.info ("Registrando bodega en la sucursal: " + idSucursal);
+
+	}
+
+	public void registrarEstante(long idSucursal, double capacidadVolumen, double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso)
+	{
+		log.info ("Registrando estante en la sucursal: " + idSucursal);
+	}
+
+	/**
+	 * 
+	 * @param tipoPromocion
+	 * @param codigoProducto
+	 * @param fechaVencimientoPromocion
+	 * @param cantidadPaga
+	 * @param cantidadLleva
+	 * @param porcentajeDescSegundoP
+	 * @param porcentajeDesc
+	 * @param precioConjunto
+	 * @param codigoNuevoProducto
+	 * @param compraUnidades
+	 * @param llevaUnidades
+	 */
+	public void registrarPromocion(String tipoPromocion,String codigoProducto, Timestamp fechaVencimientoPromocion,double cantidadPaga, double cantidadLleva, double porcentajeDescSegundoP, 
+			double porcentajeDesc, int precioConjunto, String codigoNuevoProducto, int compraUnidades, int llevaUnidades)
+	{
+		switch (tipoPromocion) {
 		case "":
-			
+
 			break;
 
 		default:
 			break;
 		}
-    }
-    
-    
-    
-    public PagueNUnidadesLleveMPromo registrarPromocionPagueNLleveM(String codigoProducto, Timestamp fechaVencimientoPromocion, int compraUnidades, int llevaUnidades)
-    {
-    	
-    	PersistenceManager pm = pmf.getPersistenceManager();
-    	Transaction tx=pm.currentTransaction();
-    	try 
-    	{
+	}
+
+
+
+	public PagueNUnidadesLleveMPromo registrarPromocionPagueNLleveM(String codigoProducto, Timestamp fechaVencimientoPromocion, int compraUnidades, int llevaUnidades)
+	{
+
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try 
+		{
 			tx.begin();
 			String codigoPromo= nextval()+"";
 			long tuplasInsertadas=sqlPromocion.adicionarPromocion(pm, codigoPromo, 1, fechaVencimientoPromocion);
@@ -483,67 +604,67 @@ public class PersistenciaSuperAndes {
 			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm, codigoProducto, "3");
 			tx.commit();
 			log.trace ("Inserción de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
-            return new PagueNUnidadesLleveMPromo(codigoPromo, compraUnidades, llevaUnidades);
+			return new PagueNUnidadesLleveMPromo(codigoPromo, compraUnidades, llevaUnidades);
 		} 
-    	catch (Exception e) 
-    	{
-    		log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return null;
+		catch (Exception e) 
+		{
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
 		}
-    	finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-    }
-    public DescPorcentajePromo registrarPromocionDescPorcentaje(String codigoProducto, Timestamp fechaVencimientoPromocion, double porcentaje)
-    {
-    	return null;
-    }
-    public PagueXCantidadLleveYPromo registrarPromocionPagueXLleveY(String codigoProducto, Timestamp fechaVencimientoPromocion, int cantidadPaga, int cantidadLleva)
-    {
-    	return null;
-    }
-    public Pague1Lleve2ConDescPromo registrarPromocionPague1Lleve2doDesc(String codigoProducto, Timestamp fechaVencimientoPromocion, double porcentaje)
-    {
-    	return null;
-    }
-    public PaqueteDeProductos registrarPromocionPaqueteProductos(String codigoProducto, Timestamp fechaVencimientoPromocion, String producto2, double precioConjunto)
-    {
-    	return null;
-    }
- 
-    public void finalizarPromocion()
-    {
-    	System.out.println("Hola");
-    }
-    
-    public void registrarPedido(String[] codigosProductos, String nitProveedor, Timestamp fechaPrevista, int precioTotal )
-    {
-    	log.info ("Registrando pedido con numero de productos: " + codigosProductos.length);
-    }
-    
-    public void registrarLlegadaPedido(long codigoPedido, Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
-    {
-    	log.info ("Registrando llegada pedido: " + codigoPedido);
-    }
-    
-    public void registrarVenta(String codigoProducto, int unidadesVendidas, String tipoDocumentoCliente, String numeroDocumentoCLiente)
-    {
-    	log.info ("Registrando venta de producto: " + codigoProducto);
-    }
-    
-    /* ****************************************************************
-     * 			Requerimientos funcionales de consulta
-     *****************************************************************/
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	public DescPorcentajePromo registrarPromocionDescPorcentaje(String codigoProducto, Timestamp fechaVencimientoPromocion, double porcentaje)
+	{
+		return null;
+	}
+	public PagueXCantidadLleveYPromo registrarPromocionPagueXLleveY(String codigoProducto, Timestamp fechaVencimientoPromocion, int cantidadPaga, int cantidadLleva)
+	{
+		return null;
+	}
+	public Pague1Lleve2ConDescPromo registrarPromocionPague1Lleve2doDesc(String codigoProducto, Timestamp fechaVencimientoPromocion, double porcentaje)
+	{
+		return null;
+	}
+	public PaqueteDeProductos registrarPromocionPaqueteProductos(String codigoProducto, Timestamp fechaVencimientoPromocion, String producto2, double precioConjunto)
+	{
+		return null;
+	}
+
+	public void finalizarPromocion()
+	{
+		System.out.println("Hola");
+	}
+
+	public void registrarPedido(String[] codigosProductos, String nitProveedor, Timestamp fechaPrevista, int precioTotal )
+	{
+		log.info ("Registrando pedido con numero de productos: " + codigosProductos.length);
+	}
+
+	public void registrarLlegadaPedido(long codigoPedido, Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
+	{
+		log.info ("Registrando llegada pedido: " + codigoPedido);
+	}
+
+	public void registrarVenta(String codigoProducto, int unidadesVendidas, String tipoDocumentoCliente, String numeroDocumentoCLiente)
+	{
+		log.info ("Registrando venta de producto: " + codigoProducto);
+	}
+
+	/* ****************************************************************
+	 * 			Requerimientos funcionales de consulta
+	 *****************************************************************/
 	public void dineroRecolectado(Timestamp fechaInicio,Timestamp fechaFin)
 	{
 		log.info ("Obteniendo dinero recolectado en las sucursales entre " + fechaInicio+" y "+fechaFin);
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -551,7 +672,7 @@ public class PersistenciaSuperAndes {
 	{
 		log.info ("Obteniendo las 20 promociones mas populares ");
 	}
-    
+
 	/**
 	 * 
 	 * @param idSucursal
@@ -560,26 +681,26 @@ public class PersistenciaSuperAndes {
 	{
 		return sqlSucursal.darIndiceOcupacion(pmf.getPersistenceManager(), idSucursal);
 	}
-	
+
 	public void productosConCiertaCaracteristica(int precioInferior, int precioSuperior, Timestamp fechaVencimientoMinima, double pesoMinimo, double pesoMaximo,
 			String nitProveedor, String ciudad, long idSucursal, String tipo, String categoria, int cantidadMinimaVentas, Timestamp fechaMinCantMinVentas,
 			Timestamp fechaMaxCantMinVentas)
 	{
-		
+
 	}
 	/* ****************************************************************
 	 *			Requerimientos funcionales de Bono
 	 *****************************************************************/
 	public void comprasAProveedores()
 	{
-		
+
 	}
-	
+
 	public void ventasAUsuario()
 	{
-		
+
 	}
-	
+
 	/**
 	 * Transacción para el generador de secuencia de SuperAndes
 	 * Adiciona entradas al log de la aplicación
@@ -587,11 +708,11 @@ public class PersistenciaSuperAndes {
 	 */
 	private long nextval ()
 	{
-        long resp = sqlUtil.nextval (pmf.getPersistenceManager());
-        log.trace ("Generando secuencia: " + resp);
-        return resp;
-    }
-	
+		long resp = sqlUtil.nextval (pmf.getPersistenceManager());
+		log.trace ("Generando secuencia: " + resp);
+		return resp;
+	}
+
 	/**
 	 * Extrae el mensaje de la exception JDODataStoreException embebido en la Exception e, que da el detalle específico del problema encontrado
 	 * @param e - La excepción que ocurrio
@@ -608,9 +729,9 @@ public class PersistenciaSuperAndes {
 		return resp;
 	}
 
-	
 
-	
-	
-	
+
+
+
+
 }

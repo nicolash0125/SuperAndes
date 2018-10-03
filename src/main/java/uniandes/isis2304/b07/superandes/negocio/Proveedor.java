@@ -10,6 +10,14 @@ public class Proveedor implements VOProveedor{
 	
 	private String nombre;
 
+	public Proveedor(String pNit, String pNombre) {
+		
+		nit = pNit;
+		
+		nombre = pNombre;
+		
+	}
+
 	/**
 	 * @return the nit
 	 */
