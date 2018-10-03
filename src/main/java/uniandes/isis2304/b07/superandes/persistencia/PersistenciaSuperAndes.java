@@ -16,8 +16,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import uniandes.isis2304.b07.superandes.negocio.Bodega;
 import uniandes.isis2304.b07.superandes.negocio.Cliente;
 import uniandes.isis2304.b07.superandes.negocio.DescPorcentajePromo;
+import uniandes.isis2304.b07.superandes.negocio.Estante;
 import uniandes.isis2304.b07.superandes.negocio.IndiceOcupacion;
 import uniandes.isis2304.b07.superandes.negocio.Pague1Lleve2ConDescPromo;
 import uniandes.isis2304.b07.superandes.negocio.PagueNUnidadesLleveMPromo;
@@ -26,6 +28,7 @@ import uniandes.isis2304.b07.superandes.negocio.PaqueteDeProductos;
 import uniandes.isis2304.b07.superandes.negocio.PersonaJuridica;
 import uniandes.isis2304.b07.superandes.negocio.Producto;
 import uniandes.isis2304.b07.superandes.negocio.Proveedor;
+import uniandes.isis2304.b07.superandes.negocio.Sucursal;
 
 
 
@@ -535,21 +538,93 @@ public class PersistenciaSuperAndes {
 	}
 
 
-	public void registrarSucursal(String nombre, String segmentacion, String tamanio, String ciudad, String direccion)
+	public Sucursal registrarSucursal(String nombre, String segmentacion, String tamanio, String ciudad, String direccion)
 	{
-		log.info ("Registrando sucursal: " + nombre);
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try 
+		{
+			tx.begin();
+			long idSucursal= nextval();
+			long tuplasInsertadas = sqlSucursal.insertarSucursal(pm, idSucursal, nombre, segmentacion, tamanio, ciudad, direccion);
+			tx.commit();
+			log.trace ("Inserción de sucursal: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+			return new Sucursal();
+
+		} 
+		catch (Exception e) 
+		{
+
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}	
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 
 	}
 
-	public void registrarBodega(long idSucursal, double capacidadVolumen, double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso)
+	public Bodega registrarBodega(long idSucursal, double capacidadVolumen, double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso)
 	{
-		log.info ("Registrando bodega en la sucursal: " + idSucursal);
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try 
+		{
+			tx.begin();
+			long idBodega= nextval();	
+			long tuplasInsertadas = sqlBodega.insertarBodega(pm,idBodega,idSucursal,capacidadVolumen,capacidadTotalVolumen,capacidadPeso,capacidadTotalPeso);
+			tx.commit();
+			log.trace ("Inserción de bodega: " + idBodega + ": " + tuplasInsertadas + " tuplas insertadas");
+			return new Bodega();
 
+		} 
+		catch (Exception e) 
+		{
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 
-	public void registrarEstante(long idSucursal, double capacidadVolumen, double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso)
+	public Estante registrarEstante(long idSucursal, double capacidadVolumen, double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso)
 	{
-		log.info ("Registrando estante en la sucursal: " + idSucursal);
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try 
+		{
+			tx.begin();
+			long idEstante= nextval();	
+			long tuplasInsertadas = sqlEstante.insertarEstante(pm,idEstante,idSucursal,capacidadVolumen,capacidadTotalVolumen,capacidadPeso,capacidadTotalPeso);
+			tx.commit();
+			log.trace ("Inserción de estante: " + idEstante + ": " + tuplasInsertadas + " tuplas insertadas");
+			return new Estante();
+
+		} 
+		catch (Exception e) 
+		{
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 
 	/**

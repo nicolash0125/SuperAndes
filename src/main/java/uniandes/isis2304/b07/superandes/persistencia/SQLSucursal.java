@@ -36,6 +36,14 @@ public class SQLSucursal {
 	{
 		this.pp = pp;
 	}
+	
+	public long insertarSucursal(PersistenceManager pm,long idSucursal, String nombre, String segmentacion, String tamano, String ciudad, String direccion)
+	{
+		 Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaSucursal() + "(IDSUCURSAL,NOMBRE,SEGMENTACION,TAMANO,CIUDAD,DIRECCION) values (?, ?, ?, ?, ?, ?)");
+	     q.setParameters(idSucursal, nombre, segmentacion, tamano, ciudad, direccion);
+	     return (long) q.executeUnique();   
+	}
+	
 	public List<IndiceOcupacion> darIndiceOcupacion(PersistenceManager pm, long idSucursal){
 		Query q = pm.newQuery(SQL, "SELECT * FROM ( SELECT idEstante as id_Elemento, 'ESTANTE' as TIPO, CAPACIDADVOLUMEN / CAPACIDADTOTALVOLUMEN as INDICE_VOLUMEN, CAPACIDADPESO / CAPACIDADTOTALPESO as INDICE_PESO "
 				+ "FROM ESTANTE WHERE idsucursal = ? "

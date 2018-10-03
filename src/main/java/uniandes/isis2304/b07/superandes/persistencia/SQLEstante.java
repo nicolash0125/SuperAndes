@@ -1,5 +1,7 @@
 package uniandes.isis2304.b07.superandes.persistencia;
 
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 
 public class SQLEstante {
 	/* ****************************************************************
@@ -29,5 +31,12 @@ public class SQLEstante {
 	public SQLEstante (PersistenciaSuperAndes pp)
 	{
 		this.pp = pp;
+	}
+
+	public long insertarEstante(PersistenceManager pm, long idEstante, long idSucursal, double capacidadVolumen,
+			double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso) {
+		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaEstante  () + "(idsucursal, idestante,capacidadvolumen,capacidadtotalvolumen,capacidadpeso,capacidadtotalpeso) values (?, ?, ?, ?, ?, ?)");
+        q.setParameters(idEstante, idSucursal, capacidadVolumen, capacidadTotalVolumen, capacidadPeso, capacidadTotalPeso);
+        return (long) q.executeUnique();
 	}
 }

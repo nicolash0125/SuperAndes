@@ -1,5 +1,7 @@
 package uniandes.isis2304.b07.superandes.persistencia;
 
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 
 public class SQLBodega {
 	/* ****************************************************************
@@ -29,5 +31,12 @@ public class SQLBodega {
 	public SQLBodega (PersistenciaSuperAndes pp)
 	{
 		this.pp = pp;
+	}
+
+	public long insertarBodega(PersistenceManager pm,long idBodega, long idSucursal, double capacidadVolumen, double capacidadTotalVolumen,
+			double capacidadPeso, double capacidadTotalPeso) {
+		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaBodega  () + "(idsucursal, idbodega,capacidadvolumen,capacidadtotalvolumen,capacidadpeso,capacidadtotalpeso) values (?, ?, ?, ?, ?, ?)");
+        q.setParameters(idBodega, idSucursal, capacidadVolumen, capacidadTotalVolumen, capacidadPeso, capacidadTotalPeso);
+        return (long) q.executeUnique();
 	}
 }
