@@ -1086,12 +1086,12 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
     		
     		if (sucursal != 0)
     		{
-    			List<IndiceOcupacion> lista=superAndes.indiceOcupacion(sucursal);
-    			String resultado = "En indiceOcupacion\n\n";
+    			List<Object []> lista=superAndes.indiceOcupacion(sucursal);
+    			String resultado = "En indiceOcupacion\n";
     			resultado += "\n ID_ELEMENTO | TIPO | INDICE_VOLUMEN | INDICE_PESO ";
     			if(lista!=null){
-    				for (IndiceOcupacion indiceOcupacion : lista) {
-    					resultado += "\n "+indiceOcupacion;
+    				for (Object[] objeto : lista) {
+    					resultado += "\n "+objeto;
 					}
     				resultado += "\n Operación terminada";
     				panelDatos.actualizarInterfaz(resultado);

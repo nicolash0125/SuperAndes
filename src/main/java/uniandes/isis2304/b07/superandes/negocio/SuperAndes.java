@@ -195,7 +195,7 @@ public class SuperAndes {
 	 * 
 	 * @param idSucursal
 	 */
-	public List<IndiceOcupacion> indiceOcupacion(long idSucursal)
+	public List<Object []> indiceOcupacion(long idSucursal)
 	{
 		log.info ("Obteniendo indice de ocupacion de la sucursal: " + idSucursal);
 		return pp.indiceOcupacion(idSucursal);

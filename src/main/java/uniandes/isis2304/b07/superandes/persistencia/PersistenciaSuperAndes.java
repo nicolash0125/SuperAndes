@@ -140,7 +140,7 @@ public class PersistenciaSuperAndes {
 	 */
 	private PersistenciaSuperAndes ()
 	{
-		pmf = JDOHelper.getPersistenceManagerFactory("Parranderos");		
+		pmf = JDOHelper.getPersistenceManagerFactory("SuperAndes");		
 		crearClasesSQL ();
 
 		// Define los nombres por defecto de las tablas de la base de datos
@@ -811,7 +811,7 @@ public class PersistenciaSuperAndes {
 	 * 
 	 * @param idSucursal
 	 */
-	public List<IndiceOcupacion> indiceOcupacion(long idSucursal)
+	public List<Object []> indiceOcupacion(long idSucursal)
 	{
 		return sqlSucursal.darIndiceOcupacion(pmf.getPersistenceManager(), idSucursal);
 	}
