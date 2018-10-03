@@ -114,20 +114,20 @@ public class SuperAndes {
 	public Sucursal registrarSucursal(String nombre, String segmentacion, String tamanio, String ciudad, String direccion)
 	{
 		log.info ("Registrando sucursal: " + nombre);
-		return null;
+		return pp.registrarSucursal(nombre, segmentacion, tamanio, ciudad, direccion);
 
 	}
 
 	public Bodega registrarBodega(long idSucursal, double capacidadVolumen, double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso)
 	{
 		log.info ("Registrando bodega en la sucursal: " + idSucursal);
-		return null;
+		return pp.registrarBodega(idSucursal, capacidadVolumen, capacidadTotalVolumen, capacidadPeso, capacidadTotalPeso);
 	}
 
 	public Estante registrarEstante(long idSucursal, String nombre ,double capacidadVolumen, double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso)
 	{
 		log.info ("Registrando estante en la sucursal: " + idSucursal);
-		return null;
+		return pp.registrarEstante(idSucursal, capacidadVolumen, capacidadTotalVolumen, capacidadPeso, capacidadTotalPeso);
 	}
 
 
