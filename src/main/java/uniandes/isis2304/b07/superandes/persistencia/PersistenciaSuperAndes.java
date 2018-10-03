@@ -274,7 +274,7 @@ public class PersistenciaSuperAndes {
 			String codigoPromo= nextval()+"";
 			long tuplasInsertadas=sqlPromocion.adicionarPromocion(pm, codigoPromo, 1, fechaVencimientoPromocion);
 			tuplasInsertadas+=sqlPagueNUnidadesLleveMPromo.adicionarPromocion(pm, codigoPromo, compraUnidades, llevaUnidades);
-			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm, codigoProducto, codigoPromo);
+			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm, codigoProducto, "3");
 			tx.commit();
 			log.trace ("Inserción de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
             return new PagueNUnidadesLleveMPromo(codigoPromo, compraUnidades, llevaUnidades);
