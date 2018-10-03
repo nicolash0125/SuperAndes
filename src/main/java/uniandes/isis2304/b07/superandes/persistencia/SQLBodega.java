@@ -36,7 +36,7 @@ public class SQLBodega {
 	public long insertarBodega(PersistenceManager pm,long idBodega, long idSucursal, double capacidadVolumen, double capacidadTotalVolumen,
 			double capacidadPeso, double capacidadTotalPeso) {
 		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaBodega  () + "(idsucursal, idbodega,capacidadvolumen,capacidadtotalvolumen,capacidadpeso,capacidadtotalpeso) values (?, ?, ?, ?, ?, ?)");
-        q.setParameters(idBodega, idSucursal, capacidadVolumen, capacidadTotalVolumen, capacidadPeso, capacidadTotalPeso);
+        q.setParameters(idSucursal, idBodega, capacidadVolumen, capacidadTotalVolumen, capacidadPeso, capacidadTotalPeso);
         return (long) q.executeUnique();
 	}
 }

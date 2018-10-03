@@ -181,7 +181,7 @@ public class PersistenciaSuperAndes {
 
 	public String darTablaBodega()
 	{
-		return tablas.get (1);
+		return "BODEGA";
 	}
 
 	public String darTablaCategoria()
@@ -209,7 +209,7 @@ public class PersistenciaSuperAndes {
 
 	public String darTablaEstante()
 	{
-		return tablas.get (6);
+		return "ESTANTE";
 	}
 
 
@@ -298,7 +298,7 @@ public class PersistenciaSuperAndes {
 
 	public String darTablaSucursal()
 	{
-		return tablas.get (23);
+		return "SUCURSAL";
 	}
 
 	public String darTablaVenta()
@@ -549,7 +549,7 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas = sqlSucursal.insertarSucursal(pm, idSucursal, nombre, segmentacion, tamanio, ciudad, direccion);
 			tx.commit();
 			log.trace ("Inserción de sucursal: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
-			return new Sucursal();
+			return new Sucursal(idSucursal, nombre, segmentacion, direccion, tamanio, ciudad);
 
 		} 
 		catch (Exception e) 
@@ -580,7 +580,7 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas = sqlBodega.insertarBodega(pm,idBodega,idSucursal,capacidadVolumen,capacidadTotalVolumen,capacidadPeso,capacidadTotalPeso);
 			tx.commit();
 			log.trace ("Inserción de bodega: " + idBodega + ": " + tuplasInsertadas + " tuplas insertadas");
-			return new Bodega();
+			return new Bodega(idSucursal, idBodega, 0, capacidadVolumen, capacidadTotalVolumen, capacidadPeso, capacidadTotalPeso);
 
 		} 
 		catch (Exception e) 
@@ -609,8 +609,7 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas = sqlEstante.insertarEstante(pm,idEstante,idSucursal,capacidadVolumen,capacidadTotalVolumen,capacidadPeso,capacidadTotalPeso);
 			tx.commit();
 			log.trace ("Inserción de estante: " + idEstante + ": " + tuplasInsertadas + " tuplas insertadas");
-			return new Estante();
-
+			return new Estante(idSucursal, idEstante, "", 0, capacidadVolumen, capacidadTotalVolumen, capacidadPeso, capacidadTotalPeso, 0);
 		} 
 		catch (Exception e) 
 		{

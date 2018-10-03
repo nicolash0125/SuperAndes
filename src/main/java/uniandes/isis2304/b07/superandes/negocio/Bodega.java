@@ -23,7 +23,17 @@ public class Bodega implements VOBodega{
 	/* ****************************************************************
 	 * 			Métodos
 	 *****************************************************************/
-	
+	public Bodega(long idSucursal, long id, long idTipoProducto, double capacidadVolumen, double capacidadTotalVolumen,
+			double capacidadPeso, double capacidadTotalPeso) 
+	{
+		this.idSucursal = idSucursal;
+		this.id = id;
+		this.idTipoProducto = idTipoProducto;
+		this.capacidadVolumen = capacidadVolumen;
+		this.capacidadTotalVolumen = capacidadTotalVolumen;
+		this.capacidadPeso = capacidadPeso;
+		this.capacidadTotalPeso = capacidadTotalPeso;
+	}
 
 	/**
 	 * @return the idSucursal
@@ -31,6 +41,7 @@ public class Bodega implements VOBodega{
 	public long getIdSucursal() {
 		return idSucursal;
 	}
+
 
 	/**
 	 * @param idSucursal the idSucursal to set
@@ -121,6 +132,16 @@ public class Bodega implements VOBodega{
 	 */
 	public void setCapacidadTotalPeso(double capacidadTotalPeso) {
 		this.capacidadTotalPeso = capacidadTotalPeso;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Bodega [idSucursal=" + idSucursal + ", id=" + id + ", idTipoProducto=" + idTipoProducto
+				+ ", capacidadVolumen=" + capacidadVolumen + ", capacidadTotalVolumen=" + capacidadTotalVolumen
+				+ ", capacidadPeso=" + capacidadPeso + ", capacidadTotalPeso=" + capacidadTotalPeso + "]";
 	}
 	
 	

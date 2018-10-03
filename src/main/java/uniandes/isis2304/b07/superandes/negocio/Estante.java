@@ -23,6 +23,23 @@ public class Estante implements VOEstante{
 	
 	private double nivelDeAbastecimiento;
 
+	
+	
+	
+	public Estante(long idSucursal, long id, String nombre, long idTipoProducto, double capacidadVolumen,
+			double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso,
+			double nivelDeAbastecimiento) {
+		this.idSucursal = idSucursal;
+		this.id = id;
+		this.nombre = nombre;
+		this.idTipoProducto = idTipoProducto;
+		this.capacidadVolumen = capacidadVolumen;
+		this.capacidadTotalVolumen = capacidadTotalVolumen;
+		this.capacidadPeso = capacidadPeso;
+		this.capacidadTotalPeso = capacidadTotalPeso;
+		this.nivelDeAbastecimiento = nivelDeAbastecimiento;
+	}
+
 	/**
 	 * @return the idSucursal
 	 */
@@ -147,6 +164,17 @@ public class Estante implements VOEstante{
 	 */
 	public void setNivelDeAbastecimiento(double nivelDeAbastecimiento) {
 		this.nivelDeAbastecimiento = nivelDeAbastecimiento;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Estante [idSucursal=" + idSucursal + ", id=" + id + ", nombre=" + nombre + ", idTipoProducto="
+				+ idTipoProducto + ", capacidadVolumen=" + capacidadVolumen + ", capacidadTotalVolumen="
+				+ capacidadTotalVolumen + ", capacidadPeso=" + capacidadPeso + ", capacidadTotalPeso="
+				+ capacidadTotalPeso + ", nivelDeAbastecimiento=" + nivelDeAbastecimiento + "]";
 	}
 	
 	

@@ -17,6 +17,19 @@ public class Sucursal implements VOSucursal{
 	
 	private String ciudad;
 
+	
+	
+	
+	public Sucursal(long id, String nombre, String segmentacion, String direccion, String tamano, String ciudad) 
+	{
+		this.id = id;
+		this.nombre = nombre;
+		this.segmentacion = segmentacion;
+		this.direccion = direccion;
+		this.tamano = tamano;
+		this.ciudad = ciudad;
+	}
+
 	/**
 	 * @return the id
 	 */
@@ -99,6 +112,15 @@ public class Sucursal implements VOSucursal{
 	 */
 	public void setCiudad(String ciudad) {
 		this.ciudad = ciudad;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Sucursal [id=" + id + ", nombre=" + nombre + ", segmentacion=" + segmentacion + ", direccion="
+				+ direccion + ", tamano=" + tamano + ", ciudad=" + ciudad + "]";
 	}
 	
 	
