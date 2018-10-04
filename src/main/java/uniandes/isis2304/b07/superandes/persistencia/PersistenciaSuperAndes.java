@@ -1,4 +1,4 @@
-锘縫ackage uniandes.isis2304.b07.superandes.persistencia;
+package uniandes.isis2304.b07.superandes.persistencia;
 
 import java.sql.Timestamp;
 import java.util.LinkedList;
@@ -41,7 +41,7 @@ public class PersistenciaSuperAndes {
 	 * 			Constantes
 	 *****************************************************************/
 	/**
-	 * Logger para escribir la traza de la ejecuci贸n
+	 * Logger para escribir la traza de la ejecuci髇
 	 */
 	private static Logger log = Logger.getLogger(PersistenciaSuperAndes.class.getName());
 
@@ -54,12 +54,12 @@ public class PersistenciaSuperAndes {
 	 * 			Atributos
 	 *****************************************************************/
 	/**
-	 * Atributo privado que es el 煤nico objeto de la clase - Patr贸n SINGLETON
+	 * Atributo privado que es el 鷑ico objeto de la clase - Patr髇 SINGLETON
 	 */
 	private static PersistenciaSuperAndes instance;
 
 	/**
-	 * F谩brica de Manejadores de persistencia, para el manejo correcto de las transacciones
+	 * F醔rica de Manejadores de persistencia, para el manejo correcto de las transacciones
 	 */
 	private PersistenceManagerFactory pmf;
 
@@ -134,11 +134,11 @@ public class PersistenciaSuperAndes {
 
 
 	/* ****************************************************************
-	 * 			M茅todos del MANEJADOR DE PERSISTENCIA
+	 * 			M閠odos del MANEJADOR DE PERSISTENCIA
 	 *****************************************************************/
 
 	/**
-	 * Constructor privado con valores por defecto - Patr贸n SINGLETON
+	 * Constructor privado con valores por defecto - Patr髇 SINGLETON
 	 */
 	private PersistenciaSuperAndes ()
 	{
@@ -318,7 +318,7 @@ public class PersistenciaSuperAndes {
 
 
 	/**
-	 * Constructor privado, que recibe los nombres de las tablas en un objeto Json - Patr贸n SINGLETON
+	 * Constructor privado, que recibe los nombres de las tablas en un objeto Json - Patr髇 SINGLETON
 	 * @param tableConfig - Objeto Json que contiene los nombres de las tablas y de la unidad de persistencia a manejar
 	 */
 	private PersistenciaSuperAndes (JsonObject tableConfig)
@@ -332,7 +332,7 @@ public class PersistenciaSuperAndes {
 	}
 
 	/**
-	 * @return Retorna el 煤nico objeto PersistenciaParranderos existente - Patr贸n SINGLETON
+	 * @return Retorna el 鷑ico objeto PersistenciaParranderos existente - Patr髇 SINGLETON
 	 */
 	public static PersistenciaSuperAndes getInstance ()
 	{
@@ -346,7 +346,7 @@ public class PersistenciaSuperAndes {
 	/**
 	 * Constructor que toma los nombres de las tablas de la base de datos del objeto tableConfig
 	 * @param tableConfig - El objeto JSON con los nombres de las tablas
-	 * @return Retorna el 煤nico objeto PersistenciaParranderos existente - Patr贸n SINGLETON
+	 * @return Retorna el 鷑ico objeto PersistenciaParranderos existente - Patr髇 SINGLETON
 	 */
 	public static PersistenciaSuperAndes getInstance (JsonObject tableConfig)
 	{
@@ -358,7 +358,7 @@ public class PersistenciaSuperAndes {
 	}
 
 	/**
-	 * Cierra la conexi贸n con la base de datos
+	 * Cierra la conexi髇 con la base de datos
 	 */
 	public void cerrarUnidadPersistencia ()
 	{
@@ -449,7 +449,7 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas = sqlProveedor.adicionarProveedor(pm,nit,nombre);
 			tx.commit();
 
-			log.trace ("Inserci贸n de proveedor: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Inserci髇 de proveedor: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
 
 			return new Proveedor(nit, nombre);
 
@@ -481,7 +481,7 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas = sqlProducto.adicionarProducto(pm, codigosBarras, nombres, presentaciones, marcas, cantidades, unidadesMedida, especificacionesEmpacado);
 			tx.commit();
 
-			log.trace ("Inserci贸n de producto: " + nombres + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Inserci髇 de producto: " + nombres + ": " + tuplasInsertadas + " tuplas insertadas");
 
 			return new Producto(codigosBarras, nombres , presentaciones, marcas, cantidades,unidadesMedida, especificacionesEmpacado);
 
@@ -513,7 +513,7 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas = sqlCliente.adicionarCliente(pm, tipodocumento, numDocumento, nombre, apellido, correo);
 			tx.commit();
 
-			log.trace ("Inserci贸n de cliente: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Inserci髇 de cliente: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
 
 			return new Cliente(tipodocumento, numDocumento, nombre, apellido, correo);
 
@@ -547,7 +547,7 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas = sqlPersonaJuridica.adicionarPersonaJuridica(pm, documento, numDocumento,direccion);
 			tx.commit();
 
-			log.trace ("Inserci贸n de personaJuridica: " + numDocumento + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Inserci髇 de personaJuridica: " + numDocumento + ": " + tuplasInsertadas + " tuplas insertadas");
 
 			return new PersonaJuridica(documento, numDocumento, direccion);
 
@@ -580,7 +580,7 @@ public class PersistenciaSuperAndes {
 			long idSucursal= nextval();
 			long tuplasInsertadas = sqlSucursal.insertarSucursal(pm, idSucursal, nombre, segmentacion, tamanio, ciudad, direccion);
 			tx.commit();
-			log.trace ("Inserci贸n de sucursal: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Inserci髇 de sucursal: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new Sucursal(idSucursal, nombre, segmentacion, direccion, tamanio, ciudad);
 
 		} 
@@ -611,7 +611,7 @@ public class PersistenciaSuperAndes {
 			long idBodega= nextval();	
 			long tuplasInsertadas = sqlBodega.insertarBodega(pm,idBodega,idSucursal,capacidadVolumen,capacidadTotalVolumen,capacidadPeso,capacidadTotalPeso);
 			tx.commit();
-			log.trace ("Inserci贸n de bodega: " + idBodega + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Inserci髇 de bodega: " + idBodega + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new Bodega(idSucursal, idBodega, 0, capacidadVolumen, capacidadTotalVolumen, capacidadPeso, capacidadTotalPeso);
 
 		} 
@@ -640,7 +640,7 @@ public class PersistenciaSuperAndes {
 			long idEstante= nextval();	
 			long tuplasInsertadas = sqlEstante.insertarEstante(pm,idEstante,idSucursal,capacidadVolumen,capacidadTotalVolumen,capacidadPeso,capacidadTotalPeso);
 			tx.commit();
-			log.trace ("Inserci贸n de estante: " + idEstante + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Inserci髇 de estante: " + idEstante + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new Estante(idSucursal, idEstante, "", 0, capacidadVolumen, capacidadTotalVolumen, capacidadPeso, capacidadTotalPeso, 0);
 		} 
 		catch (Exception e) 
@@ -674,7 +674,7 @@ public class PersistenciaSuperAndes {
 			tuplasInsertadas+=sqlPagueNUnidadesLleveMPromo.adicionarPromocion(pm, codigoPromo, compraUnidades, llevaUnidades);		
 			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
 			tx.commit();
-			log.trace ("Inserci贸n de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Inserci髇 de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new PagueNUnidadesLleveMPromo(codigoPromo, compraUnidades, llevaUnidades);
 		} 
 		catch (Exception e) 
@@ -703,7 +703,7 @@ public class PersistenciaSuperAndes {
 			tuplasInsertadas+=sqlDescPorcentajePromo.adicionarPromocion(pm, codigoPromo, porcentaje);		
 			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
 			tx.commit();
-			log.trace ("Inserci贸n de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Inserci髇 de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new DescPorcentajePromo(codigoPromo, porcentaje);
 		} 
 		catch (Exception e) 
@@ -732,7 +732,7 @@ public class PersistenciaSuperAndes {
 			tuplasInsertadas+=sqlPagueXCantidadLleveYPromo.adicionarPromocion(pm, codigoPromo, cantidadPaga, cantidadLleva);		
 			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
 			tx.commit();
-			log.trace ("Inserci贸n de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Inserci髇 de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new PagueXCantidadLleveYPromo(codigoPromo, cantidadPaga, cantidadLleva);
 		} 
 		catch (Exception e) 
@@ -761,7 +761,7 @@ public class PersistenciaSuperAndes {
 			tuplasInsertadas+=sqlPague1Lleve2ConDescPromo.adicionarPromocion(pm, codigoPromo, porcentaje);		
 			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
 			tx.commit();
-			log.trace ("Inserci贸n de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Inserci髇 de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new Pague1Lleve2ConDescPromo(codigoPromo, porcentaje);
 		} 
 		catch (Exception e) 
@@ -789,7 +789,7 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas=sqlPromocion.adicionarPromocion(pm, codigoPromo, 1, fechaVencimientoPromocion);
 			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
 			tx.commit();
-			log.trace ("Inserci贸n de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Inserci髇 de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new Promocion(codigoPromo, fechaVencimientoPromocion);
 		} 
 		catch (Exception e) 
@@ -858,9 +858,9 @@ public class PersistenciaSuperAndes {
 
 			tx.commit();
 
-			log.trace ("Inserci贸n de pedido a proveedor: " + nitProveedor + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Inserci髇 de pedido a proveedor: " + nitProveedor + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			log.trace ("Inserci贸n de productosPedidos: " + codigoPedido + ": " + tuplasInsertadas2 + " tuplas insertadas");
+			log.trace ("Inserci髇 de productosPedidos: " + codigoPedido + ": " + tuplasInsertadas2 + " tuplas insertadas");
 
 
 			return new Pedido(pm, idSucursal, codigosProductos, nitProveedor, fechaPrevista, precioTotal);
@@ -883,7 +883,7 @@ public class PersistenciaSuperAndes {
 				tx.begin();
 				long id= nextval();
 				long tuplasInsertadas=sqlLegadaPedido.registrarLlegadaPedido(pm, codigoPedido, idSucursal, fechaLlegada, cantidadProductos, calidadProductos, calificacion);
-				log.trace ("Inserci贸n de llegada pedido: " + id + ": " + tuplasInsertadas + " tuplas insertadas");
+				log.trace ("Inserci髇 de llegada pedido: " + id + ": " + tuplasInsertadas + " tuplas insertadas");
 				tx.commit();
 				return new LlegadaPedido(id, idSucursal, fechaLlegada, cantidadProductos, calidadProductos, calificacion, codigoPedido);
 			} 
@@ -927,9 +927,9 @@ public class PersistenciaSuperAndes {
 
 			tx.commit();
 
-			log.trace ("Inserci贸n de venta: " + numeroVenta + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Inserci髇 de venta: " + numeroVenta + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			log.trace ("Inserci贸n de ventaProducto: " + numeroVenta + ": " + tuplasInsertadas2 + " tuplas insertadas");
+			log.trace ("Inserci髇 de ventaProducto: " + numeroVenta + ": " + tuplasInsertadas2 + " tuplas insertadas");
 
 
 			return new Venta(pm, numeroVenta, tipodocumento, documento, precioTotal);
@@ -996,9 +996,9 @@ public class PersistenciaSuperAndes {
 	}
 
 	/**
-	 * Transacci贸n para el generador de secuencia de SuperAndes
-	 * Adiciona entradas al log de la aplicaci贸n
-	 * @return El siguiente n煤mero del secuenciador de SuperAndes
+	 * Transacci髇 para el generador de secuencia de SuperAndes
+	 * Adiciona entradas al log de la aplicaci髇
+	 * @return El siguiente n鷐ero del secuenciador de SuperAndes
 	 */
 	private long nextval ()
 	{
@@ -1008,9 +1008,9 @@ public class PersistenciaSuperAndes {
 	}
 
 	/**
-	 * Extrae el mensaje de la exception JDODataStoreException embebido en la Exception e, que da el detalle espec铆fico del problema encontrado
-	 * @param e - La excepci贸n que ocurrio
-	 * @return El mensaje de la excepci贸n JDO
+	 * Extrae el mensaje de la exception JDODataStoreException embebido en la Exception e, que da el detalle espec韋ico del problema encontrado
+	 * @param e - La excepci髇 que ocurrio
+	 * @return El mensaje de la excepci髇 JDO
 	 */
 	private String darDetalleException(Exception e) 
 	{
@@ -1026,7 +1026,7 @@ public class PersistenciaSuperAndes {
 
 
 	/* ****************************************************************
-	 *		M茅todos adicionales
+	 *		M閠odos adicionales
 	 *****************************************************************/
 
 
