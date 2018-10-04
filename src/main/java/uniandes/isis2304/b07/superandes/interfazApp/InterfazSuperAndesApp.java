@@ -179,7 +179,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		if ( guiConfig == null )
 		{
 			log.info ( "Se aplica configuración por defecto" );			
-			titulo = "Parranderos APP Default";
+			titulo = "SuperAndes APP Default";
 			alto = 300;
 			ancho = 500;
 		}
