@@ -335,7 +335,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	 */
 	public void mostrarModeloConceptual ()
 	{
-		mostrarArchivo ("data/Modelo Conceptual SuperAndes.pdf");
+		mostrarArchivo ("docs/Modelo Conceptual SuperAndes.pdf");
 	}
 
 	/**
@@ -343,7 +343,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	 */
 	public void mostrarEsquemaBD ()
 	{
-		mostrarArchivo ("data/Esquema BD SuperAndes.pdf");
+		mostrarArchivo ("docs/Esquema BD SuperAndes.pdf");
 	}
 
 	/**
@@ -351,7 +351,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	 */
 	public void mostrarScriptBD ()
 	{
-		mostrarArchivo ("data/EsquemaSuperAndes.sql");
+		mostrarArchivo ("docs/ScriptCreadoTablas.sql");
 	}
 
 	/**
@@ -359,7 +359,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	 */
 	public void mostrarArqRef ()
 	{
-		mostrarArchivo ("data/ArquitecturaReferencia.pdf");
+		mostrarArchivo ("docs/ArquitecturaReferencia.pdf");
 	}
 
 	/**
