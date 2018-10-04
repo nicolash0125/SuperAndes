@@ -1,5 +1,7 @@
 package uniandes.isis2304.b07.superandes.persistencia;
 
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 
 public class SQLVenta {
 	/* ****************************************************************
@@ -29,5 +31,13 @@ public class SQLVenta {
 	public SQLVenta (PersistenciaSuperAndes pp)
 	{
 		this.pp = pp;
+	}
+
+	public long adicionarVenta(PersistenceManager pm, long numeroVenta, String tipodocumento, String documento,
+			double precioTotal) {
+		
+		Query q = pm.newQuery(SQL, "INSERT INTO" + pp.darTablaVenta()+"(NUMEROVENTA,TIPODOCCLIENTE,NUMDOCCLIENTE,TOTALVENTA) values (?,?,?,?)");
+		q.setParameters(numeroVenta,tipodocumento, documento, precioTotal);
+		return (long) q.executeUnique();
 	}
 }

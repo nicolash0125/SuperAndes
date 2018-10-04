@@ -35,6 +35,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import uniandes.isis2304.b07.superandes.negocio.Cliente;
+import uniandes.isis2304.b07.superandes.negocio.IndiceOcupacion;
 import uniandes.isis2304.b07.superandes.negocio.PersonaJuridica;
 import uniandes.isis2304.b07.superandes.negocio.Producto;
 import uniandes.isis2304.b07.superandes.negocio.Promocion;
@@ -49,6 +50,7 @@ import uniandes.isis2304.b07.superandes.negocio.VOPagueNUnidadesLleveMPromo;
 import uniandes.isis2304.b07.superandes.negocio.VOPagueXCantidadLleveY;
 import uniandes.isis2304.b07.superandes.negocio.VOPedido;
 import uniandes.isis2304.b07.superandes.negocio.VOSucursal;
+import uniandes.isis2304.b07.superandes.negocio.Venta;
 /**
  * Clase principal de la interfaz
  * @author Santiago Carrero y Nicolas Hernandez, Tomado de esquema paranderos jdo, autor German Bravo
@@ -613,7 +615,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 
 				String[] options2 = {"TI", "Cedula", "Pasaporte"};
 
-				String documento = (String) JOptionPane.showInputDialog(this, "Elija el tipo de documento","Agregar cliente",JOptionPane.QUESTION_MESSAGE, icon ,options1, options1[1]);
+				String documento = (String) JOptionPane.showInputDialog(this, "Elija el tipo de documento","Agregar cliente",JOptionPane.QUESTION_MESSAGE, icon ,options2, options2[1]);
 
 				String numDocumento = JOptionPane.showInputDialog (this, "Inserte el numero de documento", "Agregar cliente", JOptionPane.QUESTION_MESSAGE);
 
@@ -634,7 +636,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 					}	
 
 					String resultado = "En registrarCliente\n\n";
-					resultado += "Cliente a�adido exitosamente: " + cliente;
+					resultado += "Cliente anadido exitosamente: " + cliente;
 					resultado += "\n Operacion terminada";
 					panelDatos.actualizarInterfaz(resultado);
 				}
@@ -647,8 +649,8 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			}
 
 			catch (Exception e){
-				
-//				e.printStackTrace();
+
+				//				e.printStackTrace();
 				String resultado = generarMensajeError(e);
 				panelDatos.actualizarInterfaz(resultado);
 
@@ -677,7 +679,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 					Cliente cliente = superAndes.registrarCliente(documento, numDocumento, nombre, apellido, correo);
 
 					PersonaJuridica cl = superAndes.registrarPersonaJuridica(documento, numDocumento, direccion);
-					
+
 					if (cliente == null)
 					{
 						throw new Exception ("No se pudo crear el cliente: " + nombre+" "+apellido);
@@ -700,7 +702,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		}
 	}
 
-	
+
 	public void registrarSucursal()
 	{
 		try 
@@ -961,28 +963,37 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	{
 		try 
 		{
+
 			String nitProveedor = JOptionPane.showInputDialog (this, "Nit del proveedor?", "Registrar pedido", JOptionPane.QUESTION_MESSAGE);
+			String idSucursal = JOptionPane.showInputDialog (this, "Id de la sucursal?", "Registrar pedido", JOptionPane.QUESTION_MESSAGE);
 			long fecha = Long.parseLong(JOptionPane.showInputDialog (this, "Fecha prevista de llegada", "Registrar pedido", JOptionPane.QUESTION_MESSAGE));
 			Timestamp fechaPrevista = new Timestamp(fecha);
+			String[] codigosProductos = (JOptionPane.showInputDialog(this,"Ingrese los codigos de los productos a pedir separados por comas", "Registrar pedido", JOptionPane.QUESTION_MESSAGE)).split(",");
+			String[] cantidad = (JOptionPane.showInputDialog(this,"Ingrese la cantidad de productos a pedir separados por comas", "Registrar pedido", JOptionPane.QUESTION_MESSAGE)).split(",");
+			String[] precios = (JOptionPane.showInputDialog(this,"Ingrese los precios del total de la cantidad de cada producto, separados por comas", "Registrar pedido", JOptionPane.QUESTION_MESSAGE)).split(",");
 
-			double precioTotal = Double.parseDouble(JOptionPane.showInputDialog (this, "Precio Total del pedido?", "Registrar pedido", JOptionPane.QUESTION_MESSAGE));
-			String[] codigosProductos=new String[8];
+			double precioTotal = 0;
+
+			for (int i = 0; i < precios.length; i++) {
+
+				precioTotal += Double.parseDouble(precios[i]);
+			}
 
 			if (precioTotal != 0 && nitProveedor != null && fechaPrevista != null && codigosProductos != null)
 			{
-				VOPedido pedido =superAndes.registrarPedido(codigosProductos, nitProveedor, fechaPrevista, precioTotal);
+				VOPedido pedido =superAndes.registrarPedido(idSucursal, codigosProductos, cantidad, precios, nitProveedor, fechaPrevista, precioTotal);
 				if (pedido == null)
 				{
 					throw new Exception ("No se pudo registrar pedido a proveedor: " + nitProveedor);
 				}
 				String resultado = "En registrarPedido\n\n";
-				resultado += "Estante adicionado exitosamente: " + pedido;
-				resultado += "\n Operación terminada";
+				resultado += "Pedido adicionado exitosamente: " + pedido;
+				resultado += "\n Operacion terminada";
 				panelDatos.actualizarInterfaz(resultado);
 			}
 			else
 			{
-				panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+				panelDatos.actualizarInterfaz("Operacion cancelada por el usuario");
 			}
 		} 
 		catch (Exception e) 
@@ -1034,7 +1045,53 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 
 	public void registrarVenta()
 	{
-		System.out.println("Hola");
+		try{
+			String sucursal = JOptionPane.showInputDialog (this, "Digite el id de la sucursal", "Registrar venta", JOptionPane.QUESTION_MESSAGE);
+			String[] options2 = {"TI", "Cedula", "Pasaporte","NIT"};
+			ImageIcon icon = new ImageIcon("https://image.flaticon.com/icons/png/512/16/16075.png");
+			String tipodocumento = (String) JOptionPane.showInputDialog(this, "Elija el tipo de documento","Registrar venta",JOptionPane.QUESTION_MESSAGE, icon ,options2, options2[1]);
+			String documento = JOptionPane.showInputDialog (this, "Digite el numero de documento", "Registrar venta", JOptionPane.QUESTION_MESSAGE);
+			String[] codigosProductos = (JOptionPane.showInputDialog(this,"Ingrese los codigos de los productos a pedir separados por comas", "Registrar pedido", JOptionPane.QUESTION_MESSAGE)).split(",");
+			String[] cantidad = (JOptionPane.showInputDialog(this,"Ingrese la cantidad de productos a pedir separados por comas", "Registrar pedido", JOptionPane.QUESTION_MESSAGE)).split(",");
+
+			String[] precios = superAndes.obtenerPreciosSucursal(sucursal, codigosProductos);
+
+			double precioTotal = 0;
+
+			for (int i = 0; i < precios.length; i++) {
+
+				precioTotal += (Double.parseDouble(precios[i]) * (Double.parseDouble(cantidad[i])));
+
+			}
+
+			if (precioTotal != 0 && sucursal != null && tipodocumento != null && documento != null && codigosProductos != null && cantidad != null && precios != null)
+			{
+				Venta venta = superAndes.registrarVenta(sucursal,tipodocumento, documento, codigosProductos, cantidad, precios, precioTotal);
+
+				if (venta == null)
+				{
+					throw new Exception ("No se pudo registrar la venta en la sucursal: "+sucursal);
+				}
+				
+				String resultado = "En registrarVenta\n\n";
+				resultado += "Venta adicionada exitosamente: " + venta;
+				resultado += "\n Operacion terminada";
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operacion cancelada por el usuario");
+			}
+		} 
+
+		catch (Exception e) 
+		{
+			//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+
+
 	}
 	/* ****************************************************************
 	 * 			Requerimientos funcionales de consulta
@@ -1078,6 +1135,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	public void indiceOcupacion()
 	{
 		try 
+
     	{
     		long sucursal = Long.parseLong(JOptionPane.showInputDialog (this, "Id de la sucursal", "Indice de ocupacion sucursal", JOptionPane.QUESTION_MESSAGE));
     		
@@ -1090,20 +1148,20 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
     				for (Object[] objeto : lista) {
     					resultado += "\n "+objeto;
 					}
-    				resultado += "\n Operación terminada";
-    				panelDatos.actualizarInterfaz(resultado);
-        	    	
-    			}
-    			else
-    			{
-    				panelDatos.actualizarInterfaz("No se econtro informacion de la sucursal"+sucursal);
-    			}
-        	}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-    		}
-		
+					resultado += "\n Operación terminada";
+					panelDatos.actualizarInterfaz(resultado);
+
+				}
+				else
+				{
+					panelDatos.actualizarInterfaz("No se econtro informacion de la sucursal"+sucursal);
+				}
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+			}
+
 		} 
 		catch (Exception e) 
 		{

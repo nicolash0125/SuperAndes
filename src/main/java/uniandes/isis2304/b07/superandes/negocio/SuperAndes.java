@@ -162,10 +162,10 @@ public class SuperAndes {
 		System.out.println("Hola");
 	}
 
-	public Pedido registrarPedido(String[] codigosProductos, String nitProveedor, Timestamp fechaPrevista, double precioTotal )
+	public Pedido registrarPedido(String idSucursal, String[] codigosProductos, String[] cantidad, String[] precios, String nitProveedor, Timestamp fechaPrevista, double precioTotal )
 	{
 		log.info ("Registrando pedido con numero de productos: " + codigosProductos.length);
-		return null;
+		return pp.registrarPedido(idSucursal, codigosProductos,cantidad, precios, nitProveedor, fechaPrevista, precioTotal);
 	}
 
 	public LlegadaPedido registrarLlegadaPedido(long codigoPedido, long idSucursal, Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
@@ -174,10 +174,22 @@ public class SuperAndes {
 		return pp.registrarLlegadaPedido(codigoPedido, idSucursal, fechaLlegada, cantidadProductos, calidadProductos, calificacion);
 	}
 
-	public void registrarVenta(String codigoProducto, int unidadesVendidas, String tipoDocumentoCliente, String numeroDocumentoCLiente)
-	{
-		log.info ("Registrando venta de producto: " + codigoProducto);
+
+	public Venta registrarVenta(String sucursal, String tipodocumento, String documento, String[] codigosProductos,
+			String[] cantidad, String[] precios, double precioTotal) {
+
+		return pp.registrarVenta(sucursal, tipodocumento, documento, codigosProductos, cantidad, precios, precioTotal);
+
 	}
+
+
+
+	public String[] obtenerPreciosSucursal(String sucursal, String[] productos) {
+
+		return pp.obtenerPreciosSucursal(sucursal, productos);
+	}
+
+
 
 	/* ****************************************************************
 	 * 			Requerimientos funcionales de consulta
@@ -199,7 +211,7 @@ public class SuperAndes {
 	 * 
 	 * @param idSucursal
 	 */
-	public List<Object []> indiceOcupacion(long idSucursal)
+	public List<Object[]> indiceOcupacion(long idSucursal)
 	{
 		log.info ("Obteniendo indice de ocupacion de la sucursal: " + idSucursal);
 		return pp.indiceOcupacion(idSucursal);
@@ -250,6 +262,7 @@ public class SuperAndes {
 	public void productosDeProveedor(String nit) {
 
 	}
+
 
 
 

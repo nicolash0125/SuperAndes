@@ -1,5 +1,8 @@
 package uniandes.isis2304.b07.superandes.persistencia;
 
+import java.sql.Timestamp;
+
+import javax.jdo.PersistenceManager;
 
 public class SQLPedido {
 	/* ****************************************************************
@@ -29,5 +32,11 @@ public class SQLPedido {
 	public SQLPedido (PersistenciaSuperAndes pp)
 	{
 		this.pp = pp;
+	}
+
+	public long adicionarPedido(PersistenceManager pm, String idSucursal, String[] codigosProductos,
+			String nitProveedor, Timestamp fechaPrevista, double precioTotal) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
