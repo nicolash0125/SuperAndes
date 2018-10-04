@@ -673,6 +673,7 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas=sqlPromocion.adicionarPromocion(pm, codigoPromo, 1, fechaVencimientoPromocion);
 			tuplasInsertadas+=sqlPagueNUnidadesLleveMPromo.adicionarPromocion(pm, codigoPromo, compraUnidades, llevaUnidades);		
 			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
+			tx.commit();
 			log.trace ("Inserción de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new PagueNUnidadesLleveMPromo(codigoPromo, compraUnidades, llevaUnidades);
 		} 
@@ -701,6 +702,7 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas=sqlPromocion.adicionarPromocion(pm, codigoPromo, 1, fechaVencimientoPromocion);
 			tuplasInsertadas+=sqlDescPorcentajePromo.adicionarPromocion(pm, codigoPromo, porcentaje);		
 			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
+			tx.commit();
 			log.trace ("Inserción de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new DescPorcentajePromo(codigoPromo, porcentaje);
 		} 
@@ -729,6 +731,7 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas=sqlPromocion.adicionarPromocion(pm, codigoPromo, 1, fechaVencimientoPromocion);
 			tuplasInsertadas+=sqlPagueXCantidadLleveYPromo.adicionarPromocion(pm, codigoPromo, cantidadPaga, cantidadLleva);		
 			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
+			tx.commit();
 			log.trace ("Inserción de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new PagueXCantidadLleveYPromo(codigoPromo, cantidadPaga, cantidadLleva);
 		} 
@@ -757,6 +760,7 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas=sqlPromocion.adicionarPromocion(pm, codigoPromo, 1, fechaVencimientoPromocion);
 			tuplasInsertadas+=sqlPague1Lleve2ConDescPromo.adicionarPromocion(pm, codigoPromo, porcentaje);		
 			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
+			tx.commit();
 			log.trace ("Inserción de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new Pague1Lleve2ConDescPromo(codigoPromo, porcentaje);
 		} 
@@ -784,6 +788,7 @@ public class PersistenciaSuperAndes {
 			String codigoPromo= nextval()+"";
 			long tuplasInsertadas=sqlPromocion.adicionarPromocion(pm, codigoPromo, 1, fechaVencimientoPromocion);
 			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
+			tx.commit();
 			log.trace ("Inserción de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new Promocion(codigoPromo, fechaVencimientoPromocion);
 		} 
@@ -802,9 +807,31 @@ public class PersistenciaSuperAndes {
 		}
 	}
 
-	public void finalizarPromocion()
+	public long finalizarPromocion(Timestamp fecha)
 	{
-		System.out.println("Hola");
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try 
+		{
+			tx.begin();
+			long tuplasEliminadas=sqlPromocion.eliminarPromocion(pm, fecha);
+			log.trace ("Eliminacion de promocion, "  + tuplasEliminadas + " tuplas eliminadas");
+			tx.commit();
+			return tuplasEliminadas;
+		} 
+		catch (Exception e) 
+		{
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return 0;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 
 	public Pedido registrarPedido(String idSucursal, String[] codigosProductos, String[] cantidad, String[] precios, String nitProveedor, Timestamp fechaPrevista, double precioTotal )
@@ -857,6 +884,7 @@ public class PersistenciaSuperAndes {
 				long id= nextval();
 				long tuplasInsertadas=sqlLegadaPedido.registrarLlegadaPedido(pm, codigoPedido, idSucursal, fechaLlegada, cantidadProductos, calidadProductos, calificacion);
 				log.trace ("Inserción de llegada pedido: " + id + ": " + tuplasInsertadas + " tuplas insertadas");
+				tx.commit();
 				return new LlegadaPedido(id, idSucursal, fechaLlegada, cantidadProductos, calidadProductos, calificacion, codigoPedido);
 			} 
 			catch (Exception e) 

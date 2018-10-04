@@ -157,9 +157,9 @@ public class SuperAndes {
 	}
 
 
-	public void finalizarPromocion()
+	public long finalizarPromocion(Timestamp fecha)
 	{
-		System.out.println("Hola");
+		return pp.finalizarPromocion(fecha);
 	}
 
 	public Pedido registrarPedido(String idSucursal, String[] codigosProductos, String[] cantidad, String[] precios, String nitProveedor, Timestamp fechaPrevista, double precioTotal )

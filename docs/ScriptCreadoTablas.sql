@@ -284,6 +284,7 @@ ALTER TABLE PersonaJuridica
 ALTER TABLE PagueNUnidadesLleveMPromo
     ADD    FOREIGN KEY (codigoPromo)
     REFERENCES Promocion(codigoPromocion)
+    ON DELETE CASCADE
 ;
     
 ALTER TABLE VentaPromocion
@@ -294,20 +295,24 @@ ALTER TABLE VentaPromocion
 ALTER TABLE DescPorcentajePromo
     ADD    FOREIGN KEY (codigoPromo)
     REFERENCES Promocion(codigoPromocion)
+    ON DELETE CASCADE
 ;
     
 ALTER TABLE Pague1Lleve2ConDescPromo
     ADD    FOREIGN KEY (codigoPromo)
     REFERENCES Promocion(codigoPromocion)
+    ON DELETE CASCADE
 ;
 
 ALTER TABLE PagueXCantidadLleveYPromo
     ADD    FOREIGN KEY (codigoPromo)
     REFERENCES Promocion(codigoPromocion)
+    ON DELETE CASCADE
 ;    
 ALTER TABLE ProductoPromocion
     ADD    FOREIGN KEY (codigoPromocion)
     REFERENCES Promocion(codigoPromocion)
+    ON DELETE CASCADE
 ;
     
 ALTER TABLE VentaProducto

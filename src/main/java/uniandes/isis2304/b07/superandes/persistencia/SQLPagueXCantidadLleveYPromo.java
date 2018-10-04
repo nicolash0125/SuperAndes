@@ -38,5 +38,11 @@ public class SQLPagueXCantidadLleveYPromo {
 		q.setParameters(codigoPromo,cantidadPaga,cantidadLleva);
 		return (long) q.executeUnique();
 	}
+	public long eliminarPromocion(PersistenceManager pm, String codigoPromo){
+		Query q = pm.newQuery(SQL,"DELETE FROM "+pp.darTablaPagueXCantidadLleveYPromo()+" "
+				+ "WHERE CODIGOPROMO = ? ");
+		q.setParameters(codigoPromo);
+		return (long) q.executeUnique();
+	}
 
 }
