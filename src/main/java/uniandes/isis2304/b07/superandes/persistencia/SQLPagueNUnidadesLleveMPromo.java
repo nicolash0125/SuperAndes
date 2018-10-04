@@ -1,7 +1,5 @@
 package uniandes.isis2304.b07.superandes.persistencia;
 
-import java.sql.Timestamp;
-
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 

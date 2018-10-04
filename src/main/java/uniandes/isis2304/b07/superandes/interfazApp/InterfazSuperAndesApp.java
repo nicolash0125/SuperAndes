@@ -34,8 +34,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
-import uniandes.isis2304.b07.superandes.negocio.IndiceOcupacion;
 import uniandes.isis2304.b07.superandes.negocio.Cliente;
+import uniandes.isis2304.b07.superandes.negocio.IndiceOcupacion;
 import uniandes.isis2304.b07.superandes.negocio.PersonaJuridica;
 import uniandes.isis2304.b07.superandes.negocio.Producto;
 import uniandes.isis2304.b07.superandes.negocio.Promocion;
@@ -48,9 +48,7 @@ import uniandes.isis2304.b07.superandes.negocio.VOLlegadaPedido;
 import uniandes.isis2304.b07.superandes.negocio.VOPague1Lleve2ConDescPromo;
 import uniandes.isis2304.b07.superandes.negocio.VOPagueNUnidadesLleveMPromo;
 import uniandes.isis2304.b07.superandes.negocio.VOPagueXCantidadLleveY;
-import uniandes.isis2304.b07.superandes.negocio.VOPaqueteDeProductos;
 import uniandes.isis2304.b07.superandes.negocio.VOPedido;
-import uniandes.isis2304.b07.superandes.negocio.VOProveedor;
 import uniandes.isis2304.b07.superandes.negocio.VOSucursal;
 import uniandes.isis2304.b07.superandes.negocio.Venta;
 /**
@@ -1137,17 +1135,18 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	public void indiceOcupacion()
 	{
 		try 
-		{
-			long sucursal = Long.parseLong(JOptionPane.showInputDialog (this, "Id de la sucursal", "Indice de ocupacion sucursal", JOptionPane.QUESTION_MESSAGE));
 
-			if (sucursal != 0)
-			{
-				List<IndiceOcupacion> lista=superAndes.indiceOcupacion(sucursal);
-				String resultado = "En indiceOcupacion\n\n";
-				resultado += "\n ID_ELEMENTO | TIPO | INDICE_VOLUMEN | INDICE_PESO ";
-				if(lista!=null){
-					for (IndiceOcupacion indiceOcupacion : lista) {
-						resultado += "\n "+indiceOcupacion;
+    	{
+    		long sucursal = Long.parseLong(JOptionPane.showInputDialog (this, "Id de la sucursal", "Indice de ocupacion sucursal", JOptionPane.QUESTION_MESSAGE));
+    		
+    		if (sucursal != 0)
+    		{
+    			List<Object []> lista=superAndes.indiceOcupacion(sucursal);
+    			String resultado = "En indiceOcupacion\n";
+    			resultado += "\n ID_ELEMENTO | TIPO | INDICE_VOLUMEN | INDICE_PESO ";
+    			if(lista!=null){
+    				for (Object[] objeto : lista) {
+    					resultado += "\n "+objeto;
 					}
 					resultado += "\n Operación terminada";
 					panelDatos.actualizarInterfaz(resultado);

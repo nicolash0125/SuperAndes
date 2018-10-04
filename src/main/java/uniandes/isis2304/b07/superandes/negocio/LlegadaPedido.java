@@ -22,6 +22,21 @@ public class LlegadaPedido implements VOLlegadaPedido{
 	
 	public long idPedido;
 
+	
+	
+	
+	public LlegadaPedido(long id, long idSucursal, Timestamp fechaEntrega, int cantidadProductos,
+			String calidadProductos, String calificacion, long idPedido)
+	{
+		this.id = id;
+		this.idSucursal = idSucursal;
+		this.fechaEntrega = fechaEntrega;
+		this.cantidadProductos = cantidadProductos;
+		this.calidadProductos = calidadProductos;
+		this.calificacion = calificacion;
+		this.idPedido = idPedido;
+	}
+
 	/**
 	 * @return the id
 	 */
@@ -119,6 +134,17 @@ public class LlegadaPedido implements VOLlegadaPedido{
 	public void setIdPedido(long idPedido) {
 		this.idPedido = idPedido;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "LlegadaPedido [id=" + id + ", idSucursal=" + idSucursal + ", fechaEntrega=" + fechaEntrega
+				+ ", cantidadProductos=" + cantidadProductos + ", calidadProductos=" + calidadProductos
+				+ ", calificacion=" + calificacion + ", idPedido=" + idPedido + "]";
+	}
+	
 	
 	
 }

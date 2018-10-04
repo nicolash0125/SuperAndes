@@ -20,7 +20,7 @@ import uniandes.isis2304.b07.superandes.negocio.Bodega;
 import uniandes.isis2304.b07.superandes.negocio.Cliente;
 import uniandes.isis2304.b07.superandes.negocio.DescPorcentajePromo;
 import uniandes.isis2304.b07.superandes.negocio.Estante;
-import uniandes.isis2304.b07.superandes.negocio.IndiceOcupacion;
+import uniandes.isis2304.b07.superandes.negocio.LlegadaPedido;
 import uniandes.isis2304.b07.superandes.negocio.Pague1Lleve2ConDescPromo;
 import uniandes.isis2304.b07.superandes.negocio.PagueNUnidadesLleveMPromo;
 import uniandes.isis2304.b07.superandes.negocio.PagueXCantidadLleveYPromo;
@@ -142,7 +142,7 @@ public class PersistenciaSuperAndes {
 	 */
 	private PersistenciaSuperAndes ()
 	{
-		pmf = JDOHelper.getPersistenceManagerFactory("Parranderos");		
+		pmf = JDOHelper.getPersistenceManagerFactory("SuperAndes");		
 		crearClasesSQL ();
 
 		// Define los nombres por defecto de las tablas de la base de datos
@@ -224,7 +224,7 @@ public class PersistenciaSuperAndes {
 
 	public String darTablaLlegadaPedido()
 	{
-		return tablas.get (8);
+		return "LLEGADAPEDIDO";
 	}
 
 
@@ -459,7 +459,14 @@ public class PersistenciaSuperAndes {
 
 			return null;
 		}
-
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 
 	public Producto registrarProductos(String codigosBarras, String nombres, String presentaciones, String marcas, int cantidades, String unidadesMedida, String especificacionesEmpacado)
@@ -484,7 +491,14 @@ public class PersistenciaSuperAndes {
 
 			return null;
 		}		
-
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 
 	public Cliente registrarCliente(String tipodocumento, String numDocumento, String nombre, String apellido, String correo)
@@ -509,7 +523,14 @@ public class PersistenciaSuperAndes {
 
 			return null;
 		}	
-
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 
 
@@ -536,8 +557,16 @@ public class PersistenciaSuperAndes {
 
 			return null;
 		}	
-
-
+		
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+		
 	}
 
 
@@ -817,9 +846,33 @@ public class PersistenciaSuperAndes {
 		}		
 	}
 
-	public void registrarLlegadaPedido(long codigoPedido, Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
+	public LlegadaPedido registrarLlegadaPedido(long codigoPedido, long idSucursal,Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
 	{
-		log.info ("Registrando llegada pedido: " + codigoPedido);
+		{
+			PersistenceManager pm = pmf.getPersistenceManager();
+			Transaction tx=pm.currentTransaction();
+			try 
+			{
+				tx.begin();
+				long id= nextval();
+				long tuplasInsertadas=sqlLegadaPedido.registrarLlegadaPedido(pm, codigoPedido, idSucursal, fechaLlegada, cantidadProductos, calidadProductos, calificacion);
+				log.trace ("Inserción de llegada pedido: " + id + ": " + tuplasInsertadas + " tuplas insertadas");
+				return new LlegadaPedido(id, idSucursal, fechaLlegada, cantidadProductos, calidadProductos, calificacion, codigoPedido);
+			} 
+			catch (Exception e) 
+			{
+				log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+				return null;
+			}
+			finally
+			{
+				if (tx.isActive())
+				{
+					tx.rollback();
+				}
+				pm.close();
+			}
+		}
 	}
 
 	public Venta registrarVenta(String sucursal, String tipodocumento, String documento, String[] codigosProductos,
@@ -884,7 +937,7 @@ public class PersistenciaSuperAndes {
 	 * 
 	 * @param idSucursal
 	 */
-	public List<IndiceOcupacion> indiceOcupacion(long idSucursal)
+	public List<Object []> indiceOcupacion(long idSucursal)
 	{
 		return sqlSucursal.darIndiceOcupacion(pmf.getPersistenceManager(), idSucursal);
 	}

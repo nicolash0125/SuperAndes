@@ -12,7 +12,11 @@ import uniandes.isis2304.b07.superandes.persistencia.PersistenciaSuperAndes;
 
 
 
-
+/**
+ * Clase principal del mundo
+ * @author Santiago Carrero y Nicolas Hernandez 
+ *
+ */
 public class SuperAndes {
 	/* ****************************************************************
 	 * 			Constantes
@@ -167,7 +171,7 @@ public class SuperAndes {
 	public LlegadaPedido registrarLlegadaPedido(long codigoPedido, long idSucursal, Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
 	{
 		log.info ("Registrando llegada pedido: " + codigoPedido);
-		return null;
+		return pp.registrarLlegadaPedido(codigoPedido, idSucursal, fechaLlegada, cantidadProductos, calidadProductos, calificacion);
 	}
 
 
@@ -207,7 +211,7 @@ public class SuperAndes {
 	 * 
 	 * @param idSucursal
 	 */
-	public List<IndiceOcupacion> indiceOcupacion(long idSucursal)
+	public List<Object[]> indiceOcupacion(long idSucursal)
 	{
 		log.info ("Obteniendo indice de ocupacion de la sucursal: " + idSucursal);
 		return pp.indiceOcupacion(idSucursal);
@@ -240,25 +244,22 @@ public class SuperAndes {
 
 
 	public void productosPorFechaVencimiento(Timestamp fechaVencimiento) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
 
 	public void productosEnRangoPesos(double pesoMin, double pesoMax) {
-		// TODO Auto-generated method stub
 
 	}
 
 
 	public void productosEnRangoVolumen(double volumenMin, double volumenMax) {
-		// TODO Auto-generated method stub
 
 	}
 
 
 	public void productosDeProveedor(String nit) {
-		// TODO Auto-generated method stub
 
 	}
 

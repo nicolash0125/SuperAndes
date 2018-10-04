@@ -45,6 +45,7 @@ CREATE TABLE Estante
     capacidadPeso INTEGER,
     capacidadTotalPeso INTEGER,
     nivelDeAbastecimiento INTEGER,
+    idProducto VARCHAR(20),
     CONSTRAINT estante_pk PRIMARY KEY(idSucursal, idEstante)
 );
 
@@ -57,6 +58,7 @@ CREATE TABLE Bodega
     capacidadTotalVolumen INTEGER,
     capacidadPeso INTEGER,
     capacidadTotalPeso INTEGER,
+    idProducto VARCHAR(20),
     CONSTRAINT bodega_pk PRIMARY KEY(idSucursal, idBodega)
 );
 
@@ -90,6 +92,7 @@ CREATE TABLE Pedido
     precioTotal INTEGER,
     estadoOrden VARCHAR(20),
     NitProveedor VARCHAR(20),
+    idSucursal NUMBER,
     CONSTRAINT pedido_pk PRIMARY KEY(codigoPedido)
 );
 
@@ -240,10 +243,23 @@ ALTER TABLE Bodega
     REFERENCES Categoria(idCategoria)
 ;    
 
+ALTER TABLE Bodega
+    ADD FOREIGN KEY (idProducto)
+    REFERENCES Producto(codigoDeBarras)
+;
+
 ALTER TABLE Estante
     ADD FOREIGN KEY (tipoproductoID)
     REFERENCES Categoria(idCategoria)
 ;    
+ALTER TABLE Pedido 
+    ADD FOREIGN KEY  (idSucursal)
+    REFERENCES Sucursal(idSucursal)
+;
+ALTER TABLE Estante
+    ADD FOREIGN KEY (idProducto)
+    REFERENCES Producto(codigoDeBarras)
+;
 
 ALTER TABLE Factura
     ADD    FOREIGN KEY (numeroFactura)
