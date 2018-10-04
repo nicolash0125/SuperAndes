@@ -1046,7 +1046,10 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	public void registrarVenta()
 	{
 		try{
+			
 			String sucursal = JOptionPane.showInputDialog (this, "Digite el id de la sucursal", "Registrar venta", JOptionPane.QUESTION_MESSAGE);
+			long fecha1 = Long.parseLong(JOptionPane.showInputDialog (this, "Fecha  de la venta", "Registrar venta", JOptionPane.QUESTION_MESSAGE));
+			Timestamp fecha = new Timestamp(fecha1);
 			String[] options2 = {"TI", "Cedula", "Pasaporte","NIT"};
 			ImageIcon icon = new ImageIcon("https://image.flaticon.com/icons/png/512/16/16075.png");
 			String tipodocumento = (String) JOptionPane.showInputDialog(this, "Elija el tipo de documento","Registrar venta",JOptionPane.QUESTION_MESSAGE, icon ,options2, options2[1]);
@@ -1066,7 +1069,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 
 			if (precioTotal != 0 && sucursal != null && tipodocumento != null && documento != null && codigosProductos != null && cantidad != null && precios != null)
 			{
-				Venta venta = superAndes.registrarVenta(sucursal,tipodocumento, documento, codigosProductos, cantidad, precios, precioTotal);
+				Venta venta = superAndes.registrarVenta(sucursal,tipodocumento, documento, codigosProductos, cantidad, precios, precioTotal, fecha);
 
 				if (venta == null)
 				{
@@ -1102,14 +1105,13 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		{
 			long fechaI = Long.parseLong(JOptionPane.showInputDialog (this, "Fecha  de inicio", "Dinero recolectado por ventas", JOptionPane.QUESTION_MESSAGE));
 			Timestamp fechaInicio = new Timestamp(fechaI);
-			long fechaF = Long.parseLong(JOptionPane.showInputDialog (this, "Fecha  de inicio", "Dinero recolectado por ventas", JOptionPane.QUESTION_MESSAGE));
+			long fechaF = Long.parseLong(JOptionPane.showInputDialog (this, "Fecha  de fin", "Dinero recolectado por ventas", JOptionPane.QUESTION_MESSAGE));
 			Timestamp fechaFin= new Timestamp(fechaF);
-
 
 
 			if (fechaInicio != null && fechaFin != null)
 			{
-				superAndes.dineroRecolectado(fechaInicio, fechaFin);
+				List<Object[]> dinero = superAndes.dineroRecolectado(fechaInicio, fechaFin);
 				String resultado = "En dineroRecolectado\n\n";
 				resultado += "\n Operación terminada";
 				panelDatos.actualizarInterfaz(resultado);

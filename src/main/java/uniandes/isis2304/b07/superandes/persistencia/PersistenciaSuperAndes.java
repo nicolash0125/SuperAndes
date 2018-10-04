@@ -557,7 +557,7 @@ public class PersistenciaSuperAndes {
 
 			return null;
 		}	
-		
+
 		finally
 		{
 			if (tx.isActive())
@@ -566,7 +566,7 @@ public class PersistenciaSuperAndes {
 			}
 			pm.close();
 		}
-		
+
 	}
 
 
@@ -876,7 +876,7 @@ public class PersistenciaSuperAndes {
 	}
 
 	public Venta registrarVenta(String sucursal, String tipodocumento, String documento, String[] codigosProductos,
-			String[] cantidad, String[] precios, double precioTotal) {
+			String[] cantidad, String[] precios, double precioTotal, Timestamp fecha) {
 
 		PersistenceManager pm = pmf.getPersistenceManager();
 
@@ -888,7 +888,7 @@ public class PersistenciaSuperAndes {
 
 			long numeroVenta = nextval();
 
-			long tuplasInsertadas = sqlVenta.adicionarVenta(pm, numeroVenta, tipodocumento, documento, precioTotal);
+			long tuplasInsertadas = sqlVenta.adicionarVenta(pm, sucursal, numeroVenta, tipodocumento, documento, precioTotal, fecha);
 
 			long tuplasInsertadas2 = 0;
 
@@ -920,9 +920,15 @@ public class PersistenciaSuperAndes {
 	 *****************************************************************/
 
 
-	public void dineroRecolectado(Timestamp fechaInicio,Timestamp fechaFin)
+	public List<Object[]> dineroRecolectado(Timestamp fechaInicio,Timestamp fechaFin)
 	{
 		log.info ("Obteniendo dinero recolectado en las sucursales entre " + fechaInicio+" y "+fechaFin);
+
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		List<Object[]> respuesta = sqlVenta.obtenerDineroRecolectado(pm, fechaInicio, fechaFin);
+
+		return respuesta;
 	}
 
 	/**

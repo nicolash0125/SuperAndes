@@ -176,9 +176,9 @@ public class SuperAndes {
 
 
 	public Venta registrarVenta(String sucursal, String tipodocumento, String documento, String[] codigosProductos,
-			String[] cantidad, String[] precios, double precioTotal) {
+			String[] cantidad, String[] precios, double precioTotal, Timestamp fecha) {
 
-		return pp.registrarVenta(sucursal, tipodocumento, documento, codigosProductos, cantidad, precios, precioTotal);
+		return pp.registrarVenta(sucursal, tipodocumento, documento, codigosProductos, cantidad, precios, precioTotal,fecha);
 
 	}
 
@@ -194,9 +194,11 @@ public class SuperAndes {
 	/* ****************************************************************
 	 * 			Requerimientos funcionales de consulta
 	 *****************************************************************/
-	public void dineroRecolectado(Timestamp fechaInicio,Timestamp fechaFin)
+	public List<Object[]> dineroRecolectado(Timestamp fechaInicio,Timestamp fechaFin)
 	{
 		log.info ("Obteniendo dinero recolectado en las sucursales entre " + fechaInicio+" y "+fechaFin);
+		
+		return pp.dineroRecolectado(fechaInicio, fechaFin);
 	}
 
 	/**
@@ -226,6 +228,7 @@ public class SuperAndes {
 	/* ****************************************************************
 	 *			Requerimientos funcionales de Bono
 	 *****************************************************************/
+	
 	public void comprasAProveedores()
 	{
 
