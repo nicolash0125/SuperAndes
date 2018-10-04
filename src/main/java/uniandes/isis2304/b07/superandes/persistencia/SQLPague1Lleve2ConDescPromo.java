@@ -39,5 +39,12 @@ public class SQLPague1Lleve2ConDescPromo {
 		q.setParameters(codigoPromo,porcentaje);
 		return (long) q.executeUnique();
 	}
+	
+	public long eliminarPromocion(PersistenceManager pm, String codigoPromo){
+		Query q = pm.newQuery(SQL,"DELETE FROM "+pp.darTablaPague1Lleve2ConDescPromo()+" "
+				+ "WHERE CODIGOPROMO = ? ");
+		q.setParameters(codigoPromo);
+		return (long) q.executeUnique();
+	}
 
 }

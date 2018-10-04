@@ -42,6 +42,12 @@ public class SQLPromocion {
 		return (long) q.executeUnique();
 
 	}
+	public long eliminarPromocion(PersistenceManager pm, Timestamp fechaTerminacion){
+		Query q = pm.newQuery(SQL,"DELETE FROM "+pp.darTablaPromocion()+" "
+				+ "WHERE FECHATERMINACION < ? ");
+		q.setParameters(fechaTerminacion);
+		return (long) q.executeUnique();
+	}
 	
 	
 }

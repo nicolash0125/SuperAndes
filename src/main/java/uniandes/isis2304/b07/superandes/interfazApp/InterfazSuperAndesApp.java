@@ -179,7 +179,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		if ( guiConfig == null )
 		{
 			log.info ( "Se aplica configuración por defecto" );			
-			titulo = "Parranderos APP Default";
+			titulo = "SuperAndes APP Default";
 			alto = 300;
 			ancho = 500;
 		}
@@ -956,7 +956,31 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 
 	public void finalizarPromocion()
 	{
-		System.out.println("Hola");
+		try 
+		{
+			String fechaS = JOptionPane.showInputDialog (this, "Fecha actual o de las cuales se quieren acabar las promociones (dd/mm/yyyy)", "Finalizar promocion", JOptionPane.QUESTION_MESSAGE);
+			SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
+			Date d = dateformat.parse(fechaS);
+			Timestamp fecha = new Timestamp(d.getTime());
+			
+
+
+			if (fecha != null)
+			{
+				long eliminados =superAndes.finalizarPromocion(fecha);
+				String resultado = "En finalizarPromocion\n\n";
+				resultado += "Se eliminaron exitosamente: " + eliminados;
+				resultado += "\n Operación terminada";
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			
+		} 
+		catch (Exception e) 
+		{
+			//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
 	}
 
 	public void registrarPedido()
