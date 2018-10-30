@@ -1,19 +1,19 @@
 create sequence SuperAndes_sequence;
 
 -- Crear tablas
-CREATE TABLE Producto
+CREATE TABLE PRODUCTO
 (
     codigoDeBarras VARCHAR(20) NOT NULL,
     nombre VARCHAR(20),
     presentacion VARCHAR(20),
     marca VARCHAR(20),
-    cantidad INTEGER,
     unidadDeMedida VARCHAR(20),
     especificacionEmpacado VARCHAR(20),
+    categoria INTEGER,
     CONSTRAINT producto_pk PRIMARY KEY(codigoDeBarras)
 );
 
-CREATE TABLE Sucursal
+CREATE TABLE SUCURSAL
 (
     idSucursal INTEGER NOT NULL,
     nombre VARCHAR(20),
@@ -32,6 +32,7 @@ CREATE TABLE ProductoOfrecidoSucursal
     precioUnidadMedida INTEGER,
     nivelDeReorden INTEGER,
     cantidadRecompra INTEGER,
+    cantidad INTEGER,
     CONSTRAINT productoofrecidosucursal_pk PRIMARY KEY(idSucursal, codigoBarras)
 );
 
@@ -39,13 +40,12 @@ CREATE TABLE Estante
 (
     idSucursal INTEGER NOT NULL,
     idEstante INTEGER NOT NULL,
-    tipoproductoID INTEGER,
     capacidadVolumen INTEGER,
     capacidadTotalVolumen INTEGER,
     capacidadPeso INTEGER,
     capacidadTotalPeso INTEGER,
     nivelDeAbastecimiento INTEGER,
-    idProducto VARCHAR(20),
+    categoria INTEGER,
     CONSTRAINT estante_pk PRIMARY KEY(idSucursal, idEstante)
 );
 
@@ -58,7 +58,7 @@ CREATE TABLE Bodega
     capacidadTotalVolumen INTEGER,
     capacidadPeso INTEGER,
     capacidadTotalPeso INTEGER,
-    idProducto VARCHAR(20),
+    categoria INTEGER,
     CONSTRAINT bodega_pk PRIMARY KEY(idSucursal, idBodega)
 );
 
@@ -69,22 +69,6 @@ CREATE TABLE Categoria
     CONSTRAINT categoria_pk PRIMARY KEY(idCategoria)
 );
 
-CREATE TABLE RestriccionEstante
-(
-    idSucursal INTEGER NOT NULL,
-    id INTEGER NOT NULL,
-    idCategoria INTEGER NOT NULL,
-    CONSTRAINT restriccionestante_pk PRIMARY KEY(idSucursal, id, idCategoria)
-);
-
-CREATE TABLE RestriccionBodega
-(
-    idSucursal INTEGER NOT NULL,
-    id INTEGER NOT NULL,
-    idCategoria INTEGER NOT NULL,
-    CONSTRAINT restriccionbodega_pk PRIMARY KEY(idSucursal, id, idCategoria)
-);
-
 CREATE TABLE Pedido
 (
     codigoPedido INTEGER NOT NULL,
@@ -92,7 +76,7 @@ CREATE TABLE Pedido
     precioTotal INTEGER,
     estadoOrden VARCHAR(20),
     NitProveedor VARCHAR(20),
-    idSucursal NUMBER,
+    idSucursal INTEGER,
     CONSTRAINT pedido_pk PRIMARY KEY(codigoPedido)
 );
 
@@ -100,7 +84,7 @@ CREATE TABLE ProductoPedido
 (
     codigoProducto VARCHAR(20) NOT NULL,
     codigoPedido INTEGER NOT NULL,
-    volumen INTEGER,
+    cantidad INTEGER,
     precio INTEGER,
     CONSTRAINT productopedido_pk PRIMARY KEY(codigoProducto, codigoPedido)
 );
@@ -124,7 +108,6 @@ CREATE TABLE ProveedorProducto
 CREATE TABLE LlegadaPedido
 (
     codigoPedido INTEGER NOT NULL,
-    idsucursal INTEGER,
     fechaEntrega DATE,
     cantidadProductos INTEGER,
     calidadProductos VARCHAR(20),
@@ -136,9 +119,6 @@ CREATE TABLE Cliente
 (
     tipoDocumento VARCHAR(20) NOT NULL,
     numDocumento VARCHAR(20) NOT NULL,
-    nombre VARCHAR(20),
-    correo VARCHAR(20),
-    apellido VARCHAR(20),
     CONSTRAINT cliente_pk PRIMARY KEY(tipoDocumento, numDocumento)
 );
 
@@ -150,27 +130,33 @@ CREATE TABLE PersonaJuridica
     CONSTRAINT personajuridica_pk PRIMARY KEY(tipoDocumento, numDocumento)
 );
 
+CREATE TABLE PersonaNatural
+(
+    tipoDocumento VARCHAR(20) NOT NULL,
+    numDocumento VARCHAR(20) NOT NULL,
+    nombre VARCHAR(20),
+    correo VARCHAR(20),
+    CONSTRAINT personaNatural_pk PRIMARY KEY(tipoDocumento, numDocumento)
+);
+
 CREATE TABLE Venta
 (
     numeroVenta INTEGER NOT NULL,
     tipoDocCliente VARCHAR(20) NOT NULL,
     numDocCliente VARCHAR(20) NOT NULL,
-    totalVenta INTEGER,
+    fechaVenta DATE,
+    total INTEGER,
+    totalImpuestos INTEGER,
+    sucursal INTEGER,
     CONSTRAINT venta_pk PRIMARY KEY(numeroVenta)
 );
 
-CREATE TABLE CategoriaProducto
-(
-    idCategoria INTEGER NOT NULL,
-    idProducto VARCHAR(20) NOT NULL,
-    CONSTRAINT categoriaproducto_pk PRIMARY KEY(idCategoria, idProducto)
-);
 
 CREATE TABLE VentaProducto
 (
     numeroVenta INTEGER NOT NULL,
     codigoProducto VARCHAR(20) NOT NULL,
-    unidades INTEGER,
+    cantifdad INTEGER,
     CONSTRAINT ventaproducto_pk PRIMARY KEY(numeroVenta, codigoProducto)
 );
 
@@ -227,48 +213,61 @@ CREATE TABLE Pague1Lleve2ConDescPromo
     CONSTRAINT pague1lleve2condescpromo_pk PRIMARY KEY(codigoPromo)
 );
 
-CREATE TABLE Factura
+
+CREATE TABLE ESTANTEPRODUCTO
 (
-    numeroFactura INTEGER NOT NULL,
-    totalImpuestos INTEGER,
-    total INTEGER,
-    CONSTRAINT factura_pk PRIMARY KEY(numeroFactura)
+    idEstante INTEGER,
+    idProducto VARCHAR(20),
+    cantidad INTEGER,
+    CONSTRAINT ESTANTEPRODUCTO_PK PRIMARY KEY (idEstante, idProducto) 
 );
 
+CREATE TABLE BODEGAPRODUCTO
+(
+    idBodega INTEGER,
+    idProducto VARCHAR(20),
+    cantidad INTEGER,
+    CONSTRAINT BODEGAPRODUCTO_PK PRIMARY KEY (idBodega, idProducto) 
+);
+CREATE TABLE CARRITO
+(
+    numDocumento VARCHAR(20),
+    tipoDocumento VARCHAR(20),
+    cantidad INTEGER,
+    abandonado INTEGER,
+    producto VARCHAR(20),
+    CONSTRAINT CARRITO_PK PRIMARY KEY (numDocumento, tipoDocumento, producto) 
+);
 
 -- Crear llaves foraneas
 
-ALTER TABLE Bodega
-    ADD FOREIGN KEY (tipoproductoID)
+ALTER TABLE BODEGA
+    ADD FOREIGN KEY (categoria)
     REFERENCES Categoria(idCategoria)
 ;    
 
-ALTER TABLE Bodega
-    ADD FOREIGN KEY (idProducto)
-    REFERENCES Producto(codigoDeBarras)
-;
-
 ALTER TABLE Estante
-    ADD FOREIGN KEY (tipoproductoID)
+    ADD FOREIGN KEY (categoria)
     REFERENCES Categoria(idCategoria)
 ;    
 ALTER TABLE Pedido 
     ADD FOREIGN KEY  (idSucursal)
     REFERENCES Sucursal(idSucursal)
 ;
-ALTER TABLE Estante
-    ADD FOREIGN KEY (idProducto)
-    REFERENCES Producto(codigoDeBarras)
+ALTER TABLE Pedido 
+    ADD FOREIGN KEY  (NitProveedor)
+    REFERENCES Proveedor(NIT)
 ;
 
-ALTER TABLE Factura
-    ADD    FOREIGN KEY (numeroFactura)
-    REFERENCES Venta(numeroVenta)
-;
     
 ALTER TABLE VentaProducto
     ADD    FOREIGN KEY (numeroVenta)
     REFERENCES Venta(numeroVenta)
+;
+
+ALTER TABLE VentaProducto
+    ADD    FOREIGN KEY (codigoProducto)
+    REFERENCES Producto(codigoDeBarras)
 ;
     
 ALTER TABLE VentaPromocion
@@ -277,6 +276,10 @@ ALTER TABLE VentaPromocion
 ;
     
 ALTER TABLE PersonaJuridica
+    ADD    FOREIGN KEY (tipoDocumento, numDocumento)
+    REFERENCES Cliente(tipoDocumento, numDocumento)
+;
+ALTER TABLE PersonaNatural
     ADD    FOREIGN KEY (tipoDocumento, numDocumento)
     REFERENCES Cliente(tipoDocumento, numDocumento)
 ;
@@ -315,10 +318,7 @@ ALTER TABLE ProductoPromocion
     ON DELETE CASCADE
 ;
     
-ALTER TABLE VentaProducto
-    ADD    FOREIGN KEY (codigoProducto)
-    REFERENCES Producto(codigoDeBarras)
-;
+
     
 ALTER TABLE ProveedorProducto
     ADD    FOREIGN KEY (codigoProducto)
@@ -330,21 +330,19 @@ ALTER TABLE ProveedorProducto
     REFERENCES Proveedor(NIT)
 ;
     
-ALTER TABLE Pedido
-    ADD    FOREIGN KEY (NitProveedor)
-    REFERENCES Proveedor(NIT)
-;
+
     
 ALTER TABLE ProductoPromocion
     ADD    FOREIGN KEY (codigoProducto)
     REFERENCES Producto(codigoDeBarras)
 ;
     
-ALTER TABLE CategoriaProducto
-    ADD    FOREIGN KEY (idProducto)
-    REFERENCES Producto(codigoDeBarras)
-;
     
+ALTER TABLE ProductoOfrecidoSucursal
+    ADD    FOREIGN KEY (idSucursal)
+    REFERENCES Sucursal(idSucursal)
+;
+
 ALTER TABLE ProductoOfrecidoSucursal
     ADD    FOREIGN KEY (codigoBarras)
     REFERENCES Producto(codigoDeBarras)
@@ -354,16 +352,12 @@ ALTER TABLE ProductoPedido
     ADD    FOREIGN KEY (codigoProducto)
     REFERENCES Producto(codigoDeBarras)
 ;
-    
-ALTER TABLE CategoriaProducto
-    ADD    FOREIGN KEY (idCategoria)
-    REFERENCES Categoria(idCategoria)
+
+ALTER TABLE ProductoPedido
+    ADD    FOREIGN KEY (codigoPedido)
+    REFERENCES Pedido(codigoPedido)
 ;
     
-ALTER TABLE ProductoOfrecidoSucursal
-    ADD    FOREIGN KEY (idSucursal)
-    REFERENCES Sucursal(idSucursal)
-;
     
 ALTER TABLE Estante
     ADD    FOREIGN KEY (idSucursal)
@@ -376,50 +370,54 @@ ALTER TABLE Bodega
 ;
     
 ALTER TABLE LlegadaPedido
-    ADD    FOREIGN KEY (idsucursal)
-    REFERENCES Sucursal(idSucursal)
-;
-
-    
-ALTER TABLE RestriccionEstante
-    ADD    FOREIGN KEY (idSucursal, id)
-    REFERENCES Estante(idSucursal, idEstante)
-;
-
-ALTER TABLE RestriccionEstante
-    ADD    FOREIGN KEY (idCategoria)
-    REFERENCES Categoria(idCategoria)
-;
-    
-ALTER TABLE RestriccionBodega
-    ADD    FOREIGN KEY (idSucursal, id)
-    REFERENCES Bodega(idSucursal, idBodega)
-;
-    
-ALTER TABLE RestriccionBodega
-    ADD    FOREIGN KEY (idCategoria)
-    REFERENCES Categoria(idCategoria)
-;    
-
-    
-ALTER TABLE ProductoPedido
     ADD    FOREIGN KEY (codigoPedido)
     REFERENCES Pedido(codigoPedido)
-;
-    
-ALTER TABLE LlegadaPedido
-    ADD    FOREIGN KEY (codigoPedido)
-    REFERENCES Pedido(codigoPedido)
-;
+;   
+
+
     
 ALTER TABLE Venta
     ADD    FOREIGN KEY (tipoDocCliente, numDocCliente)
     REFERENCES Cliente(tipoDocumento, numDocumento)
-;        
+;     
+ALTER TABLE BODEGAPRODUCTO
+    ADD FOREIGN KEY (idProducto)
+    REFERENCES PRODUCTO(codigoDeBarras)
+;
+ALTER TABLE BODEGAPRODUCTO
+    ADD FOREIGN KEY (idBodega)
+    REFERENCES BODEGA(idBodega)
+;
+ALTER TABLE PRODUCTO
+    ADD FOREIGN KEY (categoria)
+    REFERENCES CATEGORIA(idCategoria)
+;
+ALTER TABLE VENTA
+    ADD FOREIGN KEY (sucursal)
+    REFERENCES SUCURSAL(idSucursal)
+;
 
+ALTER TABLE ESTANTEPRODUCTO
+    ADD FOREIGN KEY (idEstante)
+    REFERENCES ESTANTE (idEstante)
+;
+ALTER TABLE ESTANTEPRODUCTO
+    ADD FOREIGN KEY (idProducto)
+    REFERENCES PRODUCTO (codigoDeBarras)
+;
+
+ALTER TABLE CARRITO
+    ADD FOREIGN KEY (producto)
+    REFERENCES PRODUCTO (codigoDeBarras)
+;
 -- Restricciones 
 
 ALTER TABLE PersonaJuridica
     ADD CONSTRAINT SOLO_NIT_PERSONAS_JURIDICAS
     CHECK (tipoDocumento IN ('NIT'))
+;
+
+ALTER TABLE CARRITO
+    ADD CONSTRAINT BOOLEAN_NUM
+    CHECK (abandonado IN (1,0))
 ;
