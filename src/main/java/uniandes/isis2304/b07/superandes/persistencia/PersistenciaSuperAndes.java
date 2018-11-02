@@ -120,9 +120,7 @@ public class PersistenciaSuperAndes {
 
 	private SQLProveedor sqlProveedor;
 
-	private SQLRestriccionBodega sqlRestriccionBodega;
-
-	private SQLRestriccionEstante sqlRestriccionEstante;
+	
 
 	private SQLSucursal sqlSucursal;
 
@@ -286,7 +284,7 @@ public class PersistenciaSuperAndes {
 
 	public String darTablaProveedor()
 	{
-		return tablas.get (20);
+		return "PROVEEDOR";
 	}
 
 	public String darTablaRestriccionBodega()
@@ -416,8 +414,6 @@ public class PersistenciaSuperAndes {
 		sqlPromocion = new SQLPromocion(this);
 		sqlProveedor = new SQLProveedor(this);
 
-		sqlRestriccionBodega = new SQLRestriccionBodega(this);		
-		sqlRestriccionEstante = new SQLRestriccionEstante(this);
 		sqlSucursal = new SQLSucursal(this);
 		sqlVenta = new SQLVenta(this);
 		sqlVentaProducto = new SQLVentaProducto(this);		
@@ -449,8 +445,8 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas = sqlProveedor.adicionarProveedor(pm,nit,nombre);
 			tx.commit();
 
-			log.trace ("Inserci�n de proveedor: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
-
+			log.trace ("Insercion de proveedor: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+			
 			return new Proveedor(nit, nombre);
 
 		} catch (Exception e) {
@@ -481,7 +477,7 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas = sqlProducto.adicionarProducto(pm, codigosBarras, nombres, presentaciones, marcas, cantidades, unidadesMedida, especificacionesEmpacado);
 			tx.commit();
 
-			log.trace ("Inserci�n de producto: " + nombres + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Insercion de producto: " + nombres + ": " + tuplasInsertadas + " tuplas insertadas");
 
 			return new Producto(codigosBarras, nombres , presentaciones, marcas, cantidades,unidadesMedida, especificacionesEmpacado);
 
@@ -513,7 +509,7 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas = sqlCliente.adicionarCliente(pm, tipodocumento, numDocumento, nombre, apellido, correo);
 			tx.commit();
 
-			log.trace ("Inserci�n de cliente: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Insercion de cliente: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
 
 			return new Cliente(tipodocumento, numDocumento, nombre, apellido, correo);
 
@@ -547,7 +543,7 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas = sqlPersonaJuridica.adicionarPersonaJuridica(pm, documento, numDocumento,direccion);
 			tx.commit();
 
-			log.trace ("Inserci�n de personaJuridica: " + numDocumento + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Insercion de personaJuridica: " + numDocumento + ": " + tuplasInsertadas + " tuplas insertadas");
 
 			return new PersonaJuridica(documento, numDocumento, direccion);
 
@@ -580,7 +576,7 @@ public class PersistenciaSuperAndes {
 			long idSucursal= nextval();
 			long tuplasInsertadas = sqlSucursal.insertarSucursal(pm, idSucursal, nombre, segmentacion, tamanio, ciudad, direccion);
 			tx.commit();
-			log.trace ("Inserci�n de sucursal: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Insercion de sucursal: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new Sucursal(idSucursal, nombre, segmentacion, direccion, tamanio, ciudad);
 
 		} 
@@ -611,7 +607,7 @@ public class PersistenciaSuperAndes {
 			long idBodega= nextval();	
 			long tuplasInsertadas = sqlBodega.insertarBodega(pm,idBodega,idSucursal,capacidadVolumen,capacidadTotalVolumen,capacidadPeso,capacidadTotalPeso);
 			tx.commit();
-			log.trace ("Inserci�n de bodega: " + idBodega + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Insercion de bodega: " + idBodega + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new Bodega(idSucursal, idBodega, 0, capacidadVolumen, capacidadTotalVolumen, capacidadPeso, capacidadTotalPeso);
 
 		} 
@@ -640,7 +636,7 @@ public class PersistenciaSuperAndes {
 			long idEstante= nextval();	
 			long tuplasInsertadas = sqlEstante.insertarEstante(pm,idEstante,idSucursal,capacidadVolumen,capacidadTotalVolumen,capacidadPeso,capacidadTotalPeso);
 			tx.commit();
-			log.trace ("Inserci�n de estante: " + idEstante + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Insercion de estante: " + idEstante + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new Estante(idSucursal, idEstante, "", 0, capacidadVolumen, capacidadTotalVolumen, capacidadPeso, capacidadTotalPeso, 0);
 		} 
 		catch (Exception e) 
@@ -674,7 +670,7 @@ public class PersistenciaSuperAndes {
 			tuplasInsertadas+=sqlPagueNUnidadesLleveMPromo.adicionarPromocion(pm, codigoPromo, compraUnidades, llevaUnidades);		
 			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
 			tx.commit();
-			log.trace ("Inserci�n de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Insercion de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new PagueNUnidadesLleveMPromo(codigoPromo, compraUnidades, llevaUnidades);
 		} 
 		catch (Exception e) 
@@ -703,7 +699,7 @@ public class PersistenciaSuperAndes {
 			tuplasInsertadas+=sqlDescPorcentajePromo.adicionarPromocion(pm, codigoPromo, porcentaje);		
 			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
 			tx.commit();
-			log.trace ("Inserci�n de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Insercion de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new DescPorcentajePromo(codigoPromo, porcentaje);
 		} 
 		catch (Exception e) 
@@ -732,7 +728,7 @@ public class PersistenciaSuperAndes {
 			tuplasInsertadas+=sqlPagueXCantidadLleveYPromo.adicionarPromocion(pm, codigoPromo, cantidadPaga, cantidadLleva);		
 			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
 			tx.commit();
-			log.trace ("Inserci�n de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Insercion de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new PagueXCantidadLleveYPromo(codigoPromo, cantidadPaga, cantidadLleva);
 		} 
 		catch (Exception e) 
@@ -761,7 +757,7 @@ public class PersistenciaSuperAndes {
 			tuplasInsertadas+=sqlPague1Lleve2ConDescPromo.adicionarPromocion(pm, codigoPromo, porcentaje);		
 			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
 			tx.commit();
-			log.trace ("Inserci�n de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Insercion de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new Pague1Lleve2ConDescPromo(codigoPromo, porcentaje);
 		} 
 		catch (Exception e) 
@@ -789,7 +785,7 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas=sqlPromocion.adicionarPromocion(pm, codigoPromo, 1, fechaVencimientoPromocion);
 			//tuplasInsertadas+=sqlProductoPromocion.adicionarPromocion(pm,codigoProducto , codigoPromo);
 			tx.commit();
-			log.trace ("Inserci�n de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Insercion de promocion: " + codigoPromo + ": " + tuplasInsertadas + " tuplas insertadas");
 			return new Promocion(codigoPromo, fechaVencimientoPromocion);
 		} 
 		catch (Exception e) 
@@ -858,9 +854,9 @@ public class PersistenciaSuperAndes {
 
 			tx.commit();
 
-			log.trace ("Inserci�n de pedido a proveedor: " + nitProveedor + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Insercion de pedido a proveedor: " + nitProveedor + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			log.trace ("Inserci�n de productosPedidos: " + codigoPedido + ": " + tuplasInsertadas2 + " tuplas insertadas");
+			log.trace ("Insercion de productosPedidos: " + codigoPedido + ": " + tuplasInsertadas2 + " tuplas insertadas");
 
 
 			return new Pedido(pm, idSucursal, codigosProductos, nitProveedor, fechaPrevista, precioTotal);
@@ -883,7 +879,7 @@ public class PersistenciaSuperAndes {
 				tx.begin();
 				long id= nextval();
 				long tuplasInsertadas=sqlLegadaPedido.registrarLlegadaPedido(pm, codigoPedido, idSucursal, fechaLlegada, cantidadProductos, calidadProductos, calificacion);
-				log.trace ("Inserci�n de llegada pedido: " + id + ": " + tuplasInsertadas + " tuplas insertadas");
+				log.trace ("Insercion de llegada pedido: " + id + ": " + tuplasInsertadas + " tuplas insertadas");
 				tx.commit();
 				return new LlegadaPedido(id, idSucursal, fechaLlegada, cantidadProductos, calidadProductos, calificacion, codigoPedido);
 			} 
@@ -927,9 +923,9 @@ public class PersistenciaSuperAndes {
 
 			tx.commit();
 
-			log.trace ("Inserci�n de venta: " + numeroVenta + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Insercion de venta: " + numeroVenta + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			log.trace ("Inserci�n de ventaProducto: " + numeroVenta + ": " + tuplasInsertadas2 + " tuplas insertadas");
+			log.trace ("Insercion de ventaProducto: " + numeroVenta + ": " + tuplasInsertadas2 + " tuplas insertadas");
 
 
 			return new Venta(pm, numeroVenta, tipodocumento, documento, precioTotal);

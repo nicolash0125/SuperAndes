@@ -72,10 +72,7 @@ public class SuperAndes {
 	public Proveedor registrarProveedor(String nit ,String nombre)
 	{
 		log.info ("Registrando proveedores");	
-
-		pp.registrarProveedor(nit, nombre);
-
-		return null;
+		return pp.registrarProveedor(nit, nombre);
 	}
 
 	public List<Producto> registrarProductos(String[]codigosBarras, String[] nombres, String[] presentaciones, String[] marcas, int[]cantidades, String[] unidadesMedida, String[] especificacionesEmpacado)
@@ -98,12 +95,7 @@ public class SuperAndes {
 	public Cliente registrarCliente(String documento, String numDocumento, String nombre, String apellido, String correo)
 	{
 		log.info ("Registrando cliente: " + nombre+" "+apellido);
-
-		Cliente x = pp.registrarCliente(documento, numDocumento, nombre, apellido, correo);
-
-
-		return x;
-
+		return pp.registrarCliente(documento, numDocumento, nombre, apellido, correo);
 	}
 
 

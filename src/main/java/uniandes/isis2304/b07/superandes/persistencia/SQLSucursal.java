@@ -52,10 +52,6 @@ public class SQLSucursal {
 				+ "FROM BODEGA WHERE idsucursal= ?" 
 				+")");
 		q.setParameters(idSucursal,idSucursal);
-		//q = pm.newQuery(SQL, "SELECT * FROM PRODUCTO");
-		
-		//q.setResultClass(Producto.class);
-
 		return q.executeList();
 	}
 }

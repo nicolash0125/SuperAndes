@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -1168,11 +1169,18 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
     		if (sucursal != 0)
     		{
     			List<Object []> lista=superAndes.indiceOcupacion(sucursal);
+    			
     			String resultado = "En indiceOcupacion\n";
-    			resultado += "\n ID_ELEMENTO | TIPO | INDICE_VOLUMEN | INDICE_PESO ";
+    			resultado += "\n ID_ELEMENTO |    TIPO    |        INDICE_VOLUMEN        |        INDICE_PESO        ";
     			if(lista!=null){
     				for (Object[] objeto : lista) {
-    					resultado += "\n "+objeto;
+    					resultado += "\n ";
+    					for (int i = 0; i < objeto.length; i++) {
+    						if(objeto[i].getClass().getName().equals(BigDecimal.class.getName()))
+    							objeto[i]=((BigDecimal) objeto[i]).doubleValue() ;
+							resultado+="    "+objeto[i]+"      ";
+						}
+    					
 					}
 					resultado += "\n Operación terminada";
 					panelDatos.actualizarInterfaz(resultado);
