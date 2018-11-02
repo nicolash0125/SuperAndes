@@ -58,10 +58,11 @@ public class SQLVenta {
 
 	public List<Venta> obtenerVentasDeCliente(PersistenceManager pm, String tipoDocumento, long numeroCliente, Timestamp fechaInicio,
 			Timestamp fechaFin) {
-		Query q = pm.newQuery(SQL, "SELECT * FROM venta "
-				+ "WHERE fechaventa BETWEEN ? AND ? "
-				+ "");
-		q.setParameters(fechaInicio, fechaFin);
+		Query q = pm.newQuery(SQL, "SELECT * FROM VENTA WHERE tipoDocCLiente = ?"
+				+ " AND numDocCliente= ? AND "
+				+ "fechaVenta BETWEEN ? AND ?");
+		q.setParameters(tipoDocumento, numeroCliente, fechaInicio, fechaFin);
+		q.setResultClass(Venta.class);
 		return (List<Venta>) q.executeList();
 	}
 }

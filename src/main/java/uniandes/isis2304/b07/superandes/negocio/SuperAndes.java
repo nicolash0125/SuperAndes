@@ -228,9 +228,9 @@ public class SuperAndes {
 
 	}
 
-	public void ventasAUsuario(String tipoDocumento, long numeroCliente, Timestamp fechaInicio, Timestamp fechaFin)
+	public List<Venta> ventasAUsuario(String tipoDocumento, long numeroCliente, Timestamp fechaInicio, Timestamp fechaFin)
 	{
-		pp.ventasAUsuario(tipoDocumento,numeroCliente,fechaInicio,fechaFin);
+		return pp.ventasAUsuario(tipoDocumento,numeroCliente,fechaInicio,fechaFin);
 	}
 
 

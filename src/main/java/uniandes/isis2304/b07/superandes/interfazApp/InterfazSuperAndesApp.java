@@ -1432,15 +1432,22 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			dateformat = new SimpleDateFormat("dd/MM/yyyy");
 			 d = dateformat.parse(fechaF);
 			Timestamp fechaFin = new Timestamp(d.getTime());
+			String resultado = "En ventas al usuario ";
 			
-			superAndes.ventasAUsuario(tipoDocumento,numeroCliente,fechaInicio,fechaFin);
+			List<Venta> lista = superAndes.ventasAUsuario(tipoDocumento,numeroCliente,fechaInicio,fechaFin);
+			resultado+="\n   N.Venta   T.Documento   #Documento   Fecha Venta   Total   Impuestos   Sucursal";
+			for (Venta venta : lista) {
+				resultado+="\n"+venta;
+			}
+			resultado += "\n Operación terminada";
+			panelDatos.actualizarInterfaz(resultado);
 			
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
 		}
 		
-		System.out.println("Hola");
+		
 	}
 
 }

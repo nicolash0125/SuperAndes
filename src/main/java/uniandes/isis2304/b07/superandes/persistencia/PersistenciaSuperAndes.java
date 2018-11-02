@@ -928,7 +928,7 @@ public class PersistenciaSuperAndes {
 			log.trace ("Insercion de ventaProducto: " + numeroVenta + ": " + tuplasInsertadas2 + " tuplas insertadas");
 
 
-			return new Venta(pm, numeroVenta, tipodocumento, documento, precioTotal);
+			return new Venta( numeroVenta, tipodocumento, documento, precioTotal);
 
 		} catch (Exception e) {
 
@@ -984,7 +984,7 @@ public class PersistenciaSuperAndes {
 
 	public List<Venta> ventasAUsuario(String tipoDocumento, long numeroCliente, Timestamp fechaInicio, Timestamp fechaFin)
 	{
-		return sqlVenta.obtenerVentasDeCliente(tipoDocumento,numeroCliente,fechaInicio,fechaFin);
+		return sqlVenta.obtenerVentasDeCliente(pmf.getPersistenceManager(),tipoDocumento,numeroCliente,fechaInicio,fechaFin);
 	}
 
 	/**
