@@ -383,7 +383,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		resultado += " * Curso: isis2304 - Sistemas Transaccionales\n";
 		resultado += " * Proyecto: SuperAndes Uniandes\n";
 		resultado += " * @version 1.0\n";
-		resultado += " * @author Santiago Carrero\n";
+		resultado += " * @author Jose Alejandro Barbosa\n";
 		resultado += " * @author Nicolas Hernandez\n";
 		resultado += " * Octubre de 2018\n";
 		resultado += " * Esquema tomado de parranderos jdo de German Bravo de 2018\n";
@@ -1267,6 +1267,130 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		}
 
 	}
+	
+	/* ****************************************************************
+	 *			Requerimientos funcionales Iteracion 2
+	 *****************************************************************/
+	public void solicitarCarrito(){
+		try {
+			
+		} catch (Exception e) {
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	
+	public void adicionarProductoACarrito(){
+		try {
+			String tipoDocumento =JOptionPane.showInputDialog (this, "Tipo de documento del cliente", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE);
+			long numeroCliente = Long.parseLong(JOptionPane.showInputDialog (this, "Numero de documento del cliente", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE));
+			long idEstante = Long.parseLong(JOptionPane.showInputDialog (this, "Id del estante del cual tomara el producto", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE));
+			long idProducto = Long.parseLong(JOptionPane.showInputDialog (this, "Id del producto a anadir al carrito", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE));
+			int cantidad = Integer.parseInt(JOptionPane.showInputDialog (this, "Cantidad de productos", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE));
+			superAndes.adicionarProductoACarrito(tipoDocumento, numeroCliente, idEstante, idProducto, cantidad);
+			
+		} catch (Exception e) {
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+		
+	}
+	public void devolverProductoDelCarrito(){
+		try {
+			String tipoDocumento =JOptionPane.showInputDialog (this, "Tipo de documento del cliente", "Devolver productos del carrito", JOptionPane.QUESTION_MESSAGE);
+			long numeroCliente = Long.parseLong(JOptionPane.showInputDialog (this, "Numero de documento del cliente", "Devolver productos del carrito", JOptionPane.QUESTION_MESSAGE));
+			long idEstante = Long.parseLong(JOptionPane.showInputDialog (this, "Id del estante del cual regresara el producto", "Devolver productos del carrito", JOptionPane.QUESTION_MESSAGE));
+			long idProducto = Long.parseLong(JOptionPane.showInputDialog (this, "Id del producto a regresar del carrito", "Devolver productos del carrito", JOptionPane.QUESTION_MESSAGE));
+			int cantidad = Integer.parseInt(JOptionPane.showInputDialog (this, "Cantidad de productos", "Devolver productos del carrito", JOptionPane.QUESTION_MESSAGE));
+			superAndes.devolverProductoDelCarrito(tipoDocumento, numeroCliente, idEstante, idProducto, cantidad);
+		} catch (Exception e) {
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+		
+	}
+	public void pagarCompraCarrito(){
+		try {
+			String tipoDocumento =JOptionPane.showInputDialog (this, "Tipo de documento del cliente", "Pagar el carrito", JOptionPane.QUESTION_MESSAGE);
+			long numeroCliente = Long.parseLong(JOptionPane.showInputDialog (this, "Numero de documento del cliente", "Pagar el carrito", JOptionPane.QUESTION_MESSAGE));
+			superAndes.pagarCompraCarrito(tipoDocumento, numeroCliente);
+		} catch (Exception e) {
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+		
+	}
+	public void abandonarCarrito(){
+		try {
+			String tipoDocumento =JOptionPane.showInputDialog (this, "Tipo de documento del cliente", "Abandonar el carrito", JOptionPane.QUESTION_MESSAGE);
+			long numeroCliente = Long.parseLong(JOptionPane.showInputDialog (this, "Numero de documento del cliente", "Abandonar el carrito", JOptionPane.QUESTION_MESSAGE));
+			superAndes.abandonarCarrito(tipoDocumento, numeroCliente);
+		} catch (Exception e) {
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+		
+	}
+	public void recolectarProductosAbandonados(){
+		try {
+			superAndes.recolectarProductosAbandonados();
+		} catch (Exception e) {
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	public void consolidarPedidos(){
+		try {
+			superAndes.consolidarPedidos();
+		} catch (Exception e) {
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	public void registrarLlegadaPedidoConsolidado(){
+		try 
+		{
+			long codigoPedido = Long.parseLong(JOptionPane.showInputDialog (this, "Codigo del pedido", "Registrar llegada pedido", JOptionPane.QUESTION_MESSAGE));
+			long idSucursal = Long.parseLong(JOptionPane.showInputDialog (this, "Id de la sucursal a la cual llega", "Registrar llegada pedido", JOptionPane.QUESTION_MESSAGE));
+			long fecha = Long.parseLong(JOptionPane.showInputDialog (this, "Fecha  de llegada", "Registrar llegada pedido", JOptionPane.QUESTION_MESSAGE));
+			Timestamp fechaLlegada = new Timestamp(fecha);
+			int cantidadProductos = Integer.parseInt(JOptionPane.showInputDialog (this, "Cantidad productos que llegaron?", "Registrar llegada pedido", JOptionPane.QUESTION_MESSAGE));
+			String calidadProductos = JOptionPane.showInputDialog (this, "Calidad de los productos que llegaron", "Registrar llegada pedido", JOptionPane.QUESTION_MESSAGE);
+			String calificacion = JOptionPane.showInputDialog (this, "Calificacion", "Registrar llegada pedido", JOptionPane.QUESTION_MESSAGE);
+
+			superAndes.registrarLlegadaPedidoConsolidado(codigoPedido,idSucursal,fechaLlegada,cantidadProductos,calidadProductos,calificacion);
+		} catch (Exception e) {
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	
+	public void analizarOperacion(){
+		try {
+			superAndes.analizarOperacion();
+		} catch (Exception e) {
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	
+	public void clientesFrecuentes(){
+		try {
+			
+		} catch (Exception e) {
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	public void productosPocaDemanda(){
+		try {
+			superAndes.productosPocaDemanda();
+		} catch (Exception e) {
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	
 	/* ****************************************************************
 	 *			Requerimientos funcionales de Bono
 	 *****************************************************************/

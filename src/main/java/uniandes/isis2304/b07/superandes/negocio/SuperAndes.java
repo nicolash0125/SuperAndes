@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.apache.log4j.Logger;
 
 import com.google.gson.JsonObject;
@@ -266,7 +268,56 @@ public class SuperAndes {
 
 	}
 
-
+	/* ****************************************************************
+	 * 			Requerimientos funcionales Iteracion 2
+	 *****************************************************************/
+	public void solicitarCarrito()
+	{
+		pp.solicitarCarrito();
+	}
+	
+	public void adicionarProductoACarrito(String tipoDocumento, long numeroCliente, long idEstante, long idProducto, int cantidad)
+	{
+		pp.adicionarProductoACarrito(tipoDocumento, numeroCliente, idEstante, idProducto, cantidad);
+	}
+	public void devolverProductoDelCarrito(String tipoDocumento, long numeroCliente, long idEstante, long idProducto, int cantidad)
+	{
+		pp.devolverProductoDelCarrito(tipoDocumento, numeroCliente, idEstante, idProducto, cantidad);
+	}
+	public void pagarCompraCarrito(String tipoDocumento, long numeroCliente)
+	{
+		pp.pagarCompraCarrito(tipoDocumento, numeroCliente);
+	}
+	public void abandonarCarrito(String tipoDocumento, long numeroCliente)
+	{
+		pp.abandonarCarrito(tipoDocumento, numeroCliente);
+	}
+	public void recolectarProductosAbandonados()
+	{
+		pp.recolectarProductosAbandonados();
+	}
+	public void consolidarPedidos()
+	{
+		pp.consolidarPedidos();
+	}
+	public void registrarLlegadaPedidoConsolidado(long codigoPedido, long idSucursal, Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
+	{
+		pp.registrarLlegadaPedidoConsolidado(codigoPedido,idSucursal,fechaLlegada,cantidadProductos,calidadProductos,calificacion);
+	}
+	
+	public void analizarOperacion()
+	{
+		pp.analizarOperacion();
+	}
+	
+	public void clientesFrecuentes()
+	{
+		pp.clientesFrecuentes();
+	}
+	public void productosPocaDemanda()
+	{
+		pp.productosPocaDemanda();
+	}
 
 
 }

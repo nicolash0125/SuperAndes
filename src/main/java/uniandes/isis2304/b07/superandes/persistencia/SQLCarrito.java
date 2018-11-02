@@ -1,10 +1,8 @@
 package uniandes.isis2304.b07.superandes.persistencia;
 
-import java.sql.Timestamp;
-
 import javax.jdo.PersistenceManager;
 
-public class SQLPedido {
+public class SQLCarrito {
 	/* ****************************************************************
 	 * 			Constantes
 	 *****************************************************************/
@@ -29,19 +27,36 @@ public class SQLPedido {
 	 * Constructor
 	 * @param pp - El Manejador de persistencia de la aplicación
 	 */
-	public SQLPedido (PersistenciaSuperAndes pp)
+	public SQLCarrito (PersistenciaSuperAndes pp)
 	{
 		this.pp = pp;
 	}
 
-	public long adicionarPedido(PersistenceManager pm, String idSucursal, String[] codigosProductos,
-			String nitProveedor, Timestamp fechaPrevista, double precioTotal) {
+	public long anadirProducto(PersistenceManager pm, String tipoDocumento, long numeroCliente, long idProducto,
+			int cantidad) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public long consolidarPedidos() {
+	public long eliminarProducto(PersistenceManager pm, String tipoDocumento, long numeroCliente, long idProducto,
+			int cantidad) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	public long pagarCarrito(PersistenceManager pm, String tipoDocumento, long numeroCliente) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public long abandonarCarrito(PersistenceManager pm, String tipoDocumento, long numeroCliente) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public long recolectarProductosAbandonados(PersistenceManager pm) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

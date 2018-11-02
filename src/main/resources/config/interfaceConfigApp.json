@@ -5,7 +5,7 @@
 	"bannerPath": "./src/main/resources/config/logo.png",
 	"menuBar":
 	[
-		{ "menuTitle": "Requerimientos funcionales de modificacion",
+		{ "menuTitle": "RF de modificacion IT1",
 		  "options":
 			[
 				{
@@ -54,7 +54,7 @@
 				}
 			]
 		},
-		{ "menuTitle": "Requerimientos Funcionales de Consulta",
+		{ "menuTitle": "RF de Consulta IT1",
 		  "options":
 			[
 				{
@@ -75,6 +75,52 @@
 				}
 			]
 		},
+		{ "menuTitle": "RF de modificacion IT2",
+		  "options":
+			[
+				{
+					"label": "RF12 Solicitar un carrito de compras",
+					"event": "solicitarCarrito"
+				},
+				{
+					"label": "RF13 Adicionar un producto al carrito de compras",
+					"event": "adicionarProductoACarrito"
+				},
+				{
+					"label": "RF14 Devolver un producto del carrito de compras",
+					"event": "devolverProductoDelCarrito"
+				},
+				{
+					"label": "RF15 Pagar la compra",
+					"event": "pagarCompraCarrito"
+				},
+				{
+					"label": "RF16 Abandonar carrito de compras",
+					"event": "abandonarCarrito"
+				},
+				{
+					"label": "RF17 Recolectar productos abandonados",
+					"event": "recolectarProductosAbandonados"
+				}
+			]
+		},
+		{ "menuTitle": "RF de consulta IT2",
+		  "options":
+			[
+				{
+					"label": "RFC7 Analizar operacion de SuperAndes",
+					"event": "analizarOperacion"
+				},
+				{
+					"label": "RFC8 Encontrar los clientes frecuentes",
+					"event": "clientesFrecuentes"
+				},
+				{
+					"label": "RFC9 Encontrar productos que no tienen mucha demanda",
+					"event": "productosPocaDemanda"
+				}
+			]
+		},	
 		{ "menuTitle": "Bono",
 		  "options":
 			[
@@ -85,6 +131,14 @@
 				{
 					"label": "RFC6 Mostrar ventas a un usuario en un rango de fechas",
 					"event": "ventasAUsuario"
+				},
+				{
+					"label": "RF18 Consolidar pedidos a proveedores",
+					"event": "consolidarPedidos"
+				},
+				{
+					"label": "RF19 Registrar llegada de pedido consolidado",
+					"event": "registrarLlegadaPedidoConsolidado"
 				}
 			]
 		},		

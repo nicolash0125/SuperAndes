@@ -39,4 +39,14 @@ public class SQLEstante {
         q.setParameters(idSucursal, idEstante, capacidadVolumen, capacidadTotalVolumen, capacidadPeso, capacidadTotalPeso);
         return (long) q.executeUnique();
 	}
+
+	public long tomarProducto(PersistenceManager pm,long idEstante, long idProducto, int cantidad) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public long devolverProducto(PersistenceManager pm, long idEstante, long idProducto, int cantidad) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
