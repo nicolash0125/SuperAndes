@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +37,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import uniandes.isis2304.b07.superandes.negocio.Cliente;
-import uniandes.isis2304.b07.superandes.negocio.IndiceOcupacion;
 import uniandes.isis2304.b07.superandes.negocio.PersonaJuridica;
 import uniandes.isis2304.b07.superandes.negocio.Producto;
 import uniandes.isis2304.b07.superandes.negocio.Promocion;
@@ -1421,6 +1421,25 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 
 	public void ventasAUsuario()
 	{
+		try {
+			String tipoDocumento =JOptionPane.showInputDialog (this, "Tipo de documento del cliente", "Ventas a un usuario", JOptionPane.QUESTION_MESSAGE);
+			long numeroCliente = Long.parseLong(JOptionPane.showInputDialog (this, "Numero de documento del cliente", "Ventas a un usuario", JOptionPane.QUESTION_MESSAGE));
+			String fechaI = JOptionPane.showInputDialog (this, "Fecha  de inicio (dd/mm/yyyy)", "Dinero recolectado por ventas", JOptionPane.QUESTION_MESSAGE);
+			SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
+			Date d = dateformat.parse(fechaI);
+			Timestamp fechaInicio = new Timestamp(d.getTime());
+			String fechaF = JOptionPane.showInputDialog (this, "Fecha  de fin (dd/mm/yyyy)", "Dinero recolectado por ventas", JOptionPane.QUESTION_MESSAGE);
+			dateformat = new SimpleDateFormat("dd/MM/yyyy");
+			 d = dateformat.parse(fechaF);
+			Timestamp fechaFin = new Timestamp(d.getTime());
+			
+			superAndes.ventasAUsuario(tipoDocumento,numeroCliente,fechaInicio,fechaFin);
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		System.out.println("Hola");
 	}
 

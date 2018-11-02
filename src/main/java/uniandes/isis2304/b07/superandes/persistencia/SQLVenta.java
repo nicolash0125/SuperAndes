@@ -6,6 +6,8 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import uniandes.isis2304.b07.superandes.negocio.Venta;
+
 public class SQLVenta {
 	/* ****************************************************************
 	 * 			Constantes
@@ -52,5 +54,14 @@ public class SQLVenta {
 		q.setParameters(fechaInicio, fechaFin);
 		return (List<Object[]>) q.executeList();
 		
+	}
+
+	public List<Venta> obtenerVentasDeCliente(PersistenceManager pm, String tipoDocumento, long numeroCliente, Timestamp fechaInicio,
+			Timestamp fechaFin) {
+		Query q = pm.newQuery(SQL, "SELECT * FROM venta "
+				+ "WHERE fechaventa BETWEEN ? AND ? "
+				+ "");
+		q.setParameters(fechaInicio, fechaFin);
+		return (List<Venta>) q.executeList();
 	}
 }

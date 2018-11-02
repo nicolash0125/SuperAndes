@@ -982,9 +982,9 @@ public class PersistenciaSuperAndes {
 
 	}
 
-	public void ventasAUsuario()
+	public List<Venta> ventasAUsuario(String tipoDocumento, long numeroCliente, Timestamp fechaInicio, Timestamp fechaFin)
 	{
-
+		return sqlVenta.obtenerVentasDeCliente(tipoDocumento,numeroCliente,fechaInicio,fechaFin);
 	}
 
 	/**
