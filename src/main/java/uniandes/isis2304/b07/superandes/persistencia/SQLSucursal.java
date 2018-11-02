@@ -46,11 +46,11 @@ public class SQLSucursal {
 	}
 	
 	public List<Object[]> darIndiceOcupacion(PersistenceManager pm, long idSucursal){
-		Query q = pm.newQuery(SQL, "SELECT * FROM ( SELECT idEstante as id_Elemento, 'ESTANTE' as TIPO, CAPACIDADVOLUMEN / CAPACIDADTOTALVOLUMEN as INDICE_VOLUMEN, CAPACIDADPESO / CAPACIDADTOTALPESO as INDICE_PESO "
+		Query q = pm.newQuery(SQL, " SELECT idEstante as id_Elemento, 'ESTANTE' as TIPO, 100*CAPACIDADVOLUMEN / CAPACIDADTOTALVOLUMEN as INDICE_VOLUMEN, 100*CAPACIDADPESO / CAPACIDADTOTALPESO as INDICE_PESO "
 				+ "FROM ESTANTE WHERE idsucursal = ? "
-				+ "UNION ALL SELECT idBodega as id_Elemento,'BODEGA' AS TIPO,CAPACIDADVOLUMEN / CAPACIDADTOTALVOLUMEN AS INDICE_VOLUMEN, CAPACIDADPESO / CAPACIDADTOTALPESO as INDICE_PESO "
+				+ "UNION ALL SELECT idBodega as id_Elemento,'BODEGA' AS TIPO,100*CAPACIDADVOLUMEN / CAPACIDADTOTALVOLUMEN AS INDICE_VOLUMEN, 100*CAPACIDADPESO / CAPACIDADTOTALPESO as INDICE_PESO "
 				+ "FROM BODEGA WHERE idsucursal= ?" 
-				+")");
+				+"");
 		q.setParameters(idSucursal,idSucursal);
 		return q.executeList();
 	}

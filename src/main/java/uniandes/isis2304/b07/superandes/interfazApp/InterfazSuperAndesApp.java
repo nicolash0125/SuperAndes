@@ -1128,11 +1128,16 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	{
 		try 
 		{
-			long fechaI = Long.parseLong(JOptionPane.showInputDialog (this, "Fecha  de inicio", "Dinero recolectado por ventas", JOptionPane.QUESTION_MESSAGE));
-			Timestamp fechaInicio = new Timestamp(fechaI);
-			long fechaF = Long.parseLong(JOptionPane.showInputDialog (this, "Fecha  de fin", "Dinero recolectado por ventas", JOptionPane.QUESTION_MESSAGE));
-			Timestamp fechaFin= new Timestamp(fechaF);
-
+			String fechaI = JOptionPane.showInputDialog (this, "Fecha  de inicio (dd/mm/yyyy)", "Dinero recolectado por ventas", JOptionPane.QUESTION_MESSAGE);
+			SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
+			Date d = dateformat.parse(fechaI);
+			Timestamp fechaInicio = new Timestamp(d.getTime());
+			
+			String fechaF = JOptionPane.showInputDialog (this, "Fecha  de fin (dd/mm/yyyy)", "Dinero recolectado por ventas", JOptionPane.QUESTION_MESSAGE);
+			dateformat = new SimpleDateFormat("dd/MM/yyyy");
+			 d = dateformat.parse(fechaF);
+			Timestamp fechaFin = new Timestamp(d.getTime());
+			
 
 			if (fechaInicio != null && fechaFin != null)
 			{
@@ -1171,14 +1176,14 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
     			List<Object []> lista=superAndes.indiceOcupacion(sucursal);
     			
     			String resultado = "En indiceOcupacion\n";
-    			resultado += "\n ID_ELEMENTO |    TIPO    |        INDICE_VOLUMEN        |        INDICE_PESO        ";
+    			resultado += "\n   ID_ELEMENTO     |        TIPO        |      % VOLUMEN        |     % PESO        ";
     			if(lista!=null){
     				for (Object[] objeto : lista) {
     					resultado += "\n ";
     					for (int i = 0; i < objeto.length; i++) {
     						if(objeto[i].getClass().getName().equals(BigDecimal.class.getName()))
-    							objeto[i]=((BigDecimal) objeto[i]).doubleValue() ;
-							resultado+="    "+objeto[i]+"      ";
+    							objeto[i]=((BigDecimal) objeto[i]).intValue() ;
+							resultado+="         "+objeto[i]+"           ";
 						}
     					
 					}

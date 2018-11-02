@@ -53,7 +53,6 @@ CREATE TABLE Bodega
 (
     idSucursal INTEGER NOT NULL,
     idBodega INTEGER NOT NULL,
-    tipoproductoID INTEGER,
     capacidadVolumen INTEGER,
     capacidadTotalVolumen INTEGER,
     capacidadPeso INTEGER,
