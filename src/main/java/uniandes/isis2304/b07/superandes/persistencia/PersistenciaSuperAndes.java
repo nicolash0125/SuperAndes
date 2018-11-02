@@ -947,12 +947,8 @@ public class PersistenciaSuperAndes {
 	public List<Object[]> dineroRecolectado(Timestamp fechaInicio,Timestamp fechaFin)
 	{
 		log.info ("Obteniendo dinero recolectado en las sucursales entre " + fechaInicio+" y "+fechaFin);
-
 		PersistenceManager pm = pmf.getPersistenceManager();
-
-		List<Object[]> respuesta = sqlVenta.obtenerDineroRecolectado(pm, fechaInicio, fechaFin);
-
-		return respuesta;
+		return sqlVenta.obtenerDineroRecolectado(pm, fechaInicio, fechaFin);
 	}
 
 	/**

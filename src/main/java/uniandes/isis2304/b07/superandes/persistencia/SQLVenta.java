@@ -46,7 +46,9 @@ public class SQLVenta {
 
 	public List<Object[]> obtenerDineroRecolectado(PersistenceManager pm, Timestamp fechaInicio, Timestamp fechaFin) {
 		
-		Query q = pm.newQuery(SQL, "SELECT sucursal, sum(total) FROM venta WHERE fechaventa BETWEEN ? AND ? GROUP BY sucursal;");
+		Query q = pm.newQuery(SQL, "SELECT sucursal, sum(total) FROM venta "
+				+ "WHERE fechaventa BETWEEN ? AND ? "
+				+ "GROUP BY sucursal");
 		q.setParameters(fechaInicio, fechaFin);
 		return (List<Object[]>) q.executeList();
 		

@@ -1143,6 +1143,13 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			{
 				List<Object[]> dinero = superAndes.dineroRecolectado(fechaInicio, fechaFin);
 				String resultado = "En dineroRecolectado\n\n";
+				resultado+="   Sucursal    Total";
+				for (Object[] objects : dinero) {
+					resultado+="\n";
+					for (int i = 0; i < objects.length; i++) {
+						resultado+="        "+objects[i]+"  ";
+					}
+				}
 				resultado += "\n Operación terminada";
 				panelDatos.actualizarInterfaz(resultado);
 			}
