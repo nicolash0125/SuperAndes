@@ -497,21 +497,19 @@ public class PersistenciaSuperAndes {
 		}
 	}
 
-	public Cliente registrarCliente(String tipodocumento, String numDocumento, String nombre, String apellido, String correo)
+	public Cliente registrarPersonaNatural(String tipodocumento, String numDocumento, String nombre, String correo)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
-
 		Transaction tx = pm.currentTransaction();
-
 		try {
 
 			tx.begin();
-			long tuplasInsertadas = sqlCliente.adicionarCliente(pm, tipodocumento, numDocumento, nombre, apellido, correo);
+			long tuplasInsertadas = sqlCliente.registrarCliente(pm, tipodocumento, numDocumento);
+			tuplasInsertadas += sqlCliente.registrarPersonaNatural(pm, tipodocumento, numDocumento, nombre, correo);
 			tx.commit();
 
 			log.trace ("Insercion de cliente: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
-
-			return new Cliente(tipodocumento, numDocumento, nombre, apellido, correo);
+			return new Cliente(tipodocumento, numDocumento, nombre, correo);
 
 		} catch (Exception e) {
 
@@ -530,7 +528,7 @@ public class PersistenciaSuperAndes {
 	}
 
 
-	public PersonaJuridica registrarPersonaJuridica(String documento, String numDocumento, String direccion) {
+	public PersonaJuridica registrarPersonaJuridica( String numDocumento, String nombre, String direccion) {
 
 
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -540,12 +538,13 @@ public class PersistenciaSuperAndes {
 		try {
 
 			tx.begin();
-			long tuplasInsertadas = sqlPersonaJuridica.adicionarPersonaJuridica(pm, documento, numDocumento,direccion);
+			long tuplasInsertadas = sqlCliente.registrarCliente(pm, "NIT", numDocumento);
+			tuplasInsertadas += sqlPersonaJuridica.adicionarPersonaJuridica(pm, "NIT", numDocumento,nombre,direccion);
 			tx.commit();
 
 			log.trace ("Insercion de personaJuridica: " + numDocumento + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			return new PersonaJuridica(documento, numDocumento, direccion);
+			return new PersonaJuridica( numDocumento, direccion);
 
 		} catch (Exception e) {
 

@@ -34,10 +34,10 @@ public class SQLPersonaJuridica {
 	}
 
 	public long adicionarPersonaJuridica(PersistenceManager pm, String documento, String numDocumento,
-			String direccion) {
+			String nombre, String direccion) {
 		
-		Query q = pm.newQuery(SQL, "INSERT INTO" + pp.darTablaPersonaJuridica()+"(TIPODOCUMENTO,NUMDOCUMENTO,DIRECCION) values (?,?,?)");
-		q.setParameters(documento,numDocumento,direccion);
+		Query q = pm.newQuery(SQL, "INSERT INTO" + " PERSONAJURIDICA "+"(TIPODOCUMENTO,NUMDOCUMENTO,NOMBRE,DIRECCION) values (?,?,?,?)");
+		q.setParameters(documento,numDocumento,nombre,direccion);
 		return (long) q.executeUnique();
 	}
 

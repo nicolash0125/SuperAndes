@@ -33,11 +33,20 @@ public class SQLCliente {
 		this.pp = pp;
 	}
 
-	public long adicionarCliente(PersistenceManager pm, String documento, String numDocumento, String nombre,
-			String apellido, String correo) {
-		
-		Query q = pm.newQuery(SQL, "INSERT INTO" + pp.darTablaProveedor()+"(TIPODOCUMENTO,NUMDOCUMENTO,NOMBRE,CORREO,APELLIDO) values (?,?,?,?,?)");
-		q.setParameters(documento,numDocumento,nombre,correo,apellido);
+	
+
+	public long registrarPersonaNatural(PersistenceManager pm, String tipodocumento, String numDocumento, String nombre,
+			String correo) {
+		Query q = pm.newQuery(SQL, "INSERT INTO" + " PERSONANATURAL "+"(TIPODOCUMENTO,NUMDOCUMENTO,NOMBRE,CORREO) values (?,?,?,?)");
+		q.setParameters(tipodocumento,numDocumento,nombre,correo);
+		return (long) q.executeUnique();
+	}
+
+
+
+	public long registrarCliente(PersistenceManager pm, String tipodocumento, String numDocumento) {
+		Query q = pm.newQuery(SQL, "INSERT INTO" + " CLIENTE "+"(TIPODOCUMENTO,NUMDOCUMENTO,POSEECARRO) values (?,?,0)");
+		q.setParameters(tipodocumento,numDocumento);
 		return (long) q.executeUnique();
 	}
 }

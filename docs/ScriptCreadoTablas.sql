@@ -118,6 +118,7 @@ CREATE TABLE Cliente
 (
     tipoDocumento VARCHAR(20) NOT NULL,
     numDocumento VARCHAR(20) NOT NULL,
+    poseeCarro NUMBER,
     CONSTRAINT cliente_pk PRIMARY KEY(tipoDocumento, numDocumento)
 );
 
@@ -126,6 +127,7 @@ CREATE TABLE PersonaJuridica
     tipoDocumento VARCHAR(20) NOT NULL,
     numDocumento VARCHAR(20) NOT NULL,
     direccion VARCHAR(20),
+    nombre VARCHAR (20),
     CONSTRAINT personajuridica_pk PRIMARY KEY(tipoDocumento, numDocumento)
 );
 
@@ -419,4 +421,8 @@ ALTER TABLE PersonaJuridica
 ALTER TABLE CARRITO
     ADD CONSTRAINT BOOLEAN_NUM
     CHECK (abandonado IN (1,0))
+;
+ALTER TABLE CLIENTE
+    ADD CONSTRAINT BOOLEAN_NUM_CLIENTE
+    CHECK (poseeCarro IN (1,0))
 ;

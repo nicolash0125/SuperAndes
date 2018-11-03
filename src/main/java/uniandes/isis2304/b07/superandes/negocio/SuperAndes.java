@@ -92,18 +92,18 @@ public class SuperAndes {
 		return prod;
 	}
 
-	public Cliente registrarCliente(String documento, String numDocumento, String nombre, String apellido, String correo)
+	public Cliente registrarPersonaNatural(String documento, String numDocumento, String nombre, String correo)
 	{
-		log.info ("Registrando cliente: " + nombre+" "+apellido);
-		return pp.registrarCliente(documento, numDocumento, nombre, apellido, correo);
+		log.info ("Registrando cliente: " + nombre);
+		return pp.registrarPersonaNatural(documento, numDocumento, nombre, correo);
 	}
 
 
-	public PersonaJuridica registrarPersonaJuridica(String documento, String numDocumento, String direccion) {
+	public PersonaJuridica registrarPersonaJuridica(String numDocumento, String nombre,String direccion) {
 
-		log.info ("Registrando personaJuridica: " + documento);
+		log.info ("Registrando personaJuridica: " +numDocumento);
 
-		PersonaJuridica x = pp.registrarPersonaJuridica(documento, numDocumento, direccion);
+		PersonaJuridica x = pp.registrarPersonaJuridica( numDocumento, nombre, direccion);
 
 
 		return x;
