@@ -33,10 +33,10 @@ public class SQLProducto {
 		this.pp = pp;
 	}
 
-	public long adicionarProducto(PersistenceManager pm, String codigosBarras, String nombres, String presentaciones, String marcas, int cantidades, String unidadesMedida, String especificacionesEmpacado) {
+	public long adicionarProducto(PersistenceManager pm, String codigoDeBarras, String nombre, String presentacion, String marca, String unidadDeMedida, String especificacionEmpacado, long categoria) {
 		
-		Query q = pm.newQuery(SQL, "INSERT INTO" + pp.darTablaProducto()+"(CODIGODEBARRAS,NOMBRE,PRESENTACION,MARCA,CANTIDAD,UNIDADDEMEDIDA,ESPECIFICACIONEMPACADO) values (?,?,?,?,?,?,?)");
-		q.setParameters(codigosBarras,nombres,presentaciones,marcas,cantidades,unidadesMedida,especificacionesEmpacado);
+		Query q = pm.newQuery(SQL, "INSERT INTO" + " PRODUCTO "+"(CODIGODEBARRAS,NOMBRE,PRESENTACION,MARCA,UNIDADDEMEDIDA,ESPECIFICACIONEMPACADO, CATEGORIA) values (?,?,?,?,?,?,?)");
+		q.setParameters(codigoDeBarras,nombre,presentacion,marca, unidadDeMedida,especificacionEmpacado,categoria);
 		return (long) q.executeUnique();
 	}
 }

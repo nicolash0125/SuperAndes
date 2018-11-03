@@ -12,7 +12,7 @@ public interface VOProducto {
 	
 	public String getPresentacion();
 	
-	public int getCantidad();
+	public long getCantidad();
 	
 	public String getUnidadMedida();
 	

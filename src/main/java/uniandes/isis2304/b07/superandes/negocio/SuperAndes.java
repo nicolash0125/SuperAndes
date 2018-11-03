@@ -75,21 +75,11 @@ public class SuperAndes {
 		return pp.registrarProveedor(nit, nombre);
 	}
 
-	public List<Producto> registrarProductos(String[]codigosBarras, String[] nombres, String[] presentaciones, String[] marcas, int[]cantidades, String[] unidadesMedida, String[] especificacionesEmpacado)
+	public Producto registrarProductos(String codigoDeBarras, String nombre, String presentacion, String marca, String unidadeDeMedida, String especificacionEmpacado, long categoria)
 	{
-		log.info ("Registrando productos: " + codigosBarras.length);
-
-		List<Producto> prod = new ArrayList<>();
-
-		for (int i = 0; i < codigosBarras.length; i++) {
-
-			Producto a = pp.registrarProductos(codigosBarras[i], nombres[i], presentaciones[i], marcas[i], cantidades[i], unidadesMedida[i], especificacionesEmpacado[i]);	
-
-			prod.add(a);
-
-		}
-
-		return prod;
+		log.info ("Registrando producto: " + codigoDeBarras);
+		return pp.registrarProductos(codigoDeBarras, nombre, presentacion, marca, unidadeDeMedida, especificacionEmpacado, categoria);
+		
 	}
 
 	public Cliente registrarPersonaNatural(String documento, String numDocumento, String nombre, String correo)
@@ -156,16 +146,16 @@ public class SuperAndes {
 		return pp.finalizarPromocion(fecha);
 	}
 
-	public Pedido registrarPedido(String idSucursal, String[] codigosProductos, String[] cantidad, String[] precios, String nitProveedor, Timestamp fechaPrevista, double precioTotal )
+	public Pedido registrarPedido(String idSucursal, String[] codigosProductos, double[] cantidad, double[] precios, String nitProveedor, Timestamp fechaPrevista, double precioTotal )
 	{
 		log.info ("Registrando pedido con numero de productos: " + codigosProductos.length);
 		return pp.registrarPedido(idSucursal, codigosProductos,cantidad, precios, nitProveedor, fechaPrevista, precioTotal);
 	}
 
-	public LlegadaPedido registrarLlegadaPedido(long codigoPedido, long idSucursal, Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
+	public LlegadaPedido registrarLlegadaPedido(long codigoPedido, Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
 	{
 		log.info ("Registrando llegada pedido: " + codigoPedido);
-		return pp.registrarLlegadaPedido(codigoPedido, idSucursal, fechaLlegada, cantidadProductos, calidadProductos, calificacion);
+		return pp.registrarLlegadaPedido(codigoPedido, fechaLlegada, cantidadProductos, calidadProductos, calificacion);
 	}
 
 
@@ -292,9 +282,9 @@ public class SuperAndes {
 	{
 		pp.consolidarPedidos();
 	}
-	public void registrarLlegadaPedidoConsolidado(long codigoPedido, long idSucursal, Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
+	public void registrarLlegadaPedidoConsolidado(long codigoPedido, Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
 	{
-		pp.registrarLlegadaPedidoConsolidado(codigoPedido,idSucursal,fechaLlegada,cantidadProductos,calidadProductos,calificacion);
+		pp.registrarLlegadaPedidoConsolidado(codigoPedido,fechaLlegada,cantidadProductos,calidadProductos,calificacion);
 	}
 	
 	public void analizarOperacion()

@@ -14,14 +14,14 @@ public class Producto implements VOProducto{
 	
 	public String marca;
 	
-	public int cantidad;
+	public long categoria;
 	
 	public String unidadMedida;
 	
 	public String especificacionEmpacado;
 
-	public Producto(String codigosBarras, String nombres, String presentaciones, String marcas, int cantidades, String unidadesMedida,
-			String especificacionesEmpacado) {
+	public Producto(String codigosBarras, String nombres, String presentaciones, String marcas,  String unidadesMedida,
+			String especificacionesEmpacado, long categoria) {
 		
 		codigoBarras = codigosBarras;
 		
@@ -31,7 +31,7 @@ public class Producto implements VOProducto{
 		
 		marca = marcas;
 		
-		cantidad = cantidades;
+		this.categoria = categoria;
 		
 		unidadMedida = unidadesMedida;
 		
@@ -90,17 +90,17 @@ public class Producto implements VOProducto{
 	}
 
 	/**
-	 * @return the cantidad
+	 * @return the categoria
 	 */
-	public int getCantidad() {
-		return cantidad;
+	public long getCantidad() {
+		return categoria;
 	}
 
 	/**
 	 * @param cantidad the cantidad to set
 	 */
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
+	public void setCantidad(long cantidad) {
+		this.categoria = cantidad;
 	}
 
 	/**

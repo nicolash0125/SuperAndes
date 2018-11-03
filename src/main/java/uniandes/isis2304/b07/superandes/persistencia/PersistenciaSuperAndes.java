@@ -465,7 +465,7 @@ public class PersistenciaSuperAndes {
 		}
 	}
 
-	public Producto registrarProductos(String codigosBarras, String nombres, String presentaciones, String marcas, int cantidades, String unidadesMedida, String especificacionesEmpacado)
+	public Producto registrarProductos(String codigoDeBarras, String nombre, String presentacion, String marca, String unidadDeMedida, String especificacionEmpacado, long categoria)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 
@@ -474,12 +474,12 @@ public class PersistenciaSuperAndes {
 		try {
 
 			tx.begin();
-			long tuplasInsertadas = sqlProducto.adicionarProducto(pm, codigosBarras, nombres, presentaciones, marcas, cantidades, unidadesMedida, especificacionesEmpacado);
+			long tuplasInsertadas = sqlProducto.adicionarProducto(pm, codigoDeBarras, nombre, presentacion, marca,  unidadDeMedida, especificacionEmpacado, categoria);
 			tx.commit();
 
-			log.trace ("Insercion de producto: " + nombres + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Insercion de producto: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			return new Producto(codigosBarras, nombres , presentaciones, marcas, cantidades,unidadesMedida, especificacionesEmpacado);
+			return new Producto(codigoDeBarras, nombre , presentacion, marca,unidadDeMedida, especificacionEmpacado, categoria);
 
 		} catch (Exception e) {
 
@@ -829,7 +829,7 @@ public class PersistenciaSuperAndes {
 		}
 	}
 
-	public Pedido registrarPedido(String idSucursal, String[] codigosProductos, String[] cantidad, String[] precios, String nitProveedor, Timestamp fechaPrevista, double precioTotal )
+	public Pedido registrarPedido(String idSucursal, String[] codigosProductos, double[] cantidad, double[] precios, String nitProveedor, Timestamp fechaPrevista, double precioTotal )
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 
@@ -841,13 +841,13 @@ public class PersistenciaSuperAndes {
 
 			long codigoPedido = nextval();
 
-			long tuplasInsertadas = sqlPedido.adicionarPedido(pm, idSucursal, codigosProductos, nitProveedor, fechaPrevista, precioTotal);
+			long tuplasInsertadas = sqlPedido.adicionarPedido(pm, codigoPedido, idSucursal, nitProveedor, fechaPrevista, precioTotal);
 
-			long tuplasInsertadas2 = 0;
+			
 
 			for (int i = 0; i < codigosProductos.length; i++) {
 
-				tuplasInsertadas2 += sqlProductoPedido.adicionarProductoPedido(pm, codigoPedido,codigosProductos[i],cantidad[i],precios[i]);		
+				tuplasInsertadas += sqlProductoPedido.adicionarProductoPedido(pm, codigoPedido,codigosProductos[i],cantidad[i],precios[i]);		
 
 			}
 
@@ -855,7 +855,6 @@ public class PersistenciaSuperAndes {
 
 			log.trace ("Insercion de pedido a proveedor: " + nitProveedor + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			log.trace ("Insercion de productosPedidos: " + codigoPedido + ": " + tuplasInsertadas2 + " tuplas insertadas");
 
 
 			return new Pedido(pm, idSucursal, codigosProductos, nitProveedor, fechaPrevista, precioTotal);
@@ -868,7 +867,7 @@ public class PersistenciaSuperAndes {
 		}		
 	}
 
-	public LlegadaPedido registrarLlegadaPedido(long codigoPedido, long idSucursal,Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
+	public LlegadaPedido registrarLlegadaPedido(long codigoPedido,Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
 	{
 		{
 			PersistenceManager pm = pmf.getPersistenceManager();
@@ -877,10 +876,10 @@ public class PersistenciaSuperAndes {
 			{
 				tx.begin();
 				long id= nextval();
-				long tuplasInsertadas=sqlLegadaPedido.registrarLlegadaPedido(pm, codigoPedido, idSucursal, fechaLlegada, cantidadProductos, calidadProductos, calificacion);
+				long tuplasInsertadas=sqlLegadaPedido.registrarLlegadaPedido(pm, codigoPedido, fechaLlegada, cantidadProductos, calidadProductos, calificacion);
 				log.trace ("Insercion de llegada pedido: " + id + ": " + tuplasInsertadas + " tuplas insertadas");
 				tx.commit();
-				return new LlegadaPedido(id, idSucursal, fechaLlegada, cantidadProductos, calidadProductos, calificacion, codigoPedido);
+				return new LlegadaPedido(id, fechaLlegada, cantidadProductos, calidadProductos, calificacion, codigoPedido);
 			} 
 			catch (Exception e) 
 			{
@@ -1166,7 +1165,7 @@ public class PersistenciaSuperAndes {
 
 		}
 	}
-	public void registrarLlegadaPedidoConsolidado(long codigoPedido, long idSucursal, Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
+	public void registrarLlegadaPedidoConsolidado(long codigoPedido, Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -1174,7 +1173,7 @@ public class PersistenciaSuperAndes {
 		try 
 		{
 			tx.begin();
-			sqlLegadaPedido.registrarLlegadaPedido(pm, codigoPedido, idSucursal, fechaLlegada, cantidadProductos, calidadProductos, calificacion);
+			sqlLegadaPedido.registrarLlegadaPedido(pm, codigoPedido, fechaLlegada, cantidadProductos, calidadProductos, calificacion);
 			tx.commit();
 
 		} 

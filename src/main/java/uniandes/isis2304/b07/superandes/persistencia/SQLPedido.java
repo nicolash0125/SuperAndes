@@ -3,6 +3,7 @@ package uniandes.isis2304.b07.superandes.persistencia;
 import java.sql.Timestamp;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 
 public class SQLPedido {
 	/* ****************************************************************
@@ -34,10 +35,11 @@ public class SQLPedido {
 		this.pp = pp;
 	}
 
-	public long adicionarPedido(PersistenceManager pm, String idSucursal, String[] codigosProductos,
-			String nitProveedor, Timestamp fechaPrevista, double precioTotal) {
-		// TODO Auto-generated method stub
-		return 0;
+	
+	public long adicionarPedido(PersistenceManager pm, long codigoPedido, String idSucursal, String nitProveedor, Timestamp fechaPrevista, double precioTotal) {
+		Query q = pm.newQuery(SQL, "INSERT INTO" + " PEDIDO "+"(CODIGOPEDIDO,FECHAENTREGA,PRECIOTOTAL,ESTADOORDEN, NITPROVEEDOR,IDSUCURSAL) values (?,?,?,'En proceso',?,?)");
+		q.setParameters(codigoPedido, fechaPrevista,precioTotal,nitProveedor, idSucursal);
+		return (long) q.executeUnique();	
 	}
 
 	public long consolidarPedidos() {

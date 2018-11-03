@@ -25,11 +25,10 @@ public class LlegadaPedido implements VOLlegadaPedido{
 	
 	
 	
-	public LlegadaPedido(long id, long idSucursal, Timestamp fechaEntrega, int cantidadProductos,
+	public LlegadaPedido(long id, Timestamp fechaEntrega, int cantidadProductos,
 			String calidadProductos, String calificacion, long idPedido)
 	{
 		this.id = id;
-		this.idSucursal = idSucursal;
 		this.fechaEntrega = fechaEntrega;
 		this.cantidadProductos = cantidadProductos;
 		this.calidadProductos = calidadProductos;
