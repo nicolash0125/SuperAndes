@@ -1083,8 +1083,10 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		try{
 			
 			long sucursal = Long.parseLong(JOptionPane.showInputDialog (this, "Digite el id de la sucursal", "Registrar venta", JOptionPane.QUESTION_MESSAGE));
-			long fecha1 = Long.parseLong(JOptionPane.showInputDialog (this, "Fecha  de la venta", "Registrar venta", JOptionPane.QUESTION_MESSAGE));
-			Timestamp fecha = new Timestamp(fecha1);
+			String fechaI = JOptionPane.showInputDialog (this, "Fecha de la venta (dd/mm/yyyy)", "Registrar venta", JOptionPane.QUESTION_MESSAGE);
+			SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
+			Date d = dateformat.parse(fechaI);
+			Timestamp fecha = new Timestamp(d.getTime());
 			String[] options2 = {"TI", "Cedula", "Pasaporte","NIT"};
 			ImageIcon icon = new ImageIcon("https://image.flaticon.com/icons/png/512/16/16075.png");
 			String tipodocumento = (String) JOptionPane.showInputDialog(this, "Elija el tipo de documento","Registrar venta",JOptionPane.QUESTION_MESSAGE, icon ,options2, options2[1]);
