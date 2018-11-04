@@ -55,20 +55,20 @@ public class SQLCliente {
 
 
 
-	public long solicitarCarrito(PersistenceManager pm, String tipoDocumento, long numeroCliente) {
+	public long solicitarCarrito(PersistenceManager pm, String tipoDocumento, String numeroCliente) {
 		Query q = pm.newQuery(SQL, "UPDATE " + " CLIENTE "+" SET poseeCarro = 1 WHERE tipoDocumento = ? AND numDocumento = ?");
 		q.setParameters(tipoDocumento,numeroCliente);
 		return (long) q.executeUnique();
 	}
 
-	public long abandonarCarrito(PersistenceManager pm, String tipoDocumento, long numeroCliente) {
+	public long abandonarCarrito(PersistenceManager pm, String tipoDocumento, String numeroCliente) {
 		Query q = pm.newQuery(SQL, "UPDATE " + " CLIENTE "+" SET poseeCarro = 0 WHERE tipoDocumento = ? AND numDocumento = ?");
 		q.setParameters(tipoDocumento,numeroCliente);
 		return (long) q.executeUnique();
 	}
 
 
-	public int tieneCarrito(PersistenceManager pm, String tipoDocumento, long numeroCliente) {
+	public int tieneCarrito(PersistenceManager pm, String tipoDocumento, String numeroCliente) {
 		Query q = pm.newQuery(SQL, "SELECT * FROM " + " CLIENTE "+"  WHERE tipoDocumento = ? AND numDocumento = ?");
 		q.setParameters(tipoDocumento,numeroCliente);
 		Object[] obj=(Object[])q.executeUnique();

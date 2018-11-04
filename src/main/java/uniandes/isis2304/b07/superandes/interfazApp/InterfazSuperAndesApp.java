@@ -1082,7 +1082,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	{
 		try{
 			
-			String sucursal = JOptionPane.showInputDialog (this, "Digite el id de la sucursal", "Registrar venta", JOptionPane.QUESTION_MESSAGE);
+			long sucursal = Long.parseLong(JOptionPane.showInputDialog (this, "Digite el id de la sucursal", "Registrar venta", JOptionPane.QUESTION_MESSAGE));
 			long fecha1 = Long.parseLong(JOptionPane.showInputDialog (this, "Fecha  de la venta", "Registrar venta", JOptionPane.QUESTION_MESSAGE));
 			Timestamp fecha = new Timestamp(fecha1);
 			String[] options2 = {"TI", "Cedula", "Pasaporte","NIT"};
@@ -1102,7 +1102,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 
 			}
 
-			if (precioTotal != 0 && sucursal != null && tipodocumento != null && documento != null && codigosProductos != null && cantidad != null && precios != null)
+			if (precioTotal != 0 && sucursal != 0 && tipodocumento != null && documento != null && codigosProductos != null && cantidad != null && precios != null)
 			{
 				Venta venta = superAndes.registrarVenta(sucursal,tipodocumento, documento, codigosProductos, cantidad, precios, precioTotal, fecha);
 
@@ -1305,7 +1305,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		try {
 			String resultado="Solicitar carrito \n";
 			String tipoDocumento =JOptionPane.showInputDialog (this, "Tipo de documento del cliente", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE);
-			long numeroCliente = Long.parseLong(JOptionPane.showInputDialog (this, "Numero de documento del cliente", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE));
+			String numeroCliente=JOptionPane.showInputDialog (this, "Numero de documento del cliente", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE);
 			superAndes.solicitarCarrito(tipoDocumento,numeroCliente);
 			resultado+="Carrito asignado a cliente";
 			panelDatos.actualizarInterfaz(resultado);
@@ -1319,7 +1319,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	public void adicionarProductoACarrito(){
 		try {
 			String tipoDocumento =JOptionPane.showInputDialog (this, "Tipo de documento del cliente", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE);
-			long numeroCliente = Long.parseLong(JOptionPane.showInputDialog (this, "Numero de documento del cliente", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE));
+			String numeroCliente = JOptionPane.showInputDialog (this, "Numero de documento del cliente", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE);
 			long idEstante = Long.parseLong(JOptionPane.showInputDialog (this, "Id del estante del cual tomara el producto", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE));
 			String idProducto = JOptionPane.showInputDialog (this, "Id del producto a anadir al carrito", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE);
 			int cantidad = Integer.parseInt(JOptionPane.showInputDialog (this, "Cantidad de productos", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE));
@@ -1337,11 +1337,17 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	public void devolverProductoDelCarrito(){
 		try {
 			String tipoDocumento =JOptionPane.showInputDialog (this, "Tipo de documento del cliente", "Devolver productos del carrito", JOptionPane.QUESTION_MESSAGE);
-			long numeroCliente = Long.parseLong(JOptionPane.showInputDialog (this, "Numero de documento del cliente", "Devolver productos del carrito", JOptionPane.QUESTION_MESSAGE));
+			String numeroCliente = JOptionPane.showInputDialog (this, "Numero de documento del cliente", "Devolver productos del carrito", JOptionPane.QUESTION_MESSAGE);
 			long idEstante = Long.parseLong(JOptionPane.showInputDialog (this, "Id del estante del cual regresara el producto", "Devolver productos del carrito", JOptionPane.QUESTION_MESSAGE));
 			String idProducto = JOptionPane.showInputDialog (this, "Id del producto a regresar del carrito", "Devolver productos del carrito", JOptionPane.QUESTION_MESSAGE);
 			int cantidad = Integer.parseInt(JOptionPane.showInputDialog (this, "Cantidad de productos", "Devolver productos del carrito", JOptionPane.QUESTION_MESSAGE));
-			superAndes.devolverProductoDelCarrito(tipoDocumento, numeroCliente, idEstante, idProducto, cantidad);
+			
+			if(superAndes.devolverProductoDelCarrito(tipoDocumento, numeroCliente, idEstante, idProducto, cantidad))
+				panelDatos.actualizarInterfaz("Se devolvieron los productos del carrito");
+			else 
+				throw new Exception("No se devolvieron productos del carrito. Verifique que el cliente tenga carrito y vuelva a intentarlo");
+			
+			
 		} catch (Exception e) {
 			String resultado = generarMensajeError(e);
 			panelDatos.actualizarInterfaz(resultado);
@@ -1351,8 +1357,13 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	public void pagarCompraCarrito(){
 		try {
 			String tipoDocumento =JOptionPane.showInputDialog (this, "Tipo de documento del cliente", "Pagar el carrito", JOptionPane.QUESTION_MESSAGE);
-			long numeroCliente = Long.parseLong(JOptionPane.showInputDialog (this, "Numero de documento del cliente", "Pagar el carrito", JOptionPane.QUESTION_MESSAGE));
-			superAndes.pagarCompraCarrito(tipoDocumento, numeroCliente);
+			String numeroCliente = JOptionPane.showInputDialog (this, "Numero de documento del cliente", "Pagar el carrito", JOptionPane.QUESTION_MESSAGE);
+			long sucursal = Long.parseLong(JOptionPane.showInputDialog (this, "Sucursal", "Pagar el carrito", JOptionPane.QUESTION_MESSAGE));
+			
+			if(superAndes.pagarCompraCarrito(tipoDocumento, numeroCliente, sucursal))
+				panelDatos.actualizarInterfaz("Se realizo la venta de manera efectiva");
+			else
+				panelDatos.actualizarInterfaz("Se ha producido un error. Intente luego");
 		} catch (Exception e) {
 			String resultado = generarMensajeError(e);
 			panelDatos.actualizarInterfaz(resultado);
@@ -1362,8 +1373,13 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	public void abandonarCarrito(){
 		try {
 			String tipoDocumento =JOptionPane.showInputDialog (this, "Tipo de documento del cliente", "Abandonar el carrito", JOptionPane.QUESTION_MESSAGE);
-			long numeroCliente = Long.parseLong(JOptionPane.showInputDialog (this, "Numero de documento del cliente", "Abandonar el carrito", JOptionPane.QUESTION_MESSAGE));
-			superAndes.abandonarCarrito(tipoDocumento, numeroCliente);
+			String numeroCliente = JOptionPane.showInputDialog (this, "Numero de documento del cliente", "Abandonar el carrito", JOptionPane.QUESTION_MESSAGE);
+			
+			if(superAndes.abandonarCarrito(tipoDocumento, numeroCliente))
+				panelDatos.actualizarInterfaz("Se abandono el carrito");
+			else 
+				throw new Exception("No se devolvieron productos del carrito. Verifique que el cliente tenga carrito y vuelva a intentarlo");
+			
 		} catch (Exception e) {
 			String resultado = generarMensajeError(e);
 			panelDatos.actualizarInterfaz(resultado);
@@ -1372,7 +1388,10 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	}
 	public void recolectarProductosAbandonados(){
 		try {
-			superAndes.recolectarProductosAbandonados();
+			if(superAndes.recolectarProductosAbandonados())
+				panelDatos.actualizarInterfaz("Se recolectaron los productos abandonados");
+			else
+				panelDatos.actualizarInterfaz("Hubo un error al recolectar los productos abandonados, intente luego");
 		} catch (Exception e) {
 			String resultado = generarMensajeError(e);
 			panelDatos.actualizarInterfaz(resultado);

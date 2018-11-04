@@ -1,5 +1,7 @@
 package uniandes.isis2304.b07.superandes.persistencia;
 
+import java.util.List;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
@@ -33,7 +35,7 @@ public class SQLCarrito {
 		this.pp = pp;
 	}
 
-	public long anadirProducto(PersistenceManager pm, String tipoDocumento, long numeroCliente, String idProducto,
+	public long anadirProducto(PersistenceManager pm, String tipoDocumento, String numeroCliente, String idProducto,
 			int cantidad) {
 		Query q = pm.newQuery(SQL, "INSERT INTO  " + " CARRITO " + " (tipoDocumento,numDocumento,cantidad,abandonado,producto)"
 				+ " VALUES(?,?,?,0,?) ");
@@ -41,20 +43,20 @@ public class SQLCarrito {
         return (long) q.executeUnique();
 	}
 
-	public long eliminarProducto(PersistenceManager pm, String tipoDocumento, long numeroCliente, String idProducto,
+	public long eliminarProducto(PersistenceManager pm, String tipoDocumento, String numeroCliente, String idProducto,
 			int cantidad) {
 		Query q = pm.newQuery(SQL, "UPDATE  " + " CARRITO " + " SET cantidad=cantidad-? WHERE tipoDocumento=? AND numDocumento=? AND producto=?");
         q.setParameters(cantidad, tipoDocumento, numeroCliente,idProducto);
         return (long) q.executeUnique();
 	}
 
-	public long pagarCarrito(PersistenceManager pm, String tipoDocumento, long numeroCliente) {
+	public long pagarCarrito(PersistenceManager pm, String tipoDocumento, String numeroCliente) {
 		Query q = pm.newQuery(SQL, "DELETE FROM   " + " CARRITO " + " WHERE tipoDocumento=?, numDocumento=? ");
 		q.setParameters(tipoDocumento,numeroCliente);
         return (long) q.executeUnique();
 	}
 
-	public long abandonarCarrito(PersistenceManager pm, String tipoDocumento, long numeroCliente) {
+	public long abandonarCarrito(PersistenceManager pm, String tipoDocumento, String numeroCliente) {
 		Query q = pm.newQuery(SQL, "UPDATE  " + " CARRITO " + " SET abandonado= 1 WHERE tipoDocumento=? AND numDocumento=? ");
         q.setParameters(tipoDocumento, numeroCliente);
         return (long) q.executeUnique();
@@ -63,6 +65,18 @@ public class SQLCarrito {
 	public long recolectarProductosAbandonados(PersistenceManager pm) {
 		Query q = pm.newQuery(SQL, "DELETE FROM   " + " CARRITO " + " WHERE abandonado=1 ");
         return (long) q.executeUnique();
+	}
+	
+	public List<Object[]> obtenerProductosAbandonados(PersistenceManager pm)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + " CARRITO " + " WHERE abandonado=1 ");
+        return  q.executeList();
+	}
+	
+	public List<Object[]> obtenerCarritoDeCliente(PersistenceManager pm, String tipoDocumento, String numeroCliente){
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + " CARRITO " + " WHERE tipoDocumento=? AND numDocumento=? ");
+		q.setParameters(tipoDocumento,numeroCliente);
+        return  q.executeList();
 	}
 
 }

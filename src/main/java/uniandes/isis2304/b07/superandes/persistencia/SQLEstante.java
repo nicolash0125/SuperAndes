@@ -56,15 +56,7 @@ public class SQLEstante {
         return (long) q.executeUnique();
 	}
 
-	public long recolectarProductosAbandonados(PersistenceManager pm) {
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + " CARRITO " + " WHERE abandonado=1 ");
-        List<Object[]> productosAbandonados= q.executeList();
-        //Numdoc,TipoDoc,Cantidad,Abandonado,producto
-        for (Object[] objects : productosAbandonados) {
-			devolverProductoPrimerEstante(pm, objects[4]+"", ((BigInteger)objects[2]).intValue());
-		}
-        return (long) q.executeUnique();
-	}
+	
 	public long devolverProductoPrimerEstante(PersistenceManager pm, String idProducto, int cantidad) {
 		Query q = pm.newQuery(SQL, "UPDATE " + " ESTANTEPRODUCTO " + "SET cantidad=cantidad+? WHERE   idProducto = ? ");
         q.setParameters(cantidad, idProducto);

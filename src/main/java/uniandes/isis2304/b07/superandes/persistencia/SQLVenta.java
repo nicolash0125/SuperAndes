@@ -38,11 +38,11 @@ public class SQLVenta {
 		this.pp = pp;
 	}
 
-	public long adicionarVenta(PersistenceManager pm, String sucursal, long numeroVenta, String documento,
-			String documento2, double precioTotal, Timestamp fecha) {
+	public long adicionarVenta(PersistenceManager pm, long sucursal, long numeroVenta, String tipoDoc,
+			String numDoc, double precioTotal, Timestamp fecha) {
 		
 		Query q = pm.newQuery(SQL, "INSERT INTO" + pp.darTablaVenta()+"(NUMEROVENTA,TIPODOCCLIENTE,NUMDOCCLIENTE,TOTALVENTA,FECHAVENTA,IDSUCURSAL) values (?,?,?,?,?,?)");
-		q.setParameters(numeroVenta, documento, documento2, precioTotal, fecha, sucursal);
+		q.setParameters(numeroVenta, tipoDoc, numDoc, precioTotal, fecha, sucursal);
 		return (long) q.executeUnique();
 	}
 
@@ -65,9 +65,10 @@ public class SQLVenta {
 		q.setResultClass(Venta.class);
 		return (List<Venta>) q.executeList();
 	}
-
-	public void realizarVentaBasadaEnCarro(String tipoDocumento, long numeroCliente) {
-		// TODO Auto-generated method stub
-		
+	
+	public void adicionarProductoAVenta(PersistenceManager pm, long numeroVenta, String codigoProducto,int cantidad){
+		Query q = pm.newQuery(SQL, "INSERT INTO " + " VENTAPRODUCTO "+"(NUMEROVENTA,CODIGOPRODUCTO,CANTIDAD) values (?,?,?)");
+		q.setParameters(numeroVenta, codigoProducto, cantidad);
+		q.executeUnique();
 	}
 }

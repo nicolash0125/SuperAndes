@@ -159,7 +159,7 @@ public class SuperAndes {
 	}
 
 
-	public Venta registrarVenta(String sucursal, String tipodocumento, String documento, String[] codigosProductos,
+	public Venta registrarVenta(long sucursal, String tipodocumento, String documento, String[] codigosProductos,
 			String[] cantidad, String[] precios, double precioTotal, Timestamp fecha) {
 
 		return pp.registrarVenta(sucursal, tipodocumento, documento, codigosProductos, cantidad, precios, precioTotal,fecha);
@@ -168,7 +168,7 @@ public class SuperAndes {
 
 
 
-	public String[] obtenerPreciosSucursal(String sucursal, String[] productos) {
+	public String[] obtenerPreciosSucursal(long sucursal, String[] productos) {
 
 		return pp.obtenerPreciosSucursal(sucursal, productos);
 	}
@@ -253,30 +253,30 @@ public class SuperAndes {
 	/* ****************************************************************
 	 * 			Requerimientos funcionales Iteracion 2
 	 *****************************************************************/
-	public void solicitarCarrito(String tipoDocumento, long numeroCliente)
+	public void solicitarCarrito(String tipoDocumento, String numeroCliente)
 	{
 		pp.solicitarCarrito(tipoDocumento,numeroCliente);
 	}
 	
-	public boolean adicionarProductoACarrito(String tipoDocumento, long numeroCliente, long idEstante, String idProducto, int cantidad)
+	public boolean adicionarProductoACarrito(String tipoDocumento, String numeroCliente, long idEstante, String idProducto, int cantidad)
 	{
 		return pp.adicionarProductoACarrito(tipoDocumento, numeroCliente, idEstante, idProducto, cantidad);
 	}
-	public void devolverProductoDelCarrito(String tipoDocumento, long numeroCliente, long idEstante, String idProducto, int cantidad)
+	public boolean devolverProductoDelCarrito(String tipoDocumento, String numeroCliente, long idEstante, String idProducto, int cantidad)
 	{
-		pp.devolverProductoDelCarrito(tipoDocumento, numeroCliente, idEstante, idProducto, cantidad);
+		return pp.devolverProductoDelCarrito(tipoDocumento, numeroCliente, idEstante, idProducto, cantidad);
 	}
-	public void pagarCompraCarrito(String tipoDocumento, long numeroCliente)
+	public boolean pagarCompraCarrito(String tipoDocumento, String numeroCliente, long sucursal)
 	{
-		pp.pagarCompraCarrito(tipoDocumento, numeroCliente);
+		return pp.pagarCompraCarrito(tipoDocumento, numeroCliente, sucursal);
 	}
-	public void abandonarCarrito(String tipoDocumento, long numeroCliente)
+	public boolean abandonarCarrito(String tipoDocumento, String numeroCliente)
 	{
-		pp.abandonarCarrito(tipoDocumento, numeroCliente);
+		return pp.abandonarCarrito(tipoDocumento, numeroCliente);
 	}
-	public void recolectarProductosAbandonados()
+	public boolean recolectarProductosAbandonados()
 	{
-		pp.recolectarProductosAbandonados();
+		return pp.recolectarProductosAbandonados();
 	}
 	public void consolidarPedidos()
 	{

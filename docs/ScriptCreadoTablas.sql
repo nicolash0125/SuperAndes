@@ -157,7 +157,7 @@ CREATE TABLE VentaProducto
 (
     numeroVenta INTEGER NOT NULL,
     codigoProducto VARCHAR(20) NOT NULL,
-    cantifdad INTEGER,
+    cantidad INTEGER,
     CONSTRAINT ventaproducto_pk PRIMARY KEY(numeroVenta, codigoProducto)
 );
 

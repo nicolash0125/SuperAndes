@@ -1,7 +1,9 @@
 package uniandes.isis2304.b07.superandes.persistencia;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -898,7 +900,7 @@ public class PersistenciaSuperAndes {
 		}
 	}
 
-	public Venta registrarVenta(String sucursal, String tipodocumento, String documento, String[] codigosProductos,
+	public Venta registrarVenta(long sucursal, String tipodocumento, String documento, String[] codigosProductos,
 			String[] cantidad, String[] precios, double precioTotal, Timestamp fecha) {
 
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1021,7 +1023,7 @@ public class PersistenciaSuperAndes {
 	 *****************************************************************/
 
 
-	public String[] obtenerPreciosSucursal(String sucursal, String[] productos) {
+	public String[] obtenerPreciosSucursal(long sucursal, String[] productos) {
 
 		PersistenceManager pm = pmf.getPersistenceManager();
 
@@ -1050,7 +1052,7 @@ public class PersistenciaSuperAndes {
 	/* ****************************************************************
 	 * 			Requerimientos funcionales Iteracion 2
 	 *****************************************************************/
-	public void solicitarCarrito(String tipoDocumento, long numeroCliente)
+	public void solicitarCarrito(String tipoDocumento, String numeroCliente)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -1078,7 +1080,7 @@ public class PersistenciaSuperAndes {
 		}
 	}
 	
-	public boolean adicionarProductoACarrito(String tipoDocumento, long numeroCliente, long idEstante, String idProducto, int cantidad)
+	public boolean adicionarProductoACarrito(String tipoDocumento, String numeroCliente, long idEstante, String idProducto, int cantidad)
 	{
 		boolean logro=false;
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1113,11 +1115,11 @@ public class PersistenciaSuperAndes {
 		return logro;
 
 	}
-	public void devolverProductoDelCarrito(String tipoDocumento, long numeroCliente, long idEstante, String idProducto, int cantidad)
+	public boolean devolverProductoDelCarrito(String tipoDocumento, String numeroCliente, long idEstante, String idProducto, int cantidad)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-
+		boolean logro=false;
 		try 
 		{
 			tx.begin();
@@ -1129,6 +1131,7 @@ public class PersistenciaSuperAndes {
 			sqlEstante.devolverProducto(pm, idEstante, idProducto, cantidad);
 			sqlCarrito.eliminarProducto(pm, tipoDocumento, numeroCliente, idProducto, cantidad);
 			tx.commit();
+			logro=true;
 
 		} 
 		catch (Exception e) 
@@ -1144,13 +1147,14 @@ public class PersistenciaSuperAndes {
 			}
 			pm.close();
 		}
+		return logro;
 	}
 	
-	public void pagarCompraCarrito(String tipoDocumento, long numeroCliente)
+	public boolean pagarCompraCarrito(String tipoDocumento, String numeroCliente, long sucursal)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-
+		boolean logro=false;
 		try 
 		{
 			tx.begin();
@@ -1158,24 +1162,40 @@ public class PersistenciaSuperAndes {
 			if(tieneCarrito==0)
 				throw new Exception("El cliente no tiene un carrito asignado");
 			
-			sqlVenta.realizarVentaBasadaEnCarro(tipoDocumento,numeroCliente);
+			long numeroVenta=nextval();
+			List<Object[]>productos=sqlCarrito.obtenerCarritoDeCliente(pm, tipoDocumento, numeroCliente);
+			Date d=new Date();
+			
+			sqlVenta.adicionarVenta(pm, sucursal, numeroVenta, tipoDocumento, numeroCliente, 0, new Timestamp(d.getTime()));
+			for (Object[] prod : productos) {
+				sqlVenta.adicionarProductoAVenta(pm, numeroVenta,((String) prod[4]), ((BigDecimal) prod[2]).intValue());
+			}
 			sqlCarrito.pagarCarrito(pm, tipoDocumento, numeroCliente);
 			sqlCliente.abandonarCarrito(pm, tipoDocumento, numeroCliente);
 			tx.commit();
-
+			logro=true;
 		} 
 		catch (Exception e) 
 		{
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 
 		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return logro;
 	}
 	
-	public void abandonarCarrito(String tipoDocumento, long numeroCliente)
+	public boolean abandonarCarrito(String tipoDocumento, String numeroCliente)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-
+		boolean logro=false;
 		try 
 		{
 			tx.begin();
@@ -1186,6 +1206,7 @@ public class PersistenciaSuperAndes {
 			sqlCarrito.abandonarCarrito(pm, tipoDocumento, numeroCliente);
 			sqlCliente.abandonarCarrito(pm, tipoDocumento, numeroCliente);
 			tx.commit();
+			logro=true;
 
 		} 
 		catch (Exception e) 
@@ -1193,26 +1214,48 @@ public class PersistenciaSuperAndes {
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 
 		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return logro;
 	}
 	
-	public void recolectarProductosAbandonados()
+	public boolean recolectarProductosAbandonados()
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-
+		boolean logro=false;
 		try 
 		{
 			tx.begin();
-			sqlEstante.recolectarProductosAbandonados(pm);
+			List<Object[]> productosAbandonados=sqlCarrito.obtenerProductosAbandonados(pm);
+			//Numdoc,TipoDoc,Cantidad,Abandonado,producto
+	        for (Object[] objects : productosAbandonados) {
+				sqlEstante.devolverProductoPrimerEstante(pm, objects[4]+"", ((BigDecimal)objects[2]).intValue());
+			}
 			sqlCarrito.recolectarProductosAbandonados(pm);
 			tx.commit();
-
+			logro=true;
 		} 
 		catch (Exception e) 
 		{
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 
 		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return logro;
 	}
 	public void consolidarPedidos()
 	{
@@ -1231,6 +1274,14 @@ public class PersistenciaSuperAndes {
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 
 		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 	public void registrarLlegadaPedidoConsolidado(long codigoPedido, Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
 	{
@@ -1248,6 +1299,14 @@ public class PersistenciaSuperAndes {
 		{
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
 		}
 	}
 	
