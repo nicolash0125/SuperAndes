@@ -41,8 +41,8 @@ public class SQLVenta {
 	public long adicionarVenta(PersistenceManager pm, long sucursal, long numeroVenta, String tipoDoc,
 			String numDoc, double precioTotal, Timestamp fecha) {
 		
-		Query q = pm.newQuery(SQL, "INSERT INTO" + pp.darTablaVenta()+"(NUMEROVENTA,TIPODOCCLIENTE,NUMDOCCLIENTE,TOTALVENTA,FECHAVENTA,IDSUCURSAL) values (?,?,?,?,?,?)");
-		q.setParameters(numeroVenta, tipoDoc, numDoc, precioTotal, fecha, sucursal);
+		Query q = pm.newQuery(SQL, "INSERT INTO " + " VENTA "+"(NUMEROVENTA,TIPODOCCLIENTE,NUMDOCCLIENTE,TOTAL,TOTALIMPUESTOS,FECHAVENTA,SUCURSAL) values (?,?,?,?,?,?,?)");
+		q.setParameters(numeroVenta, tipoDoc, numDoc, precioTotal, (precioTotal*0.19), fecha, sucursal);
 		return (long) q.executeUnique();
 	}
 

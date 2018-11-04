@@ -51,7 +51,7 @@ public class SQLCarrito {
 	}
 
 	public long pagarCarrito(PersistenceManager pm, String tipoDocumento, String numeroCliente) {
-		Query q = pm.newQuery(SQL, "DELETE FROM   " + " CARRITO " + " WHERE tipoDocumento=?, numDocumento=? ");
+		Query q = pm.newQuery(SQL, "DELETE FROM   " + " CARRITO " + " WHERE tipoDocumento=? AND numDocumento=? ");
 		q.setParameters(tipoDocumento,numeroCliente);
         return (long) q.executeUnique();
 	}
