@@ -1303,6 +1303,12 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	 *****************************************************************/
 	public void solicitarCarrito(){
 		try {
+			String resultado="Solicitar carrito \n";
+			String tipoDocumento =JOptionPane.showInputDialog (this, "Tipo de documento del cliente", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE);
+			long numeroCliente = Long.parseLong(JOptionPane.showInputDialog (this, "Numero de documento del cliente", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE));
+			superAndes.solicitarCarrito(tipoDocumento,numeroCliente);
+			resultado+="Carrito asignado a cliente";
+			panelDatos.actualizarInterfaz(resultado);
 			
 		} catch (Exception e) {
 			String resultado = generarMensajeError(e);
@@ -1315,9 +1321,12 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			String tipoDocumento =JOptionPane.showInputDialog (this, "Tipo de documento del cliente", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE);
 			long numeroCliente = Long.parseLong(JOptionPane.showInputDialog (this, "Numero de documento del cliente", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE));
 			long idEstante = Long.parseLong(JOptionPane.showInputDialog (this, "Id del estante del cual tomara el producto", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE));
-			long idProducto = Long.parseLong(JOptionPane.showInputDialog (this, "Id del producto a anadir al carrito", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE));
+			String idProducto = JOptionPane.showInputDialog (this, "Id del producto a anadir al carrito", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE);
 			int cantidad = Integer.parseInt(JOptionPane.showInputDialog (this, "Cantidad de productos", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE));
-			superAndes.adicionarProductoACarrito(tipoDocumento, numeroCliente, idEstante, idProducto, cantidad);
+			if(superAndes.adicionarProductoACarrito(tipoDocumento, numeroCliente, idEstante, idProducto, cantidad))
+				panelDatos.actualizarInterfaz("Se adicionaron los productos al carrito");
+			else 
+				throw new Exception("No se adicionaron productos al carrito. Verifique que el cliente tenga carrito y vuelva a intentarlo");
 			
 		} catch (Exception e) {
 			String resultado = generarMensajeError(e);
@@ -1330,7 +1339,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			String tipoDocumento =JOptionPane.showInputDialog (this, "Tipo de documento del cliente", "Devolver productos del carrito", JOptionPane.QUESTION_MESSAGE);
 			long numeroCliente = Long.parseLong(JOptionPane.showInputDialog (this, "Numero de documento del cliente", "Devolver productos del carrito", JOptionPane.QUESTION_MESSAGE));
 			long idEstante = Long.parseLong(JOptionPane.showInputDialog (this, "Id del estante del cual regresara el producto", "Devolver productos del carrito", JOptionPane.QUESTION_MESSAGE));
-			long idProducto = Long.parseLong(JOptionPane.showInputDialog (this, "Id del producto a regresar del carrito", "Devolver productos del carrito", JOptionPane.QUESTION_MESSAGE));
+			String idProducto = JOptionPane.showInputDialog (this, "Id del producto a regresar del carrito", "Devolver productos del carrito", JOptionPane.QUESTION_MESSAGE);
 			int cantidad = Integer.parseInt(JOptionPane.showInputDialog (this, "Cantidad de productos", "Devolver productos del carrito", JOptionPane.QUESTION_MESSAGE));
 			superAndes.devolverProductoDelCarrito(tipoDocumento, numeroCliente, idEstante, idProducto, cantidad);
 		} catch (Exception e) {

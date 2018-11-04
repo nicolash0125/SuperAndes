@@ -1,5 +1,8 @@
 package uniandes.isis2304.b07.superandes.persistencia;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
@@ -48,5 +51,22 @@ public class SQLCliente {
 		Query q = pm.newQuery(SQL, "INSERT INTO" + " CLIENTE "+"(TIPODOCUMENTO,NUMDOCUMENTO,POSEECARRO) values (?,?,0)");
 		q.setParameters(tipodocumento,numDocumento);
 		return (long) q.executeUnique();
+	}
+
+
+
+	public long solicitarCarrito(PersistenceManager pm, String tipoDocumento, long numeroCliente) {
+		Query q = pm.newQuery(SQL, "UPDATE " + " CLIENTE "+" SET poseeCarro = 1 WHERE tipoDocumento = ? AND numDocumento = ?");
+		q.setParameters(tipoDocumento,numeroCliente);
+		return (long) q.executeUnique();
+	}
+
+
+
+	public int tieneCarrito(PersistenceManager pm, String tipoDocumento, long numeroCliente) {
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + " CLIENTE "+"  WHERE tipoDocumento = ? AND numDocumento = ?");
+		q.setParameters(tipoDocumento,numeroCliente);
+		Object[] obj=(Object[])q.executeUnique();
+		return ((BigDecimal)obj[2]).intValue();
 	}
 }

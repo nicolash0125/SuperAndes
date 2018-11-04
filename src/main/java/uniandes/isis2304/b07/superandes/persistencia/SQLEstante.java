@@ -1,5 +1,8 @@
 package uniandes.isis2304.b07.superandes.persistencia;
 
+import java.math.BigInteger;
+import java.util.List;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
@@ -35,18 +38,37 @@ public class SQLEstante {
 
 	public long insertarEstante(PersistenceManager pm, long idEstante, long idSucursal, double capacidadVolumen,
 			double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso) {
-		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaEstante  () + "(idsucursal, idestante,capacidadvolumen,capacidadtotalvolumen,capacidadpeso,capacidadtotalpeso) values (?, ?, ?, ?, ?, ?)");
+		Query q = pm.newQuery(SQL, "INSERT INTO " + " ESTANTE " + "(idsucursal, idestante,capacidadvolumen,capacidadtotalvolumen,capacidadpeso,capacidadtotalpeso) values (?, ?, ?, ?, ?, ?)");
         q.setParameters(idSucursal, idEstante, capacidadVolumen, capacidadTotalVolumen, capacidadPeso, capacidadTotalPeso);
         return (long) q.executeUnique();
 	}
 
-	public long tomarProducto(PersistenceManager pm,long idEstante, long idProducto, int cantidad) {
-		// TODO Auto-generated method stub
-		return 0;
+	public long tomarProducto(PersistenceManager pm,long idEstante, String idProducto, int cantidad) {
+		
+		Query q = pm.newQuery(SQL, "UPDATE " + " ESTANTEPRODUCTO " + "SET cantidad=cantidad-? WHERE idEstante = ? AND idProducto = ? ");
+        q.setParameters(cantidad, idEstante, idProducto);
+        return (long) q.executeUnique();
 	}
 
-	public long devolverProducto(PersistenceManager pm, long idEstante, long idProducto, int cantidad) {
-		// TODO Auto-generated method stub
-		return 0;
+	public long devolverProducto(PersistenceManager pm, long idEstante, String idProducto, int cantidad) {
+		Query q = pm.newQuery(SQL, "UPDATE " + " ESTANTEPRODUCTO " + "SET cantidad=cantidad+? WHERE idEstante = ? AND idProducto = ? ");
+        q.setParameters(cantidad, idEstante, idProducto);
+        return (long) q.executeUnique();
 	}
+
+	public long recolectarProductosAbandonados(PersistenceManager pm) {
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + " CARRITO " + " WHERE abandonado=1 ");
+        List<Object[]> productosAbandonados= q.executeList();
+        for (Object[] objects : productosAbandonados) {
+			devolverProductoPrimerEstante(pm, objects[4]+"", ((BigInteger)objects[2]).intValue());
+		}
+        //Numdoc,TipoDoc,Cantidad,Abandonado,producto
+        return (long) q.executeUnique();
+	}
+	public long devolverProductoPrimerEstante(PersistenceManager pm, String idProducto, int cantidad) {
+		Query q = pm.newQuery(SQL, "UPDATE " + " ESTANTEPRODUCTO " + "SET cantidad=cantidad+? WHERE   idProducto = ? ");
+        q.setParameters(cantidad, idProducto);
+        return (long) q.executeUnique();
+	}
+	
 }

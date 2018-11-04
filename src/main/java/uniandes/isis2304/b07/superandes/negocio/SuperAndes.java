@@ -253,16 +253,16 @@ public class SuperAndes {
 	/* ****************************************************************
 	 * 			Requerimientos funcionales Iteracion 2
 	 *****************************************************************/
-	public void solicitarCarrito()
+	public void solicitarCarrito(String tipoDocumento, long numeroCliente)
 	{
-		pp.solicitarCarrito();
+		pp.solicitarCarrito(tipoDocumento,numeroCliente);
 	}
 	
-	public void adicionarProductoACarrito(String tipoDocumento, long numeroCliente, long idEstante, long idProducto, int cantidad)
+	public boolean adicionarProductoACarrito(String tipoDocumento, long numeroCliente, long idEstante, String idProducto, int cantidad)
 	{
-		pp.adicionarProductoACarrito(tipoDocumento, numeroCliente, idEstante, idProducto, cantidad);
+		return pp.adicionarProductoACarrito(tipoDocumento, numeroCliente, idEstante, idProducto, cantidad);
 	}
-	public void devolverProductoDelCarrito(String tipoDocumento, long numeroCliente, long idEstante, long idProducto, int cantidad)
+	public void devolverProductoDelCarrito(String tipoDocumento, long numeroCliente, long idEstante, String idProducto, int cantidad)
 	{
 		pp.devolverProductoDelCarrito(tipoDocumento, numeroCliente, idEstante, idProducto, cantidad);
 	}

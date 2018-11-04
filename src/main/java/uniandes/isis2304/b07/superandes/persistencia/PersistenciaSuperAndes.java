@@ -1,5 +1,6 @@
 package uniandes.isis2304.b07.superandes.persistencia;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
@@ -1049,12 +1050,7 @@ public class PersistenciaSuperAndes {
 	/* ****************************************************************
 	 * 			Requerimientos funcionales Iteracion 2
 	 *****************************************************************/
-	public void solicitarCarrito()
-	{
-		
-	}
-	
-	public void adicionarProductoACarrito(String tipoDocumento, long numeroCliente, long idEstante, long idProducto, int cantidad)
+	public void solicitarCarrito(String tipoDocumento, long numeroCliente)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -1062,8 +1058,8 @@ public class PersistenciaSuperAndes {
 		try 
 		{
 			tx.begin();
-			sqlEstante.tomarProducto(pm, idEstante, idProducto, cantidad);
-			sqlCarrito.anadirProducto(pm, tipoDocumento, numeroCliente, idProducto, cantidad);
+			sqlCliente.solicitarCarrito(pm, tipoDocumento, numeroCliente);
+			log.trace ("Cliente " + tipoDocumento + numeroCliente + " asignado carro");
 			tx.commit();
 
 		} 
@@ -1071,10 +1067,53 @@ public class PersistenciaSuperAndes {
 		{
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 
-		}		
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	public boolean adicionarProductoACarrito(String tipoDocumento, long numeroCliente, long idEstante, String idProducto, int cantidad)
+	{
+		boolean logro=false;
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try 
+		{
+			tx.begin();
+			
+			int tieneCarrito=sqlCliente.tieneCarrito(pm, tipoDocumento, numeroCliente);
+			if(tieneCarrito==0)
+				throw new Exception("El cliente no tiene un carrito asignado");
+			
+			sqlEstante.tomarProducto(pm, idEstante, idProducto, cantidad);
+			sqlCarrito.anadirProducto(pm, tipoDocumento, numeroCliente, idProducto, cantidad);
+			tx.commit();
+			logro=true;
+
+		} 
+		catch (Exception e) 
+		{
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+
+		}	
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return logro;
 
 	}
-	public void devolverProductoDelCarrito(String tipoDocumento, long numeroCliente, long idEstante, long idProducto, int cantidad)
+	public void devolverProductoDelCarrito(String tipoDocumento, long numeroCliente, long idEstante, String idProducto, int cantidad)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -1082,6 +1121,11 @@ public class PersistenciaSuperAndes {
 		try 
 		{
 			tx.begin();
+			
+			int tieneCarrito=sqlCliente.tieneCarrito(pm, tipoDocumento, numeroCliente);
+			if(tieneCarrito==0)
+				throw new Exception("El cliente no tiene un carrito asignado");
+			
 			sqlEstante.devolverProducto(pm, idEstante, idProducto, cantidad);
 			sqlCarrito.eliminarProducto(pm, tipoDocumento, numeroCliente, idProducto, cantidad);
 			tx.commit();
@@ -1092,6 +1136,14 @@ public class PersistenciaSuperAndes {
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 
 		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 	public void pagarCompraCarrito(String tipoDocumento, long numeroCliente)
 	{
@@ -1101,6 +1153,10 @@ public class PersistenciaSuperAndes {
 		try 
 		{
 			tx.begin();
+			int tieneCarrito=sqlCliente.tieneCarrito(pm, tipoDocumento, numeroCliente);
+			if(tieneCarrito==0)
+				throw new Exception("El cliente no tiene un carrito asignado");
+			
 			sqlCarrito.pagarCarrito(pm, tipoDocumento, numeroCliente);
 			tx.commit();
 
@@ -1119,6 +1175,10 @@ public class PersistenciaSuperAndes {
 		try 
 		{
 			tx.begin();
+			int tieneCarrito=sqlCliente.tieneCarrito(pm, tipoDocumento, numeroCliente);
+			if(tieneCarrito==0)
+				throw new Exception("El cliente no tiene un carrito asignado");
+			
 			sqlCarrito.abandonarCarrito(pm, tipoDocumento, numeroCliente);
 			tx.commit();
 
@@ -1137,6 +1197,7 @@ public class PersistenciaSuperAndes {
 		try 
 		{
 			tx.begin();
+			sqlEstante.recolectarProductosAbandonados(pm);
 			sqlCarrito.recolectarProductosAbandonados(pm);
 			tx.commit();
 

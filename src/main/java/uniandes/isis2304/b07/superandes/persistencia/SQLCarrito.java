@@ -1,6 +1,7 @@
 package uniandes.isis2304.b07.superandes.persistencia;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 
 public class SQLCarrito {
 	/* ****************************************************************
@@ -32,16 +33,19 @@ public class SQLCarrito {
 		this.pp = pp;
 	}
 
-	public long anadirProducto(PersistenceManager pm, String tipoDocumento, long numeroCliente, long idProducto,
+	public long anadirProducto(PersistenceManager pm, String tipoDocumento, long numeroCliente, String idProducto,
 			int cantidad) {
-		// TODO Auto-generated method stub
-		return 0;
+		Query q = pm.newQuery(SQL, "INSERT INTO  " + " CARRITO " + " (tipoDocumento,numDocumento,cantidad,abandonado,producto)"
+				+ " VALUES(?,?,?,0,?) ");
+        q.setParameters(tipoDocumento, numeroCliente, cantidad,idProducto);
+        return (long) q.executeUnique();
 	}
 
-	public long eliminarProducto(PersistenceManager pm, String tipoDocumento, long numeroCliente, long idProducto,
+	public long eliminarProducto(PersistenceManager pm, String tipoDocumento, long numeroCliente, String idProducto,
 			int cantidad) {
-		// TODO Auto-generated method stub
-		return 0;
+		Query q = pm.newQuery(SQL, "UPDATE  " + " CARRITO " + " SET cantidad=cantidad-? WHERE tipoDocumento=? AND numDocumento=? AND producto=?");
+        q.setParameters(cantidad, tipoDocumento, numeroCliente,idProducto);
+        return (long) q.executeUnique();
 	}
 
 	public long pagarCarrito(PersistenceManager pm, String tipoDocumento, long numeroCliente) {
@@ -50,13 +54,14 @@ public class SQLCarrito {
 	}
 
 	public long abandonarCarrito(PersistenceManager pm, String tipoDocumento, long numeroCliente) {
-		// TODO Auto-generated method stub
-		return 0;
+		Query q = pm.newQuery(SQL, "UPDATE  " + " CARRITO " + " SET abandonado= 1 WHERE tipoDocumento=? AND numDocumento=? ");
+        q.setParameters(tipoDocumento, numeroCliente);
+        return (long) q.executeUnique();
 	}
 
 	public long recolectarProductosAbandonados(PersistenceManager pm) {
-		// TODO Auto-generated method stub
-		return 0;
+		Query q = pm.newQuery(SQL, "DELETE FROM   " + " CARRITO " + " WHERE abandonado=1 ");
+        return (long) q.executeUnique();
 	}
 
 }
