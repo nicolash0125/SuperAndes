@@ -1310,22 +1310,44 @@ public class PersistenciaSuperAndes {
 		}
 	}
 	
-	public void analizarOperacion()
+	public String analizarOperacion(Timestamp fechaInicio, Timestamp fechaFin)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-
+		String resp="";
 		try 
 		{
 			tx.begin();
+			resp+="\n";
+			resp+="   SUCURSAL   CANTMAX    CODIGOPRODUCTO    FECHAVENTA";
+			List<Object[]> maxC=sqlVenta.analizarCantidadMax(pm,fechaInicio,fechaFin);
+			for (Object[] objects : maxC) {
+				resp+="\n"+"        "+((BigDecimal)objects[0]).intValue()+"               "+((BigDecimal)objects[1]).intValue()+"           "+objects[2]+"          "+objects[3];
+			}
+			resp+="\n";
+			resp+="\n";
+			resp+="   SUCURSAL   PRECIOMAX    CODIGOPRODUCTO    FECHAVENTA";
+			List<Object[]> maxP=sqlVenta.analizarPrecioMax(pm,fechaInicio,fechaFin);
+			for (Object[] objects : maxP) {
+				resp+="\n"+"        "+((BigDecimal)objects[0]).intValue()+"          $"+((BigDecimal)objects[1]).doubleValue()+"           "+objects[2]+"          "+objects[3];
+			}
+			resp+="\n";
+			resp+="\n";
+			resp+="   SUCURSAL   CANTMIN    CODIGOPRODUCTO    FECHAVENTA";
+			List<Object[]> minC=sqlVenta.analizarCantidadMin(pm,fechaInicio,fechaFin);
+			for (Object[] objects : minC) {
+				resp+="\n"+"        "+((BigDecimal)objects[0]).intValue()+"               "+((BigDecimal)objects[1]).intValue()+"            "+objects[2]+"          "+objects[3];
+			}
 			tx.commit();
-
+			resp+="\n";
+			resp+="\n";
 		} 
 		catch (Exception e) 
 		{
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-
+			resp+="/n Error: "+e.getMessage();
 		}
+		return resp;
 	}
 	
 	public void clientesFrecuentes()

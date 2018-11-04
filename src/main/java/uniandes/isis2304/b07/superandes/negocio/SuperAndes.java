@@ -287,9 +287,9 @@ public class SuperAndes {
 		pp.registrarLlegadaPedidoConsolidado(codigoPedido,fechaLlegada,cantidadProductos,calidadProductos,calificacion);
 	}
 	
-	public void analizarOperacion()
+	public String analizarOperacion(Timestamp fechaInicio, Timestamp fechaFin)
 	{
-		pp.analizarOperacion();
+		return pp.analizarOperacion(fechaInicio,fechaFin);
 	}
 	
 	public void clientesFrecuentes()

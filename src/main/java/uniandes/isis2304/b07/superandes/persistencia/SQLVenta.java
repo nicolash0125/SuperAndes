@@ -71,4 +71,109 @@ public class SQLVenta {
 		q.setParameters(numeroVenta, codigoProducto, cantidad);
 		q.executeUnique();
 	}
+
+	public List<Object[]> analizarCantidadMax(PersistenceManager pm, Timestamp fechaInicio, Timestamp fechaFin) {
+		Query q = pm.newQuery(SQL, ""
+				+ "SELECT t1.SUCURSAL, t1.CANTMAX, t1.codigoProducto, t2.fechaVENTA FROM "
+				+ " ( "
+				+ " SELECT  sucursal,MAX(cantt) as CANTMAX ,codigoProducto FROM "
+				+ " ( "
+				+ " SELECT sucursal,fechaVenta, codigoProducto, sum(CANTIDAD) as CantT, SUM(PRECIONETO) FROM "
+				+ " ( "
+				+ "	SELECT v.NumeroVenta,vp.codigoproducto, vp.cantidad, ps.preciounitario*vp.cantidad AS PrecioNeto,v.fechaventa ,v.sucursal "
+				+ " FROM VENTA v INNER JOIN VENTAPRODUCTO vp "
+				+ " ON v.numeroventa=vp.numeroventa INNER JOIN productoofrecidosucursal ps "
+                + " ON ps.codigobarras=vp.codigoproducto AND ps.idsucursal=v.sucursal "
+				+ " WHERE v.fechaVenta BETWEEN ? AND ? "
+				+ " ) "
+				+ " GROUP BY sucursal,fechaVenta,codigoProducto "
+				+ " ) "
+				+ " GROUP BY sucursal,codigoProducto "
+				+ "  ) t1 "
+				+ "  INNER JOIN "
+				+ " ( "
+				+ " SELECT sucursal,fechaVenta, codigoProducto, sum(CANTIDAD) as CantT, SUM(PRECIONETO) FROM "
+				+ " ( "
+				+ " SELECT v.NumeroVenta,vp.codigoproducto, vp.cantidad, ps.preciounitario*vp.cantidad AS PrecioNeto,v.fechaventa ,v.sucursal "
+                + " FROM VENTA v INNER JOIN VENTAPRODUCTO vp "
+                + " ON v.numeroventa=vp.numeroventa INNER JOIN productoofrecidosucursal ps "
+                + " ON ps.codigobarras=vp.codigoproducto AND ps.idsucursal=v.sucursal "
+                + " WHERE v.fechaVenta BETWEEN ? AND ? "
+                + " ) "
+                + " GROUP BY sucursal,fechaVenta,codigoProducto "
+                + " ) t2 ON t1.sucursal=t2.sucursal AND t1.codigoProducto=t2.codigoProducto AND t1.cantMax=t2.cantt "
+                + " ORDER BY t1.sucursal ");
+		q.setParameters(fechaInicio, fechaFin, fechaInicio,fechaFin);
+		return (List<Object[]>) q.executeList();
+	}
+
+	public List<Object[]> analizarPrecioMax(PersistenceManager pm, Timestamp fechaInicio, Timestamp fechaFin) {
+		Query q = pm.newQuery(SQL, ""
+				+ "SELECT t1.SUCURSAL, t1.MAXPRE, t1.codigoProducto, t2.fechaVENTA FROM "
+				+ " ( "
+				+ " SELECT  sucursal,MAX(SUMPRECIONETO) as MAXPRE ,codigoProducto FROM  "
+				+ " ( "
+				+ " SELECT sucursal,fechaVenta, codigoProducto, sum(CANTIDAD) as CantT, SUM(PRECIONETO) as SUMPRECIONETO FROM "
+				+ " ( "
+				+ "	SELECT v.NumeroVenta,vp.codigoproducto, vp.cantidad, ps.preciounitario*vp.cantidad AS PrecioNeto,v.fechaventa ,v.sucursal "
+				+ " FROM VENTA v INNER JOIN VENTAPRODUCTO vp "
+				+ " ON v.numeroventa=vp.numeroventa INNER JOIN productoofrecidosucursal ps "
+                + " ON ps.codigobarras=vp.codigoproducto AND ps.idsucursal=v.sucursal "
+				+ " WHERE v.fechaVenta BETWEEN ? AND ? "
+				+ " ) "
+				+ " GROUP BY sucursal,fechaVenta,codigoProducto "
+				+ " ) "
+				+ " GROUP BY sucursal,codigoProducto "
+				+ "  ) t1 "
+				+ "  INNER JOIN "
+				+ " ( "
+				+ " SELECT sucursal,fechaVenta, codigoProducto, SUM(PRECIONETO) AS SUMPRECIONETO FROM "
+				+ " ( "
+				+ " SELECT v.NumeroVenta,vp.codigoproducto, vp.cantidad, ps.preciounitario*vp.cantidad AS PrecioNeto,v.fechaventa ,v.sucursal "
+                + " FROM VENTA v INNER JOIN VENTAPRODUCTO vp "
+                + " ON v.numeroventa=vp.numeroventa INNER JOIN productoofrecidosucursal ps "
+                + " ON ps.codigobarras=vp.codigoproducto AND ps.idsucursal=v.sucursal "
+                + " WHERE v.fechaVenta BETWEEN ? AND ? "
+                + " ) "
+                + " GROUP BY sucursal,fechaVenta,codigoProducto "
+                + " ) t2 ON t1.sucursal=t2.sucursal AND t1.codigoProducto=t2.codigoProducto AND t1.MAXPRE=t2.SUMPRECIONETO "
+                + " ORDER BY t1.sucursal ");
+		q.setParameters(fechaInicio, fechaFin, fechaInicio,fechaFin);
+		return (List<Object[]>) q.executeList();
+	}
+
+	public List<Object[]> analizarCantidadMin(PersistenceManager pm, Timestamp fechaInicio, Timestamp fechaFin) {
+		Query q = pm.newQuery(SQL, ""
+				+ "SELECT t1.SUCURSAL, t1.CANTMIN, t1.codigoProducto, t2.fechaVENTA FROM "
+				+ " ( "
+				+ " SELECT  sucursal,MIN(cantt) as CANTMIN ,codigoProducto FROM "
+				+ " ( "
+				+ " SELECT sucursal,fechaVenta, codigoProducto, sum(CANTIDAD) as CantT, SUM(PRECIONETO) FROM "
+				+ " ( "
+				+ "	SELECT v.NumeroVenta,vp.codigoproducto, vp.cantidad, ps.preciounitario*vp.cantidad AS PrecioNeto,v.fechaventa ,v.sucursal "
+				+ " FROM VENTA v INNER JOIN VENTAPRODUCTO vp "
+				+ " ON v.numeroventa=vp.numeroventa INNER JOIN productoofrecidosucursal ps "
+                + " ON ps.codigobarras=vp.codigoproducto AND ps.idsucursal=v.sucursal "
+				+ " WHERE v.fechaVenta BETWEEN ? AND ? "
+				+ " ) "
+				+ " GROUP BY sucursal,fechaVenta,codigoProducto "
+				+ " ) "
+				+ " GROUP BY sucursal,codigoProducto "
+				+ "  ) t1 "
+				+ "  INNER JOIN "
+				+ " ( "
+				+ " SELECT sucursal,fechaVenta, codigoProducto, sum(CANTIDAD) as CantT, SUM(PRECIONETO) FROM "
+				+ " ( "
+				+ " SELECT v.NumeroVenta,vp.codigoproducto, vp.cantidad, ps.preciounitario*vp.cantidad AS PrecioNeto,v.fechaventa ,v.sucursal "
+                + " FROM VENTA v INNER JOIN VENTAPRODUCTO vp "
+                + " ON v.numeroventa=vp.numeroventa INNER JOIN productoofrecidosucursal ps "
+                + " ON ps.codigobarras=vp.codigoproducto AND ps.idsucursal=v.sucursal "
+                + " WHERE v.fechaVenta BETWEEN ? AND ? "
+                + " ) "
+                + " GROUP BY sucursal,fechaVenta,codigoProducto "
+                + " ) t2 ON t1.sucursal=t2.sucursal AND t1.codigoProducto=t2.codigoProducto AND t1.cantMin=t2.cantt "
+                + " ORDER BY t1.sucursal ");
+		q.setParameters(fechaInicio, fechaFin, fechaInicio,fechaFin);
+		return (List<Object[]>) q.executeList();
+	}
 }

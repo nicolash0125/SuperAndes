@@ -1424,7 +1424,19 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	
 	public void analizarOperacion(){
 		try {
-			superAndes.analizarOperacion();
+			
+			String fechaI = JOptionPane.showInputDialog (this, "Fecha de inicio (dd/mm/yyyy)", "Registrar llegada pedido", JOptionPane.QUESTION_MESSAGE);
+			SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
+			Date d = dateformat.parse(fechaI);
+			Timestamp fechaInicio = new Timestamp(d.getTime());
+			String fechaF = JOptionPane.showInputDialog (this, "Fecha de fin (dd/mm/yyyy)", "Analizar operacion SuperAndes", JOptionPane.QUESTION_MESSAGE);
+			dateformat = new SimpleDateFormat("dd/MM/yyyy");
+			d = dateformat.parse(fechaF);
+			Timestamp fechaFin = new Timestamp(d.getTime());
+			
+			
+			String resultado=superAndes.analizarOperacion(fechaInicio,fechaFin);
+			panelDatos.actualizarInterfaz(resultado);
 		} catch (Exception e) {
 			String resultado = generarMensajeError(e);
 			panelDatos.actualizarInterfaz(resultado);
