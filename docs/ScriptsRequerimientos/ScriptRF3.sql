@@ -1,4 +1,3 @@
---�Por convenci�n para una empresa el nombre es su raz�n social y el apellido el tipo de sociedad.
 
 -- Creamos 3 clientes de tipo persona natural
 INSERT INTO CLIENTE (TIPODOCUMENTO, NUMDOCUMENTO, poseeCarro) VALUES ('CC','1234567',0);
@@ -9,7 +8,6 @@ INSERT INTO PERSONANATURAL (TIPODOCUMENTO, NUMDOCUMENTO, NOMBRE, CORREO) VALUES 
 
 INSERT INTO CLIENTE (TIPODOCUMENTO, NUMDOCUMENTO, poseeCarro) VALUES ('CC','9876543',0);
 INSERT INTO PERSONANATURAL (TIPODOCUMENTO, NUMDOCUMENTO, NOMBRE, CORREO) VALUES ('CC','9876543', 'Juan','juan@gmail.com');
-
 
 -- Creamos 3 clientes de tipo persona jur�dica
 

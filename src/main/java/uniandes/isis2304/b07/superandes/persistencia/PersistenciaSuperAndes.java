@@ -1145,6 +1145,7 @@ public class PersistenciaSuperAndes {
 			pm.close();
 		}
 	}
+	
 	public void pagarCompraCarrito(String tipoDocumento, long numeroCliente)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1157,7 +1158,9 @@ public class PersistenciaSuperAndes {
 			if(tieneCarrito==0)
 				throw new Exception("El cliente no tiene un carrito asignado");
 			
+			sqlVenta.realizarVentaBasadaEnCarro(tipoDocumento,numeroCliente);
 			sqlCarrito.pagarCarrito(pm, tipoDocumento, numeroCliente);
+			sqlCliente.abandonarCarrito(pm, tipoDocumento, numeroCliente);
 			tx.commit();
 
 		} 
@@ -1167,6 +1170,7 @@ public class PersistenciaSuperAndes {
 
 		}
 	}
+	
 	public void abandonarCarrito(String tipoDocumento, long numeroCliente)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1180,6 +1184,7 @@ public class PersistenciaSuperAndes {
 				throw new Exception("El cliente no tiene un carrito asignado");
 			
 			sqlCarrito.abandonarCarrito(pm, tipoDocumento, numeroCliente);
+			sqlCliente.abandonarCarrito(pm, tipoDocumento, numeroCliente);
 			tx.commit();
 
 		} 
@@ -1189,6 +1194,7 @@ public class PersistenciaSuperAndes {
 
 		}
 	}
+	
 	public void recolectarProductosAbandonados()
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();

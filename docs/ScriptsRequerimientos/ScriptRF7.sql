@@ -29,14 +29,12 @@ INSERT INTO pague1lleve2condescpromo (CODIGOPROMO,porcentajedesc) VALUES ('p4',2
 INSERT INTO PRODUCTOPROMOCION (CODIGOPROMOCION,CODIGOPRODUCTO) VALUES ('p4','fc9847d6');
 
 --Promocion tipo paquete de productos para Shampoo y crema dental
---Ingresa sucursal
-INSERT INTO SUCURSAL (IDSUCURSAL,NOMBRE,SEGMENTACION,TAMANO,CIUDAD,DIRECCION) VALUES (1,'Galerias','Psicografica','Grande','Bucaramanga','Calle 45 # 22-31');
 --Producto ingresado
-INSERT INTO PRODUCTO (CODIGODEBARRAS, NOMBRE, PRESENTACION, MARCA, CANTIDAD, UNIDADDEMEDIDA, ESPECIFICACIONEMPACADO) VALUES ('10893f3eb', 'Dentrifico + Shampoo', 'Tubo y caja','Colgate y Pantene', '300','cm^3', '300 cm^3');
+INSERT INTO PRODUCTO (CODIGODEBARRAS, NOMBRE, PRESENTACION, MARCA, UNIDADDEMEDIDA, ESPECIFICACIONEMPACADO) VALUES ('PROMODS', 'Dentrifico + Shampoo', 'Tubo y caja','Colgate y Pantene','cm^3', 'Ninguna');
 --ingresa nuevo valor en la sucursal
-INSERT INTO productoofrecidosucursal (idsucursal,codigobarras, preciounitario,preciounidadmedida,niveldereorden,cantidadrecompra) VALUES (1,'10893f3eb',20,1,40,20);
+INSERT INTO productoofrecidosucursal (idsucursal,codigobarras, preciounitario,preciounidadmedida,niveldereorden,cantidadrecompra) VALUES (1,'PROMODS',20,1,40,20);
 --Ingreso de la promocion
 INSERT INTO PROMOCION(CODIGOPROMOCION, TIPOPROMOCION,FECHATERMINACION) VALUES ('p5',5,TO_DATE('2018/11/15','yyyy/mm/dd'));
-INSERT INTO PRODUCTOPROMOCION (CODIGOPROMOCION,CODIGOPRODUCTO) VALUES ('p5','10893f3eb');
-
+INSERT INTO PRODUCTOPROMOCION (CODIGOPROMOCION,CODIGOPRODUCTO) VALUES ('p5','PROMODS');
+commit;
 

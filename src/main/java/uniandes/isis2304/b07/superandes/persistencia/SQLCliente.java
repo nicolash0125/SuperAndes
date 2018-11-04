@@ -61,6 +61,11 @@ public class SQLCliente {
 		return (long) q.executeUnique();
 	}
 
+	public long abandonarCarrito(PersistenceManager pm, String tipoDocumento, long numeroCliente) {
+		Query q = pm.newQuery(SQL, "UPDATE " + " CLIENTE "+" SET poseeCarro = 0 WHERE tipoDocumento = ? AND numDocumento = ?");
+		q.setParameters(tipoDocumento,numeroCliente);
+		return (long) q.executeUnique();
+	}
 
 
 	public int tieneCarrito(PersistenceManager pm, String tipoDocumento, long numeroCliente) {

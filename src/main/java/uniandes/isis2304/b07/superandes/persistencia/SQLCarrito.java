@@ -49,8 +49,9 @@ public class SQLCarrito {
 	}
 
 	public long pagarCarrito(PersistenceManager pm, String tipoDocumento, long numeroCliente) {
-		// TODO Auto-generated method stub
-		return 0;
+		Query q = pm.newQuery(SQL, "DELETE FROM   " + " CARRITO " + " WHERE tipoDocumento=?, numDocumento=? ");
+		q.setParameters(tipoDocumento,numeroCliente);
+        return (long) q.executeUnique();
 	}
 
 	public long abandonarCarrito(PersistenceManager pm, String tipoDocumento, long numeroCliente) {

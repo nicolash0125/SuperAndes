@@ -65,4 +65,9 @@ public class SQLVenta {
 		q.setResultClass(Venta.class);
 		return (List<Venta>) q.executeList();
 	}
+
+	public void realizarVentaBasadaEnCarro(String tipoDocumento, long numeroCliente) {
+		// TODO Auto-generated method stub
+		
+	}
 }
