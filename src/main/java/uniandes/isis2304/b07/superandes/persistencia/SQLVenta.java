@@ -176,4 +176,22 @@ public class SQLVenta {
 		q.setParameters(fechaInicio, fechaFin, fechaInicio,fechaFin);
 		return (List<Object[]>) q.executeList();
 	}
+	
+	public List<Object[]> darClientesFrecuentes (PersistenceManager pm, long sucursal)
+	{
+		Query q = pm.newQuery(SQL,""
+				+"Select numCompras, documento, numero "
+				+"FROM(SELECT  COUNT(numeroventa) AS  numCompras , tipodoccliente as documento,numdoccliente as numero "
+				+"FROM "
+				+"(SELECT min (fechaventa) as minimo FROM   venta) fechaIni ,(SELECT max (fechaventa) as maximo FROM   venta) fechaFin , venta "
+				+"WHERE venta.fechaventa BETWEEN  minimo AND maximo AND venta.sucursal = ?  "
+				+"GROUP BY numdoccliente, tipodoccliente) numComprasEnSucPorCliente , "
+				+"(SELECT MONTHS_BETWEEN  (TO_DATE(maximo,'MM-DD-YYYY'),    TO_DATE(minimo,'MM-DD-YYYY') ) as meses "
+				+"FROM "
+				+"(SELECT min (fechaventa) as minimo FROM   venta) fechaIni ,(SELECT max (fechaventa) as maximo FROM   venta) fechaFin ) diffEnMeses "	
+				+" WHERE NUMCOMPRAS>= (meses -0.04)*0 ");
+		q.setParameters(sucursal);
+		return (List<Object[]>) q.executeList();
+				
+	}
 }

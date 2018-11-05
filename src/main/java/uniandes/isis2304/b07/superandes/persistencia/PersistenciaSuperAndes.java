@@ -1350,22 +1350,32 @@ public class PersistenciaSuperAndes {
 		return resp;
 	}
 	
-	public void clientesFrecuentes()
+	public String clientesFrecuentes(long idSucursal)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-
+		String resp="";
 		try 
 		{
 			tx.begin();
+			resp+="\n";
+			List<Object[]> lista = sqlVenta.darClientesFrecuentes(pm, idSucursal);
+			resp+="   NUMCOMPRAS   TIPODOCUMENTO    NUMERODE DOCUMENTO  ";
+			for (Object[] objects : lista)
+			{
+				resp+="\n"+"        "+((BigDecimal)objects[0]).intValue()+"               "+objects[1]+"           "+((BigDecimal)objects[2]).intValue();
+				
+			}
 			tx.commit();
 
 		} 
 		catch (Exception e) 
 		{
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			resp+="/n Error: "+e.getMessage();
 
 		}
+		return resp;
 	}
 	public void productosPocaDemanda()
 	{

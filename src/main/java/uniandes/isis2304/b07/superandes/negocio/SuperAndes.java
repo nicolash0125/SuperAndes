@@ -292,9 +292,10 @@ public class SuperAndes {
 		return pp.analizarOperacion(fechaInicio,fechaFin);
 	}
 	
-	public void clientesFrecuentes()
+	public String clientesFrecuentes(long idSucursal)
 	{
-		pp.clientesFrecuentes();
+		log.info ("Obteniendo los clientes frecuentes de la sucursal: " + idSucursal);
+		return pp.clientesFrecuentes(idSucursal);
 	}
 	public void productosPocaDemanda()
 	{

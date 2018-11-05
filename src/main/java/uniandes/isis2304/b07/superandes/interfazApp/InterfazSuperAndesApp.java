@@ -1447,7 +1447,10 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	
 	public void clientesFrecuentes(){
 		try {
-			
+			long sucursal = Long.parseLong(JOptionPane.showInputDialog (this, "Id de la sucursal", "Clientes frecuentes", JOptionPane.QUESTION_MESSAGE));
+    		
+			String resultado = superAndes.clientesFrecuentes(sucursal);
+			panelDatos.actualizarInterfaz(resultado);
 		} catch (Exception e) {
 			String resultado = generarMensajeError(e);
 			panelDatos.actualizarInterfaz(resultado);
