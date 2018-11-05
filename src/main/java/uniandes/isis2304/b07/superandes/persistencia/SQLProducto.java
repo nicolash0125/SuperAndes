@@ -1,5 +1,7 @@
 package uniandes.isis2304.b07.superandes.persistencia;
 
+import java.util.List;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
@@ -38,5 +40,12 @@ public class SQLProducto {
 		Query q = pm.newQuery(SQL, "INSERT INTO" + " PRODUCTO "+"(CODIGODEBARRAS,NOMBRE,PRESENTACION,MARCA,UNIDADDEMEDIDA,ESPECIFICACIONEMPACADO, CATEGORIA) values (?,?,?,?,?,?,?)");
 		q.setParameters(codigoDeBarras,nombre,presentacion,marca, unidadDeMedida,especificacionEmpacado,categoria);
 		return (long) q.executeUnique();
+	}
+	public List<Object[]> darInfoConCararacteristica(PersistenceManager pm, String caracteristica, double valIni, double valFin)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM PRODUCTOOFRECIDOSUCURSAL suc INNER JOIN PRODUCTO prod ON suc.codigobarras=prod.codigodebarras"
+				+"WHERE (?) BETWEEN (?) AND (?);" );
+		q.setParameters(caracteristica,valIni, valFin);
+		return q.executeList();
 	}
 }

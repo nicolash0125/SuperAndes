@@ -1242,11 +1242,21 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 				double precioMin = Double.parseDouble(JOptionPane.showInputDialog (this, "Precio minimo ", "Producto con cierta caracteristica", JOptionPane.QUESTION_MESSAGE));
 				double precioMax = Double.parseDouble(JOptionPane.showInputDialog (this, "Precio maximo ", "Producto con cierta caracteristica", JOptionPane.QUESTION_MESSAGE));
 
-				superAndes.productosEnRangoPrecios(precioMin,precioMax);
-				resultado = "En indiceOcupacion\n\n";
-				resultado += "\n Operación terminada";
+				List<Object []> lista1 = superAndes.productosEnRangoPrecios(precioMin,precioMax);
+				resultado = "los productos con precio entre "+precioMin+" y"+ precioMax + "\n\n";
+				if(lista1!=null){
+    				for (Object[] objeto : lista1) {
+    					resultado += "\n ";
+    					for (int i = 0; i < objeto.length; i++) {
+    						if(objeto[i].getClass().getName().equals(BigDecimal.class.getName()))
+    							objeto[i]=((BigDecimal) objeto[i]).intValue() ;
+							resultado+="         "+objeto[i]+"           ";
+						}
+    					
+					}
+				resultado += "\n OperaciÃ³n terminada";
 				panelDatos.actualizarInterfaz(resultado);
-
+				}
 				break;
 			case "2":
 				long fechaV = Long.parseLong(JOptionPane.showInputDialog (this, "Fecha  de vencimiento", "Producto con cierta caracteristica", JOptionPane.QUESTION_MESSAGE));
@@ -1254,7 +1264,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 
 				superAndes.productosPorFechaVencimiento(fechaVencimiento);
 				resultado = "En indiceOcupacion\n\n";
-				resultado += "\n Operación terminada";
+				resultado += "\n OperaciÃ³n terminada";
 				panelDatos.actualizarInterfaz(resultado);
 
 				break;
@@ -1262,26 +1272,48 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 				double pesoMin = Double.parseDouble(JOptionPane.showInputDialog (this, "Peso minimo ", "Producto con cierta caracteristica", JOptionPane.QUESTION_MESSAGE));
 				double pesoMax = Double.parseDouble(JOptionPane.showInputDialog (this, "Peso maximo ", "Producto con cierta caracteristica", JOptionPane.QUESTION_MESSAGE));
 
-				superAndes.productosEnRangoPesos(pesoMin,pesoMax);
-				resultado = "En indiceOcupacion\n\n";
-				resultado += "\n Operación terminada";
+				List<Object []> lista3 = superAndes.productosEnRangoPesos(pesoMin,pesoMax);
+				resultado = "los productos con pes entre "+pesoMin+" y"+ pesoMax + "\n\n";
+				if(lista3!=null){
+    				for (Object[] objeto : lista3) {
+    					resultado += "\n ";
+    					for (int i = 0; i < objeto.length; i++) {
+    						if(objeto[i].getClass().getName().equals(BigDecimal.class.getName()))
+    							objeto[i]=((BigDecimal) objeto[i]).intValue() ;
+							resultado+="         "+objeto[i]+"           ";
+						}
+    					
+					}
+				resultado += "\n OperaciÃ³n terminada";
 				panelDatos.actualizarInterfaz(resultado);
-
+				}
 				break;
 			case "4":
 				double volumenMin = Double.parseDouble(JOptionPane.showInputDialog (this, "Volumen minimo ", "Producto con cierta caracteristica", JOptionPane.QUESTION_MESSAGE));
 				double volumenMax = Double.parseDouble(JOptionPane.showInputDialog (this, "Volumen maximo ", "Producto con cierta caracteristica", JOptionPane.QUESTION_MESSAGE));
 
-				superAndes.productosEnRangoVolumen(volumenMin,volumenMax);
-				resultado = "En indiceOcupacion\n\n";
-				resultado += "\n Operación terminada";
+				List<Object []> lista4 = superAndes.productosEnRangoVolumen(volumenMin,volumenMax);
+				resultado = "los productos con pes entre "+volumenMin+" y"+ volumenMax + "\n\n";
+				if(lista4!=null){
+    				for (Object[] objeto : lista4) {
+    					resultado += "\n ";
+    					for (int i = 0; i < objeto.length; i++) {
+    						if(objeto[i].getClass().getName().equals(BigDecimal.class.getName()))
+    							objeto[i]=((BigDecimal) objeto[i]).intValue() ;
+							resultado+="         "+objeto[i]+"           ";
+						}
+    					
+					}
+				resultado += "\n OperaciÃ³n terminada";
 				panelDatos.actualizarInterfaz(resultado);
+				}
+				break;
 			case "5":
 				String nit = JOptionPane.showInputDialog (this, "Proveedor ", "Producto con cierta caracteristica", JOptionPane.QUESTION_MESSAGE);
 
 				superAndes.productosDeProveedor(nit);
 				resultado = "En indiceOcupacion\n\n";
-				resultado += "\n Operación terminada";
+				resultado += "\n OperaciÃ³n terminada";
 				panelDatos.actualizarInterfaz(resultado);
 
 				break;

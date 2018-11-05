@@ -224,9 +224,10 @@ public class SuperAndes {
 	}
 
 
-	public void productosEnRangoPrecios(double precioMin, double precioMax) 
+	public List<Object[]> productosEnRangoPrecios(double precioMin, double precioMax) 
 	{
-
+		log.info ("Obteniendo obteniedo los productos con precio entre "+precioMin +" y "+ precioMax );
+		return pp.productosConCiertaCaracteristica("PRECIOUNITARIO", precioMin, precioMax);
 	}
 
 
@@ -236,17 +237,24 @@ public class SuperAndes {
 	}
 
 
-	public void productosEnRangoPesos(double pesoMin, double pesoMax) {
-
+	public List<Object[]> productosEnRangoPesos(double pesoMin, double pesoMax)
+	{
+		log.info ("Obteniendo obteniedo los productos con peso entre" + pesoMin +" y "+ pesoMax);
+		return pp.productosConCiertaCaracteristica("UNIDADDEMEDIDA='gr'", pesoMin, pesoMax);
 	}
 
 
-	public void productosEnRangoVolumen(double volumenMin, double volumenMax) {
-
+	public List<Object[]> productosEnRangoVolumen(double volumenMin, double volumenMax)
+	{
+		log.info ("Obteniendo obteniedo los productos con volumen entre" + volumenMin +" y "+ volumenMax);
+		return pp.productosConCiertaCaracteristica("UNIDADDEMEDIDA='cm^3'", volumenMin, volumenMax);
 	}
 
 
-	public void productosDeProveedor(String nit) {
+	public List<Object[]> productosDeProveedor(String nit) 
+	{
+		log.info ("Obteniendo obteniedo los productos que puede proveer el proveedor con NIT :" + nit);
+		return pp.productosDeUnProveedor(nit);
 
 	}
 

@@ -867,7 +867,15 @@ public class PersistenciaSuperAndes {
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 
 			return null;
-		}		
+		}	
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 
 	public LlegadaPedido registrarLlegadaPedido(long codigoPedido,Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
@@ -936,7 +944,15 @@ public class PersistenciaSuperAndes {
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 
 			return null;
-		}		
+		}	
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 
 	}
 
@@ -969,11 +985,15 @@ public class PersistenciaSuperAndes {
 		return sqlSucursal.darIndiceOcupacion(pmf.getPersistenceManager(), idSucursal);
 	}
 
-	public void productosConCiertaCaracteristica(int precioInferior, int precioSuperior, Timestamp fechaVencimientoMinima, double pesoMinimo, double pesoMaximo,
-			String nitProveedor, String ciudad, long idSucursal, String tipo, String categoria, int cantidadMinimaVentas, Timestamp fechaMinCantMinVentas,
-			Timestamp fechaMaxCantMinVentas)
+	public List<Object []> productosConCiertaCaracteristica(String pCaracteristica, double pValIni ,double pValFin )
 	{
-
+		log.info ("Obteniendo los productos con la caracteristica " +  pCaracteristica);
+		return sqlProducto.darInfoConCararacteristica(pmf.getPersistenceManager(), pCaracteristica, pValIni, pValFin);
+	}
+	public List<Object[] > productosDeUnProveedor(String nit)
+	{
+		log.info ("Obteniendo los productos que provee el proveedor con nit " +  nit);
+		return sqlProductoProveedor.darProductosDeProveedor(pmf.getPersistenceManager(), nit);
 	}
 	/* ****************************************************************
 	 *			Requerimientos funcionales de Bono
@@ -1047,6 +1067,14 @@ public class PersistenciaSuperAndes {
 
 			return null;
 		}	
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 
 	/* ****************************************************************
@@ -1375,6 +1403,14 @@ public class PersistenciaSuperAndes {
 			resp+="/n Error: "+e.getMessage();
 
 		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 		return resp;
 	}
 	public void productosPocaDemanda()
@@ -1392,6 +1428,14 @@ public class PersistenciaSuperAndes {
 		{
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
 		}
 	}
 
