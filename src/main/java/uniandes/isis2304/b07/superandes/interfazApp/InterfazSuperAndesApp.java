@@ -1136,6 +1136,9 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	/* ****************************************************************
 	 * 			Requerimientos funcionales de consulta
 	 *****************************************************************/
+	/**
+	 * Dinero recolectado
+	 */
 	public void dineroRecolectado()
 	{
 		try 
@@ -1178,11 +1181,17 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		}
 	}
 
+	/**
+	 * Promo mas popu
+	 */
 	public void promocionesMasPopulares()
 	{
 		System.out.println("Hola");
 	}
 
+	/**
+	 * Indice ocupacion
+	 */
 	public void indiceOcupacion()
 	{
 		try 
@@ -1230,6 +1239,9 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 
 	}
 
+	/**
+	 * Prod con x carat
+	 */
 	public void productosConCiertaCaracteristica()
 	{
 		try 
@@ -1335,6 +1347,9 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	/* ****************************************************************
 	 *			Requerimientos funcionales Iteracion 2
 	 *****************************************************************/
+	/**
+	 * solicitar car
+	 */
 	public void solicitarCarrito(){
 		try {
 			String resultado="Solicitar carrito \n";
@@ -1349,7 +1364,9 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			panelDatos.actualizarInterfaz(resultado);
 		}
 	}
-	
+	/**
+	 * Adicionar prod a car
+	 */
 	public void adicionarProductoACarrito(){
 		try {
 			String tipoDocumento =JOptionPane.showInputDialog (this, "Tipo de documento del cliente", "Adicionar productos a carrito", JOptionPane.QUESTION_MESSAGE);
@@ -1368,6 +1385,9 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		}
 		
 	}
+	/**
+	 * devolver prod de car
+	 */
 	public void devolverProductoDelCarrito(){
 		try {
 			String tipoDocumento =JOptionPane.showInputDialog (this, "Tipo de documento del cliente", "Devolver productos del carrito", JOptionPane.QUESTION_MESSAGE);
@@ -1388,6 +1408,9 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		}
 		
 	}
+	/**
+	 * pagar con carrito
+	 */
 	public void pagarCompraCarrito(){
 		try {
 			String tipoDocumento =JOptionPane.showInputDialog (this, "Tipo de documento del cliente", "Pagar el carrito", JOptionPane.QUESTION_MESSAGE);
@@ -1404,6 +1427,9 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		}
 		
 	}
+	/**
+	 * Abandonar carrito
+	 */
 	public void abandonarCarrito(){
 		try {
 			String tipoDocumento =JOptionPane.showInputDialog (this, "Tipo de documento del cliente", "Abandonar el carrito", JOptionPane.QUESTION_MESSAGE);
@@ -1420,6 +1446,9 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		}
 		
 	}
+	/**
+	 * Recolectar prod abandonados
+	 */
 	public void recolectarProductosAbandonados(){
 		try {
 			if(superAndes.recolectarProductosAbandonados())
@@ -1431,6 +1460,9 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			panelDatos.actualizarInterfaz(resultado);
 		}
 	}
+	/**
+	 * Consolidarpedido
+	 */
 	public void consolidarPedidos(){
 		try {
 			superAndes.consolidarPedidos();
@@ -1439,6 +1471,9 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			panelDatos.actualizarInterfaz(resultado);
 		}
 	}
+	/**
+	 * Reg. ll pedido
+	 */
 	public void registrarLlegadaPedidoConsolidado(){
 		try 
 		{
@@ -1456,6 +1491,9 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		}
 	}
 	
+	/**
+	 * Analizar operacion
+	 */
 	public void analizarOperacion(){
 		try {
 			
@@ -1477,6 +1515,9 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		}
 	}
 	
+	/**
+	 * Clientes frecuentes
+	 */
 	public void clientesFrecuentes(){
 		try {
 			long sucursal = Long.parseLong(JOptionPane.showInputDialog (this, "Id de la sucursal", "Clientes frecuentes", JOptionPane.QUESTION_MESSAGE));
@@ -1488,6 +1529,9 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			panelDatos.actualizarInterfaz(resultado);
 		}
 	}
+	/**
+	 * Prod con poca demanda
+	 */
 	public void productosPocaDemanda(){
 		try {
 			superAndes.productosPocaDemanda();
@@ -1500,11 +1544,17 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	/* ****************************************************************
 	 *			Requerimientos funcionales de Bono
 	 *****************************************************************/
+	/**
+	 * Compras a prov
+	 */
 	public void comprasAProveedores()
 	{
 		System.out.println("Hola");
 	}
 
+	/**
+	 * Ventas a usr
+	 */
 	public void ventasAUsuario()
 	{
 		try {

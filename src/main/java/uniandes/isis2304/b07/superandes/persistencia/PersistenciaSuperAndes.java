@@ -500,6 +500,14 @@ public class PersistenciaSuperAndes {
 		}
 	}
 
+	/**
+	 * Registra cliente perssona natural
+	 * @param tipodocumento
+	 * @param numDocumento
+	 * @param nombre
+	 * @param correo
+	 * @return
+	 */
 	public Cliente registrarPersonaNatural(String tipodocumento, String numDocumento, String nombre, String correo)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -531,6 +539,13 @@ public class PersistenciaSuperAndes {
 	}
 
 
+	/**
+	 * Registra cliente persona juridica
+	 * @param numDocumento
+	 * @param nombre
+	 * @param direccion
+	 * @return
+	 */
 	public PersonaJuridica registrarPersonaJuridica( String numDocumento, String nombre, String direccion) {
 
 
@@ -567,7 +582,16 @@ public class PersistenciaSuperAndes {
 
 	}
 
-
+	
+	/**
+	 * Registra sucursal
+	 * @param nombre
+	 * @param segmentacion
+	 * @param tamanio
+	 * @param ciudad
+	 * @param direccion
+	 * @return
+	 */
 	public Sucursal registrarSucursal(String nombre, String segmentacion, String tamanio, String ciudad, String direccion)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -599,6 +623,15 @@ public class PersistenciaSuperAndes {
 
 	}
 
+	/**
+	 * Registra bodega
+	 * @param idSucursal
+	 * @param capacidadVolumen
+	 * @param capacidadTotalVolumen
+	 * @param capacidadPeso
+	 * @param capacidadTotalPeso
+	 * @return
+	 */
 	public Bodega registrarBodega(long idSucursal, double capacidadVolumen, double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -628,6 +661,15 @@ public class PersistenciaSuperAndes {
 		}
 	}
 
+	/**
+	 * Registra estante
+	 * @param idSucursal
+	 * @param capacidadVolumen
+	 * @param capacidadTotalVolumen
+	 * @param capacidadPeso
+	 * @param capacidadTotalPeso
+	 * @return
+	 */
 	public Estante registrarEstante(long idSucursal, double capacidadVolumen, double capacidadTotalVolumen, double capacidadPeso, double capacidadTotalPeso)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -659,6 +701,14 @@ public class PersistenciaSuperAndes {
 
 
 
+	/**
+	 * Registra promocion pague n lleve m
+	 * @param codigoProducto
+	 * @param fechaVencimientoPromocion
+	 * @param compraUnidades
+	 * @param llevaUnidades
+	 * @return
+	 */
 	public PagueNUnidadesLleveMPromo registrarPromocionPagueNLleveM(String codigoProducto, Timestamp fechaVencimientoPromocion, int compraUnidades, int llevaUnidades)
 	{
 
@@ -689,6 +739,14 @@ public class PersistenciaSuperAndes {
 			pm.close();
 		}
 	}
+	
+	/**
+	 * Registra promocion descuento
+	 * @param codigoProducto
+	 * @param fechaVencimientoPromocion
+	 * @param porcentaje
+	 * @return
+	 */
 	public DescPorcentajePromo registrarPromocionDescPorcentaje(String codigoProducto, Timestamp fechaVencimientoPromocion, double porcentaje)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -718,6 +776,15 @@ public class PersistenciaSuperAndes {
 			pm.close();
 		}
 	}
+	
+	/**
+	 * Registra promocion pague X lleve Y
+	 * @param codigoProducto
+	 * @param fechaVencimientoPromocion
+	 * @param cantidadPaga
+	 * @param cantidadLleva
+	 * @return
+	 */
 	public PagueXCantidadLleveYPromo registrarPromocionPagueXLleveY(String codigoProducto, Timestamp fechaVencimientoPromocion, int cantidadPaga, int cantidadLleva)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -747,6 +814,14 @@ public class PersistenciaSuperAndes {
 			pm.close();
 		}
 	}
+	
+	/**
+	 * Registra promocion pague 1 lleve 2do con desc
+	 * @param codigoProducto
+	 * @param fechaVencimientoPromocion
+	 * @param porcentaje
+	 * @return
+	 */
 	public Pague1Lleve2ConDescPromo registrarPromocionPague1Lleve2doDesc(String codigoProducto, Timestamp fechaVencimientoPromocion, double porcentaje)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -776,6 +851,15 @@ public class PersistenciaSuperAndes {
 			pm.close();
 		}
 	}
+	
+	/**
+	 * Registra promocion paquete prod
+	 * @param codigoProducto
+	 * @param fechaVencimientoPromocion
+	 * @param producto2
+	 * @param precioConjunto
+	 * @return
+	 */
 	public Promocion registrarPromocionPaqueteProductos(String codigoProducto, Timestamp fechaVencimientoPromocion, String producto2, double precioConjunto)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -805,6 +889,11 @@ public class PersistenciaSuperAndes {
 		}
 	}
 
+	/**
+	 * Finaliza promocion
+	 * @param fecha
+	 * @return
+	 */
 	public long finalizarPromocion(Timestamp fecha)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -832,6 +921,17 @@ public class PersistenciaSuperAndes {
 		}
 	}
 
+	/**
+	 * Registra pedido
+	 * @param idSucursal
+	 * @param codigosProductos
+	 * @param cantidad
+	 * @param precios
+	 * @param nitProveedor
+	 * @param fechaPrevista
+	 * @param precioTotal
+	 * @return
+	 */
 	public Pedido registrarPedido(String idSucursal, String[] codigosProductos, double[] cantidad, double[] precios, String nitProveedor, Timestamp fechaPrevista, double precioTotal )
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -878,6 +978,15 @@ public class PersistenciaSuperAndes {
 		}
 	}
 
+	/**
+	 * Registra llegada de un pedido
+	 * @param codigoPedido
+	 * @param fechaLlegada
+	 * @param cantidadProductos
+	 * @param calidadProductos
+	 * @param calificacion
+	 * @return
+	 */
 	public LlegadaPedido registrarLlegadaPedido(long codigoPedido,Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
 	{
 		{
@@ -908,6 +1017,18 @@ public class PersistenciaSuperAndes {
 		}
 	}
 
+	/**
+	 * Registra una venta
+	 * @param sucursal
+	 * @param tipodocumento
+	 * @param documento
+	 * @param codigosProductos
+	 * @param cantidad
+	 * @param precios
+	 * @param precioTotal
+	 * @param fecha
+	 * @return
+	 */
 	public Venta registrarVenta(long sucursal, String tipodocumento, String documento, String[] codigosProductos,
 			String[] cantidad, String[] precios, double precioTotal, Timestamp fecha) {
 
@@ -961,6 +1082,12 @@ public class PersistenciaSuperAndes {
 	 *****************************************************************/
 
 
+	/**
+	 * Da dinero recolectado
+	 * @param fechaInicio
+	 * @param fechaFin
+	 * @return
+	 */
 	public List<Object[]> dineroRecolectado(Timestamp fechaInicio,Timestamp fechaFin)
 	{
 		log.info ("Obteniendo dinero recolectado en las sucursales entre " + fechaInicio+" y "+fechaFin);
@@ -969,7 +1096,7 @@ public class PersistenciaSuperAndes {
 	}
 
 	/**
-	 * 
+	 * Promociones mas populares
 	 */
 	public void promocionesMasPopulares()
 	{
@@ -977,7 +1104,7 @@ public class PersistenciaSuperAndes {
 	}
 
 	/**
-	 * 
+	 * Da el indice de ocupacion
 	 * @param idSucursal
 	 */
 	public List<Object []> indiceOcupacion(long idSucursal)
@@ -985,11 +1112,23 @@ public class PersistenciaSuperAndes {
 		return sqlSucursal.darIndiceOcupacion(pmf.getPersistenceManager(), idSucursal);
 	}
 
+	/**
+	 * Da los productos con X caract
+	 * @param pCaracteristica
+	 * @param pValIni
+	 * @param pValFin
+	 * @return
+	 */
 	public List<Object []> productosConCiertaCaracteristica(String pCaracteristica, double pValIni ,double pValFin )
 	{
 		log.info ("Obteniendo los productos con la caracteristica " +  pCaracteristica);
 		return sqlProducto.darInfoConCararacteristica(pmf.getPersistenceManager(), pCaracteristica, pValIni, pValFin);
 	}
+	/**
+	 * Da productos de un proveedor
+	 * @param nit
+	 * @return
+	 */
 	public List<Object[] > productosDeUnProveedor(String nit)
 	{
 		log.info ("Obteniendo los productos que provee el proveedor con nit " +  nit);
@@ -998,11 +1137,22 @@ public class PersistenciaSuperAndes {
 	/* ****************************************************************
 	 *			Requerimientos funcionales de Bono
 	 *****************************************************************/
+	/**
+	 * Compras a proveedores
+	 */
 	public void comprasAProveedores()
 	{
 
 	}
 
+	/**
+	 * Ventas al usuario
+	 * @param tipoDocumento
+	 * @param numeroCliente
+	 * @param fechaInicio
+	 * @param fechaFin
+	 * @return
+	 */
 	public List<Venta> ventasAUsuario(String tipoDocumento, long numeroCliente, Timestamp fechaInicio, Timestamp fechaFin)
 	{
 		return sqlVenta.obtenerVentasDeCliente(pmf.getPersistenceManager(),tipoDocumento,numeroCliente,fechaInicio,fechaFin);
@@ -1043,6 +1193,12 @@ public class PersistenciaSuperAndes {
 	 *****************************************************************/
 
 
+	/**
+	 * Obtiene precios de sucursal
+	 * @param sucursal
+	 * @param productos
+	 * @return
+	 */
 	public String[] obtenerPreciosSucursal(long sucursal, String[] productos) {
 
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1080,6 +1236,12 @@ public class PersistenciaSuperAndes {
 	/* ****************************************************************
 	 * 			Requerimientos funcionales Iteracion 2
 	 *****************************************************************/
+	
+	/**
+	 * SOlicita carrito
+	 * @param tipoDocumento
+	 * @param numeroCliente
+	 */
 	public void solicitarCarrito(String tipoDocumento, String numeroCliente)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1108,6 +1270,15 @@ public class PersistenciaSuperAndes {
 		}
 	}
 	
+	/**
+	 * Adiciona producto a carrito
+	 * @param tipoDocumento
+	 * @param numeroCliente
+	 * @param idEstante
+	 * @param idProducto
+	 * @param cantidad
+	 * @return true si completo la transaccion
+	 */
 	public boolean adicionarProductoACarrito(String tipoDocumento, String numeroCliente, long idEstante, String idProducto, int cantidad)
 	{
 		boolean logro=false;
@@ -1143,6 +1314,15 @@ public class PersistenciaSuperAndes {
 		return logro;
 
 	}
+	/**
+	 * Devuelve producto del carrito
+	 * @param tipoDocumento
+	 * @param numeroCliente
+	 * @param idEstante
+	 * @param idProducto
+	 * @param cantidad
+	 * @return true si completo la transaccion
+	 */
 	public boolean devolverProductoDelCarrito(String tipoDocumento, String numeroCliente, long idEstante, String idProducto, int cantidad)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1178,6 +1358,13 @@ public class PersistenciaSuperAndes {
 		return logro;
 	}
 	
+	/**
+	 * Paga con el carrito
+	 * @param tipoDocumento
+	 * @param numeroCliente
+	 * @param sucursal
+	 * @return true si completo la transaccion
+	 */
 	public boolean pagarCompraCarrito(String tipoDocumento, String numeroCliente, long sucursal)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1219,6 +1406,12 @@ public class PersistenciaSuperAndes {
 		return logro;
 	}
 	
+	/**
+	 * Abandona el carrito
+	 * @param tipoDocumento
+	 * @param numeroCliente
+	 * @return true si completo la transaccion
+	 */
 	public boolean abandonarCarrito(String tipoDocumento, String numeroCliente)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1253,6 +1446,10 @@ public class PersistenciaSuperAndes {
 		return logro;
 	}
 	
+	/**
+	 * Recolecta productos abandonados
+	 * @return true si completo la transaccion
+	 */
 	public boolean recolectarProductosAbandonados()
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1285,6 +1482,9 @@ public class PersistenciaSuperAndes {
 		}
 		return logro;
 	}
+	/**
+	 * COnsolida pedidos
+	 */
 	public void consolidarPedidos()
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1311,6 +1511,14 @@ public class PersistenciaSuperAndes {
 			pm.close();
 		}
 	}
+	/**
+	 * Registra llegada pedido consolidado
+	 * @param codigoPedido
+	 * @param fechaLlegada
+	 * @param cantidadProductos
+	 * @param calidadProductos
+	 * @param calificacion
+	 */
 	public void registrarLlegadaPedidoConsolidado(long codigoPedido, Timestamp fechaLlegada, int cantidadProductos, String calidadProductos, String calificacion)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1337,7 +1545,12 @@ public class PersistenciaSuperAndes {
 			pm.close();
 		}
 	}
-	
+	/**
+	 * Analiza operacion
+	 * @param fechaInicio
+	 * @param fechaFin
+	 * @return la informacion reuqerida
+	 */
 	public String analizarOperacion(Timestamp fechaInicio, Timestamp fechaFin)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1378,6 +1591,11 @@ public class PersistenciaSuperAndes {
 		return resp;
 	}
 	
+	/**
+	 * Da clientes frecuentes
+	 * @param idSucursal
+	 * @return
+	 */
 	public String clientesFrecuentes(long idSucursal)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1413,6 +1631,9 @@ public class PersistenciaSuperAndes {
 		}
 		return resp;
 	}
+	/**
+	 * Da productos con porca demanda
+	 */
 	public void productosPocaDemanda()
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
