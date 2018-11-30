@@ -1660,5 +1660,185 @@ public class PersistenciaSuperAndes {
 		}
 	}
 
+	public String consultarCientesQueCompraronXProducto( String producto,  String orden,  Timestamp fechaInicio, Timestamp fechaFin)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		String resp="";
+		try 
+		{
+			tx.begin();
+			resp+="\n";
+			List<Object[]> lista = sqlFactura.darInfoUsuarioQueCompraronProd(pm, producto, orden, fechaInicio, fechaFin);
+			resp+="   TIPODOCUMENTO       NUMERODE DOCUMENTO      POSEE CARRO";
+			for (Object[] objects : lista)
+			{
+				resp+="\n"
+			+"                   "
+			+objects[0]
+			+"                   "
+			+objects[1]
+			+"                                   "
+			+objects[2];
+				
+			}
+			System.out.println(resp);
+			tx.commit();
 
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			resp+="/n Error: "+e.getMessage();
+
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return resp;
+
+	}
+	
+	public String consultarCientesQueCompraronXProductoConSucursal( String producto,  String orden,  Timestamp fechaInicio, Timestamp fechaFin, Long idSucursal)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		String resp="";
+		try 
+		{
+			tx.begin();
+			resp+="\n";
+			List<Object[]> lista = sqlFactura.darInfoUsuarioQueCompraronProdConSucursal(pm, producto, idSucursal, orden, fechaInicio, fechaFin);
+			resp+="   TIPODOCUMENTO       NUMERODE DOCUMENTO      POSEE CARRO";
+			for (Object[] objects : lista)
+			{
+				resp+="\n"
+			+"                   "
+			+objects[0]
+			+"                   "
+			+objects[1]
+			+"                                   "
+			+objects[2];
+				
+			}
+			tx.commit();
+
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			resp+="/n Error: "+e.getMessage();
+
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return resp;
+
+	}
+	
+	public String consultarCientesQueNoCompraronXProducto( String producto,  String orden,  Timestamp fechaInicio, Timestamp fechaFin)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		String resp="";
+		try 
+		{
+			tx.begin();
+			resp+="\n";
+			List<Object[]> lista = sqlFactura.darInfoUsuarioQueNoCompraronProd(pm, producto, orden, fechaInicio, fechaFin);
+			resp+="   TIPODOCUMENTO       NUMERODE DOCUMENTO      POSEE CARRO";
+			for (Object[] objects : lista)
+			{
+				resp+="\n"
+			+"                   "
+			+objects[0]
+			+"                   "
+			+objects[1]
+			+"                                   "
+			+objects[2];
+				
+			}
+			System.out.println(resp);
+			tx.commit();
+
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			resp+="/n Error: "+e.getMessage();
+
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return resp;
+
+	}
+	
+	public String consultarCientesQueNoCompraronXProductoConSucursal( String producto,  String orden,  Timestamp fechaInicio, Timestamp fechaFin, Long idSucursal)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		String resp="";
+		try 
+		{
+			tx.begin();
+			resp+="\n";
+			List<Object[]> lista = sqlFactura.darInfoUsuarioQueNoCompraronProdConSucursal(pm, producto, idSucursal, orden, fechaInicio, fechaFin);
+			resp+="   TIPODOCUMENTO       NUMERODE DOCUMENTO      POSEE CARRO";
+			for (Object[] objects : lista)
+			{
+				resp+="\n"
+			+"                   "
+			+objects[0]
+			+"                   "
+			+objects[1]
+			+"                                   "
+			+objects[2];
+				
+			}
+			tx.commit();
+
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			resp+="/n Error: "+e.getMessage();
+
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return resp;
+
+	}
 }

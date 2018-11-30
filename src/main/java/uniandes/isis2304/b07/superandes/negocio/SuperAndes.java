@@ -525,5 +525,23 @@ public class SuperAndes {
 		pp.productosPocaDemanda();
 	}
 
-
+	public String consultarClientesQueCompraronXProducto(String producto,  String orden,  Timestamp fechaInicio, Timestamp fechaFin)
+	{
+		return pp.consultarCientesQueCompraronXProducto(producto, orden, fechaInicio, fechaFin);
+	}
+	
+	public String consultarClientesQueCompraronXProductoConSucursal(String producto,  String orden,  Timestamp fechaInicio, Timestamp fechaFin, long idSucursal)
+	{
+		return pp.consultarCientesQueCompraronXProductoConSucursal(producto, orden, fechaInicio, fechaFin, idSucursal);
+	}
+	
+	public String consultarClientesQueNoCompraronXProducto(String producto,  String orden,  Timestamp fechaInicio, Timestamp fechaFin)
+	{
+		return pp.consultarCientesQueNoCompraronXProducto(producto, orden, fechaInicio, fechaFin);
+	}
+	
+	public String consultarClientesQueNoCompraronXProductoConSucursal(String producto,  String orden,  Timestamp fechaInicio, Timestamp fechaFin, long idSucursal)
+	{
+		return pp.consultarCientesQueNoCompraronXProductoConSucursal(producto, orden, fechaInicio, fechaFin, idSucursal);
+	}
 }

@@ -121,6 +121,19 @@
 				}
 			]
 		},	
+		{ "menuTitle": "RF de consulta IT3",
+		  "options":
+			[
+				{
+					"label": "RFC10 Clientes que compraron X producto en intervalo de tiempo",
+					"event": "datosClienteQueComproProducto"
+				},
+				{
+					"label": "RFC11 Clientes que no compraron X producto en intervalo de tiempo",
+					"event": "datosClienteQueNoComproProducto"
+				}
+			]
+		},
 		{ "menuTitle": "Bono",
 		  "options":
 			[

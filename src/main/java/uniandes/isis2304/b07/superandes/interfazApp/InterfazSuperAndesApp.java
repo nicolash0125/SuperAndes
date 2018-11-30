@@ -1585,5 +1585,101 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		
 		
 	}
-
+	
+	public void datosClienteQueComproProducto() throws ParseException
+	{
+	SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
+	String tipo = JOptionPane.showInputDialog (this, "Tipo de usuario:"
+			+ "\n 1. Administrador general"
+			+ "\n 2. gerente de sucursal"
+			, "Consulta de cliente que compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+	String resultado = "";
+	switch (tipo) {
+	case "1":
+		
+		String codigoProducto = JOptionPane.showInputDialog (this, "Codigo del producto del cual se desea consultar", "Consulta de cliente que compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+		String fechaIni = JOptionPane.showInputDialog (this, "Fecha minima (dd/mm/yyyy)", "Consulta de cliente que compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+		String fechaFin = JOptionPane.showInputDialog (this, "Fecha maxima (dd/mm/yyyy)", "Consulta de cliente que compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+		String ordenado = JOptionPane.showInputDialog (this, "criterio de ordenamiento", "Consulta de cliente que compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+		
+		Date dini = dateformat.parse(fechaIni);
+		Date dfin = dateformat.parse(fechaFin);
+		Timestamp fechaInicial = new Timestamp(dini.getTime());
+		Timestamp fechaFinal = new Timestamp(dfin.getTime());
+		
+		resultado = superAndes.consultarClientesQueCompraronXProducto(codigoProducto, ordenado, fechaInicial, fechaFinal);
+		
+		resultado += "\n Operación terminada";
+		panelDatos.actualizarInterfaz(resultado);
+		break;
+		
+	case "2":
+		
+		String codigoProducto2 = JOptionPane.showInputDialog (this, "Codigo del producto del cual se desea consultar", "Consulta de cliente que compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+		String fechaIni2 = JOptionPane.showInputDialog (this, "Fecha minima (dd/mm/yyyy)", "Consulta de cliente que compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+		String fechaFin2 = JOptionPane.showInputDialog (this, "Fecha maxima (dd/mm/yyyy)", "Consulta de cliente que compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+		String ordenado2 = JOptionPane.showInputDialog (this, "criterio de ordenamiento", "Consulta de cliente que compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+		String suc = JOptionPane.showInputDialog (this, "sucursal", "Consulta de cliente que compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+		long sucursal = Long.parseLong(suc);
+		Date dini2 = dateformat.parse(fechaIni2);
+		Date dfin2 = dateformat.parse(fechaFin2);
+		Timestamp fechaInicial2 = new Timestamp(dini2.getTime());
+		Timestamp fechaFinal2 = new Timestamp(dfin2.getTime());
+		
+		resultado = superAndes.consultarClientesQueCompraronXProductoConSucursal(codigoProducto2, ordenado2, fechaInicial2, fechaFinal2, sucursal);
+		
+		resultado += "\n Operación terminada";
+		panelDatos.actualizarInterfaz(resultado);
+		break;
+		}
+	}
+	
+	public void datosClienteQueNoComproProducto() throws ParseException
+	{
+	SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
+	String tipo = JOptionPane.showInputDialog (this, "Tipo de usuario:"
+			+ "\n 1. Administrador general"
+			+ "\n 2. gerente de sucursal"
+			, "Consulta de cliente que No compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+	String resultado = "";
+	switch (tipo) {
+	case "1":
+		
+		String codigoProducto = JOptionPane.showInputDialog (this, "Codigo del producto del cual se desea consultar", "Consulta de cliente que no compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+		String fechaIni = JOptionPane.showInputDialog (this, "Fecha minima (dd/mm/yyyy)", "Consulta de cliente que no compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+		String fechaFin = JOptionPane.showInputDialog (this, "Fecha maxima (dd/mm/yyyy)", "Consulta de cliente que no compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+		String ordenado = JOptionPane.showInputDialog (this, "criterio de ordenamiento", "Consulta de cliente que no compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+		
+		Date dini = dateformat.parse(fechaIni);
+		Date dfin = dateformat.parse(fechaFin);
+		Timestamp fechaInicial = new Timestamp(dini.getTime());
+		Timestamp fechaFinal = new Timestamp(dfin.getTime());
+		
+		resultado = superAndes.consultarClientesQueNoCompraronXProducto(codigoProducto, ordenado, fechaInicial, fechaFinal);
+		
+		resultado += "\n Operación terminada";
+		panelDatos.actualizarInterfaz(resultado);
+		break;
+		
+	case "2":
+		
+		String codigoProducto2 = JOptionPane.showInputDialog (this, "Codigo del producto del cual se desea consultar", "Consulta de cliente que no compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+		String fechaIni2 = JOptionPane.showInputDialog (this, "Fecha minima (dd/mm/yyyy)", "Consulta de cliente que  no compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+		String fechaFin2 = JOptionPane.showInputDialog (this, "Fecha maxima (dd/mm/yyyy)", "Consulta de cliente que no compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+		String ordenado2 = JOptionPane.showInputDialog (this, "criterio de ordenamiento", "Consulta de cliente que no compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+		String suc = JOptionPane.showInputDialog (this, "sucursal", "Consulta de cliente que no compraron cierto producto ", JOptionPane.QUESTION_MESSAGE);
+		long sucursal = Long.parseLong(suc);
+		Date dini2 = dateformat.parse(fechaIni2);
+		Date dfin2 = dateformat.parse(fechaFin2);
+		Timestamp fechaInicial2 = new Timestamp(dini2.getTime());
+		Timestamp fechaFinal2 = new Timestamp(dfin2.getTime());
+		
+		resultado = superAndes.consultarClientesQueNoCompraronXProductoConSucursal(codigoProducto2, ordenado2, fechaInicial2, fechaFinal2, sucursal);
+		
+		resultado += "\n Operación terminada";
+		panelDatos.actualizarInterfaz(resultado);
+		break;
+		}
+	}
+	
 }
