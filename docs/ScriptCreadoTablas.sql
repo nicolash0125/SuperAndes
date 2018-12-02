@@ -4,7 +4,7 @@ create sequence SuperAndes_sequence;
 CREATE TABLE PRODUCTO
 (
     codigoDeBarras VARCHAR(20) NOT NULL,
-    nombre VARCHAR(20),
+    nombre VARCHAR(50),
     presentacion VARCHAR(20),
     marca VARCHAR(20),
     unidadDeMedida VARCHAR(20),
@@ -126,7 +126,7 @@ CREATE TABLE PersonaJuridica
 (
     tipoDocumento VARCHAR(20) NOT NULL,
     numDocumento VARCHAR(20) NOT NULL,
-    direccion VARCHAR(20),
+    direccion VARCHAR(50),
     nombre VARCHAR (20),
     CONSTRAINT personajuridica_pk PRIMARY KEY(tipoDocumento, numDocumento)
 );
@@ -136,7 +136,7 @@ CREATE TABLE PersonaNatural
     tipoDocumento VARCHAR(20) NOT NULL,
     numDocumento VARCHAR(20) NOT NULL,
     nombre VARCHAR(20),
-    correo VARCHAR(20),
+    correo VARCHAR(40),
     CONSTRAINT personaNatural_pk PRIMARY KEY(tipoDocumento, numDocumento)
 );
 
