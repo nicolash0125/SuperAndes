@@ -123,7 +123,7 @@ public class PersistenciaSuperAndes {
 
 	private SQLProveedor sqlProveedor;
 
-	
+
 
 	private SQLSucursal sqlSucursal;
 
@@ -449,7 +449,7 @@ public class PersistenciaSuperAndes {
 			tx.commit();
 
 			log.trace ("Insercion de proveedor: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
-			
+
 			return new Proveedor(nit, nombre);
 
 		} catch (Exception e) {
@@ -582,7 +582,7 @@ public class PersistenciaSuperAndes {
 
 	}
 
-	
+
 	/**
 	 * Registra sucursal
 	 * @param nombre
@@ -739,7 +739,7 @@ public class PersistenciaSuperAndes {
 			pm.close();
 		}
 	}
-	
+
 	/**
 	 * Registra promocion descuento
 	 * @param codigoProducto
@@ -776,7 +776,7 @@ public class PersistenciaSuperAndes {
 			pm.close();
 		}
 	}
-	
+
 	/**
 	 * Registra promocion pague X lleve Y
 	 * @param codigoProducto
@@ -814,7 +814,7 @@ public class PersistenciaSuperAndes {
 			pm.close();
 		}
 	}
-	
+
 	/**
 	 * Registra promocion pague 1 lleve 2do con desc
 	 * @param codigoProducto
@@ -851,7 +851,7 @@ public class PersistenciaSuperAndes {
 			pm.close();
 		}
 	}
-	
+
 	/**
 	 * Registra promocion paquete prod
 	 * @param codigoProducto
@@ -946,7 +946,7 @@ public class PersistenciaSuperAndes {
 
 			long tuplasInsertadas = sqlPedido.adicionarPedido(pm, codigoPedido, idSucursal, nitProveedor, fechaPrevista, precioTotal);
 
-			
+
 
 			for (int i = 0; i < codigosProductos.length; i++) {
 
@@ -1236,7 +1236,7 @@ public class PersistenciaSuperAndes {
 	/* ****************************************************************
 	 * 			Requerimientos funcionales Iteracion 2
 	 *****************************************************************/
-	
+
 	/**
 	 * SOlicita carrito
 	 * @param tipoDocumento
@@ -1269,7 +1269,7 @@ public class PersistenciaSuperAndes {
 			pm.close();
 		}
 	}
-	
+
 	/**
 	 * Adiciona producto a carrito
 	 * @param tipoDocumento
@@ -1287,11 +1287,11 @@ public class PersistenciaSuperAndes {
 		try 
 		{
 			tx.begin();
-			
+
 			int tieneCarrito=sqlCliente.tieneCarrito(pm, tipoDocumento, numeroCliente);
 			if(tieneCarrito==0)
 				throw new Exception("El cliente no tiene un carrito asignado");
-			
+
 			sqlEstante.tomarProducto(pm, idEstante, idProducto, cantidad);
 			sqlCarrito.anadirProducto(pm, tipoDocumento, numeroCliente, idProducto, cantidad);
 			tx.commit();
@@ -1331,11 +1331,11 @@ public class PersistenciaSuperAndes {
 		try 
 		{
 			tx.begin();
-			
+
 			int tieneCarrito=sqlCliente.tieneCarrito(pm, tipoDocumento, numeroCliente);
 			if(tieneCarrito==0)
 				throw new Exception("El cliente no tiene un carrito asignado");
-			
+
 			sqlEstante.devolverProducto(pm, idEstante, idProducto, cantidad);
 			sqlCarrito.eliminarProducto(pm, tipoDocumento, numeroCliente, idProducto, cantidad);
 			tx.commit();
@@ -1357,7 +1357,7 @@ public class PersistenciaSuperAndes {
 		}
 		return logro;
 	}
-	
+
 	/**
 	 * Paga con el carrito
 	 * @param tipoDocumento
@@ -1376,11 +1376,11 @@ public class PersistenciaSuperAndes {
 			int tieneCarrito=sqlCliente.tieneCarrito(pm, tipoDocumento, numeroCliente);
 			if(tieneCarrito==0)
 				throw new Exception("El cliente no tiene un carrito asignado");
-			
+
 			long numeroVenta=nextval();
 			List<Object[]>productos=sqlCarrito.obtenerCarritoDeCliente(pm, tipoDocumento, numeroCliente);
 			Date d=new Date();
-			
+
 			sqlVenta.adicionarVenta(pm, sucursal, numeroVenta, tipoDocumento, numeroCliente, 0, new Timestamp(d.getTime()));
 			for (Object[] prod : productos) {
 				sqlVenta.adicionarProductoAVenta(pm, numeroVenta,((String) prod[4]), ((BigDecimal) prod[2]).intValue());
@@ -1405,7 +1405,7 @@ public class PersistenciaSuperAndes {
 		}
 		return logro;
 	}
-	
+
 	/**
 	 * Abandona el carrito
 	 * @param tipoDocumento
@@ -1423,7 +1423,7 @@ public class PersistenciaSuperAndes {
 			int tieneCarrito=sqlCliente.tieneCarrito(pm, tipoDocumento, numeroCliente);
 			if(tieneCarrito==0)
 				throw new Exception("El cliente no tiene un carrito asignado");
-			
+
 			sqlCarrito.abandonarCarrito(pm, tipoDocumento, numeroCliente);
 			sqlCliente.abandonarCarrito(pm, tipoDocumento, numeroCliente);
 			tx.commit();
@@ -1445,7 +1445,7 @@ public class PersistenciaSuperAndes {
 		}
 		return logro;
 	}
-	
+
 	/**
 	 * Recolecta productos abandonados
 	 * @return true si completo la transaccion
@@ -1460,7 +1460,7 @@ public class PersistenciaSuperAndes {
 			tx.begin();
 			List<Object[]> productosAbandonados=sqlCarrito.obtenerProductosAbandonados(pm);
 			//Numdoc,TipoDoc,Cantidad,Abandonado,producto
-	        for (Object[] objects : productosAbandonados) {
+			for (Object[] objects : productosAbandonados) {
 				sqlEstante.devolverProductoPrimerEstante(pm, objects[4]+"", ((BigDecimal)objects[2]).intValue());
 			}
 			sqlCarrito.recolectarProductosAbandonados(pm);
@@ -1590,7 +1590,7 @@ public class PersistenciaSuperAndes {
 		}
 		return resp;
 	}
-	
+
 	/**
 	 * Da clientes frecuentes
 	 * @param idSucursal
@@ -1610,7 +1610,7 @@ public class PersistenciaSuperAndes {
 			for (Object[] objects : lista)
 			{
 				resp+="\n"+"        "+((BigDecimal)objects[0]).intValue()+"               "+objects[1]+"           "+((BigDecimal)objects[2]).intValue();
-				
+
 			}
 			tx.commit();
 
@@ -1674,13 +1674,13 @@ public class PersistenciaSuperAndes {
 			for (Object[] objects : lista)
 			{
 				resp+="\n"
-			+"                   "
-			+objects[0]
-			+"                   "
-			+objects[1]
-			+"                                   "
-			+objects[2];
-				
+						+"                   "
+						+objects[0]
+								+"                   "
+								+objects[1]
+										+"                                   "
+										+objects[2];
+
 			}
 			System.out.println(resp);
 			tx.commit();
@@ -1705,7 +1705,7 @@ public class PersistenciaSuperAndes {
 		return resp;
 
 	}
-	
+
 	public String consultarCientesQueCompraronXProductoConSucursal( String producto,  String orden,  Timestamp fechaInicio, Timestamp fechaFin, Long idSucursal)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1720,13 +1720,13 @@ public class PersistenciaSuperAndes {
 			for (Object[] objects : lista)
 			{
 				resp+="\n"
-			+"                   "
-			+objects[0]
-			+"                   "
-			+objects[1]
-			+"                                   "
-			+objects[2];
-				
+						+"                   "
+						+objects[0]
+								+"                   "
+								+objects[1]
+										+"                                   "
+										+objects[2];
+
 			}
 			tx.commit();
 
@@ -1750,7 +1750,7 @@ public class PersistenciaSuperAndes {
 		return resp;
 
 	}
-	
+
 	public String consultarCientesQueNoCompraronXProducto( String producto,  String orden,  Timestamp fechaInicio, Timestamp fechaFin)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1765,13 +1765,13 @@ public class PersistenciaSuperAndes {
 			for (Object[] objects : lista)
 			{
 				resp+="\n"
-			+"                   "
-			+objects[0]
-			+"                   "
-			+objects[1]
-			+"                                   "
-			+objects[2];
-				
+						+"                   "
+						+objects[0]
+								+"                   "
+								+objects[1]
+										+"                                   "
+										+objects[2];
+
 			}
 			System.out.println(resp);
 			tx.commit();
@@ -1796,7 +1796,7 @@ public class PersistenciaSuperAndes {
 		return resp;
 
 	}
-	
+
 	public String consultarCientesQueNoCompraronXProductoConSucursal( String producto,  String orden,  Timestamp fechaInicio, Timestamp fechaFin, Long idSucursal)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1811,13 +1811,13 @@ public class PersistenciaSuperAndes {
 			for (Object[] objects : lista)
 			{
 				resp+="\n"
-			+"                   "
-			+objects[0]
-			+"                   "
-			+objects[1]
-			+"                                   "
-			+objects[2];
-				
+						+"                   "
+						+objects[0]
+								+"                   "
+								+objects[1]
+										+"                                   "
+										+objects[2];
+
 			}
 			tx.commit();
 
@@ -1838,6 +1838,61 @@ public class PersistenciaSuperAndes {
 			}
 			pm.close();
 		}
+		return resp;
+
+	}
+
+	public String consultarMejoresYPeoresProductosProveedoresSemanaASemanaDeUnAño(int anio )
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();	
+		String resp="";
+		try 
+		{						
+			for(int i = 1 ; i<54;i++)
+			{
+				List<Object[]> listaVenta =sqlVenta.listaProdVendidosConCantidadPorSemana(pm, i, anio);
+				List<Object[]> listaProve =sqlPedido.listaProveedoresConCantidadPedidosPorSemana(pm, i, anio);
+			
+				if(!listaVenta.isEmpty())
+				{
+					resp +="\n producto más vendido de la semana "+i+" del año 20"+anio;
+					Object[] objects = listaVenta.get(0);
+					resp += "\n     unidades vendidas             codigo producto";
+					resp +="\n                "+objects[0]+"                                "+objects[1];
+					resp += "\n producto menos vendido de la semana "+i+"del año 20"+anio;
+					objects = listaVenta.get(listaVenta.size()-1);
+					resp += "\n     unidades vendidas             codigo producto";
+					resp += "\n               "+objects[0]+"                                   "+objects[1];
+				}  
+				else {
+					resp += "\n no hubierón ventas en la semana "+i+" del año 20"+anio;
+				}
+				if(!listaProve.isEmpty())
+				{
+					resp +="\n proveedor más solicitado de la semana "+i+" del año 20"+anio;
+					Object[] objects = listaProve.get(0);
+					resp += "\n     numero de pedidos             nit del proveedor";
+					resp += "\n               "+objects[0]+"	         "+objects[1];
+					resp += "\n proveedor menos solicitado  de la semana "+i+" del año 20"+anio;
+					objects = listaVenta.get(listaProve.size()-1); 
+					resp += "\n     numero de pedidos             nit del proveedor";
+					resp += "\n          "+objects[0]+"       	     "+objects[1];
+				}
+				else {
+					resp += "\n no hubierón compras aprovedores en la semana "+i+" del año 20"+anio;
+				}
+				resp+="\n ";
+			}
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			resp+="/n Error: "+e.getMessage();
+
+		}
+	
 		return resp;
 
 	}
