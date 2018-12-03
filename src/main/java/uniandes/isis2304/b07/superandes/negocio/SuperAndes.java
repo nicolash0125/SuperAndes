@@ -544,4 +544,9 @@ public class SuperAndes {
 	{
 		return pp.consultarCientesQueNoCompraronXProductoConSucursal(producto, orden, fechaInicio, fechaFin, idSucursal);
 	}
+	
+	public String consultarMejoresYPeoresProductosYProveedoresSemanaASemanaPorAnio(int anio)
+	{
+		return pp.consultarMejoresYPeoresProductosProveedoresSemanaASemanaDeUnAño(anio);
+	}
 }

@@ -132,6 +132,11 @@
 					"label": "RFC11 Clientes que no compraron X producto en intervalo de tiempo",
 					"event": "datosClienteQueNoComproProducto"
 				}
+				,
+				{
+					"label": "RFC12 Productos más y menos vendidos y \n proveedores más y menos solicitados \n por semanas de un anio",
+					"event": "mejoresYPeoresProductosYProveedores"
+				}
 			]
 		},
 		{ "menuTitle": "Bono",

@@ -194,4 +194,16 @@ public class SQLVenta {
 		return (List<Object[]>) q.executeList();
 				
 	}
+	
+	public List<Object[]> listaProdVendidosConCantidadPorSemana (PersistenceManager pm , int semana, int anio)
+	{
+		Query q = pm.newQuery(SQL,""
+		+" select  sum(cantidad) AS cantidadtotal , ventaproducto.codigoproducto as prod"
+		+" from  ventaproducto inner join venta on ventaproducto.numeroventa = venta.numeroventa and to_number (to_char(to_date( venta.fechaventa,'DD-MM-YYYY'),'WW')) = ?"
+		+" and to_number (to_char(to_date( venta.fechaventa,'DD-MM-YYYY'),'YYYY')) = ?"
+		+" GROUP by ventaproducto.codigoproducto"
+		+" order by cantidadtotal DESC");	
+		q.setParameters(semana , anio);
+		return (List<Object[]>) q.executeList();
+	}
 }

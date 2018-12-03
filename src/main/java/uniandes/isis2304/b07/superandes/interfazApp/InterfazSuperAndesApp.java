@@ -1681,5 +1681,15 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		break;
 		}
 	}
-	
+	public void mejoresYPeoresProductosYProveedores()
+	{
+		String anio =JOptionPane.showInputDialog (this, "año de consulta", "mejoresYPeoresProductosYProveedores", JOptionPane.QUESTION_MESSAGE);
+		int anioInt = Integer.parseInt(anio);
+		
+		String resultado= superAndes.consultarMejoresYPeoresProductosYProveedoresSemanaASemanaPorAnio(anioInt);
+		
+		panelDatos.actualizarInterfaz(resultado);
+		
+		
+	}
 }
