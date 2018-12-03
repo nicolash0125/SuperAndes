@@ -547,6 +547,6 @@ public class SuperAndes {
 	
 	public String consultarMejoresYPeoresProductosYProveedoresSemanaASemanaPorAnio(int anio)
 	{
-		return pp.consultarMejoresYPeoresProductosProveedoresSemanaASemanaDeUnAño(anio);
+		return pp.consultarMejoresYPeoresProductosProveedoresSemanaASemanaDeUnAnio(anio);
 	}
 }

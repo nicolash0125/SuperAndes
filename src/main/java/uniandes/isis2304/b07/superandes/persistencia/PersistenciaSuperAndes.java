@@ -1842,7 +1842,7 @@ public class PersistenciaSuperAndes {
 
 	}
 
-	public String consultarMejoresYPeoresProductosProveedoresSemanaASemanaDeUnAño(int anio )
+	public String consultarMejoresYPeoresProductosProveedoresSemanaASemanaDeUnAnio(int anio )
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();	
 		String resp="";
@@ -1855,31 +1855,31 @@ public class PersistenciaSuperAndes {
 			
 				if(!listaVenta.isEmpty())
 				{
-					resp +="\n producto más vendido de la semana "+i+" del año 20"+anio;
+					resp +="\n producto mï¿½s vendido de la semana "+i+" del aï¿½o 20"+anio;
 					Object[] objects = listaVenta.get(0);
 					resp += "\n     unidades vendidas             codigo producto";
 					resp +="\n                "+objects[0]+"                                "+objects[1];
-					resp += "\n producto menos vendido de la semana "+i+"del año 20"+anio;
+					resp += "\n producto menos vendido de la semana "+i+"del aï¿½o 20"+anio;
 					objects = listaVenta.get(listaVenta.size()-1);
 					resp += "\n     unidades vendidas             codigo producto";
 					resp += "\n               "+objects[0]+"                                   "+objects[1];
 				}  
 				else {
-					resp += "\n no hubierón ventas en la semana "+i+" del año 20"+anio;
+					resp += "\n no hubierï¿½n ventas en la semana "+i+" del aï¿½o 20"+anio;
 				}
 				if(!listaProve.isEmpty())
 				{
-					resp +="\n proveedor más solicitado de la semana "+i+" del año 20"+anio;
+					resp +="\n proveedor mï¿½s solicitado de la semana "+i+" del aï¿½o 20"+anio;
 					Object[] objects = listaProve.get(0);
 					resp += "\n     numero de pedidos             nit del proveedor";
 					resp += "\n               "+objects[0]+"	         "+objects[1];
-					resp += "\n proveedor menos solicitado  de la semana "+i+" del año 20"+anio;
+					resp += "\n proveedor menos solicitado  de la semana "+i+" del aï¿½o 20"+anio;
 					objects = listaVenta.get(listaProve.size()-1); 
 					resp += "\n     numero de pedidos             nit del proveedor";
 					resp += "\n          "+objects[0]+"       	     "+objects[1];
 				}
 				else {
-					resp += "\n no hubierón compras aprovedores en la semana "+i+" del año 20"+anio;
+					resp += "\n no hubierï¿½n compras aprovedores en la semana "+i+" del aï¿½o 20"+anio;
 				}
 				resp+="\n ";
 			}
